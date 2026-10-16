@@ -1,0 +1,4 @@
+User-agent: *
+Allow: /
+
+Sitemap: https://evaz.com.br/sitemap.xml
