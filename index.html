@@ -34,9 +34,9 @@
   <!-- Preload de Ativos Críticos (LCP Core Web Vitals) -->
   <link rel="preload" as="image" href="assets/evaz-logo-4k-branca-laranja.webp">
   <link rel="preload" as="image" href="assets/produto-logitech-pro-x2-superstrike.webp">
-  <link rel="preconnect" href="https://fonts.googleapis.com">
-  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&family=JetBrains+Mono:wght@400;500;600&display=swap" rel="stylesheet">
+  <!-- Tipografia Local Auto-hospedada (Zero requisições externas, sem render-blocking) -->
+  <link rel="preload" as="style" href="assets/fonts/fonts.css">
+  <link rel="stylesheet" href="assets/fonts/fonts.css">
 
   <!-- Dados Estruturados Schema.org (JSON-LD) -->
   <script type="application/ld+json">
@@ -695,7 +695,7 @@
               type="button" 
               data-filter-btn="todos" 
               onclick="filterVitrine('todos')" 
-              class="vitrine-tab px-4 py-2 rounded-xl text-xs font-semibold bg-[#F8701C] text-white transition-all duration-200 shadow-sm"
+              class="vitrine-tab px-4 py-2 rounded-xl text-xs font-semibold bg-[#F8701C] text-[#09090B] transition-all duration-200 shadow-sm"
             >
               Todos (42)
             </button>
@@ -5890,7 +5890,7 @@
       <!-- Box de Destaque Fotográfico + Preço Oficial vs EVAZ (-10%) -->
       <div class="p-5 rounded-2xl bg-[#121216] border border-white/[0.08] mb-6 flex flex-col sm:flex-row items-center gap-5">
         <div class="w-32 h-32 rounded-xl bg-[#09090B] border border-white/[0.06] p-3 flex items-center justify-center shrink-0">
-          <img id="preorder-modal-img" src="" alt="Produto" class="max-h-full max-w-full object-contain">
+          <img id="preorder-modal-img" src="" alt="Produto" width="128" height="128" class="max-h-full max-w-full object-contain">
         </div>
         <div class="flex-1 w-full text-center sm:text-left">
           <div class="inline-flex items-center gap-1.5 px-2.5 py-0.5 rounded text-[11px] font-mono font-bold text-[#F8701C] bg-[#F8701C]/10 border border-[#F8701C]/20 mb-2">
@@ -6065,6 +6065,33 @@
     <span class="w-2 h-2 rounded-full bg-[#F8701C]"></span>
     <span id="toast-text">Copiado</span>
   </div>
+
+  <!-- Barra de Ação Flutuante Mobile (Alta Conversão WhatsApp Concierge) -->
+  <aside 
+    id="mobile-floating-bar" 
+    class="md:hidden fixed bottom-4 left-3 right-3 z-40 p-2.5 rounded-2xl bg-[#09090B]/90 backdrop-blur-xl border border-white/10 shadow-[0_8px_32px_rgba(0,0,0,0.6)] flex items-center justify-between gap-3"
+    aria-label="Atendimento rápido e suporte técnico"
+  >
+    <div class="flex items-center gap-2.5 min-w-0 pl-1">
+      <span class="relative flex h-2 w-2 shrink-0">
+        <span class="animate-ping absolute inline-flex h-full w-full rounded-full bg-[#F8701C] opacity-75"></span>
+        <span class="relative inline-flex rounded-full h-2 w-2 bg-[#F8701C]"></span>
+      </span>
+      <div class="truncate">
+        <div class="text-[11px] font-semibold text-[#F5F5F7] tracking-tight truncate">Consultoria EVAZ</div>
+        <div class="text-[9px] text-[#A1A1A6] font-mono truncate">Atendimento de Brasília</div>
+      </div>
+    </div>
+    <a 
+      href="https://wa.me/5561992282898?text=Ol%C3%A1!%20Estou%20no%20site%20da%20EVAZ%20e%20gostaria%20de%20tirar%20uma%20d%C3%BAvida%20sobre%20produtos%20e%20pedidos." 
+      target="_blank" 
+      rel="noopener noreferrer" 
+      class="shrink-0 px-3.5 py-2 rounded-xl bg-[#F8701C] text-[#09090B] text-xs font-bold flex items-center gap-1.5 shadow-sm hover:brightness-110 active:scale-95 transition-all cursor-pointer min-h-[36px]"
+      aria-label="Abrir WhatsApp oficial da EVAZ"
+    >
+      <span>WhatsApp ›</span>
+    </a>
+  </aside>
 
   <!-- ==========================================
        JAVASCRIPT FUNCIONAL COMPLETO
