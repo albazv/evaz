@@ -195,6 +195,10 @@
 }
   </script>
 
+  <!-- Three.js & OrbitControls para o Visualizador 3D Interativo da EVADESK -->
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r128/three.min.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/three@0.128.0/examples/js/controls/OrbitControls.js"></script>
+
   <!-- Tailwind CSS CDN -->
   <script src="https://cdn.tailwindcss.com"></script>
   <script>
@@ -397,6 +401,10 @@
 
       <!-- Navegação Central Minimalista (Apple Style) -->
       <nav class="hidden lg:flex items-center gap-7 text-xs font-normal tracking-wide text-[#A1A1A6]" aria-label="Navegação principal">
+        <a href="#evadesk" class="text-[#F8701C] font-semibold flex items-center gap-1.5 hover:text-white transition-colors">
+          <span class="w-1.5 h-1.5 rounded-full bg-[#F8701C] animate-pulse"></span>
+          EVADESK™ 3D
+        </a>
         <a href="#vitrine" class="hover:text-[#F5F5F7] transition-colors">
           Série PRO
         </a>
@@ -457,6 +465,13 @@
     <!-- Mobile Drawer Overlay (Space Black Glass) -->
     <div id="mobile-menu-drawer" class="hidden lg:hidden bg-[#09090B]/95 backdrop-blur-2xl border-b border-white/10 px-6 py-6 transition-all duration-300">
       <nav class="flex flex-col gap-3 text-sm font-medium text-[#F5F5F7]">
+        <a href="#evadesk" onclick="closeMobileMenu()" class="py-2.5 flex items-center justify-between border-b border-white/[0.06] text-[#F8701C]">
+          <span class="flex items-center gap-2">
+            <span class="w-1.5 h-1.5 rounded-full bg-[#F8701C] animate-pulse"></span>
+            EVADESK™ 3D Flagship
+          </span>
+          <span class="text-[10px] px-2 py-0.5 rounded-full bg-[#F8701C]/20 border border-[#F8701C]/40 text-[#F8701C] font-mono">Pré-Venda</span>
+        </a>
         <a href="#vitrine" onclick="closeMobileMenu()" class="py-2.5 flex items-center justify-between border-b border-white/[0.06]">
           <span>Série PRO &amp; Hardware</span>
           <span class="text-[11px] text-[#F8701C] font-mono">Explorar ›</span>
@@ -666,6 +681,401 @@
         </div>
       </div>
     </section>
+
+    <!-- ==========================================
+         EVADESK™ FLAGSHIP 1600×800 — PRÉ-VENDA & 3D INTERATIVO (#evadesk)
+         Linguagem Sideral Apple Pro / Three.js 3D WebGL Orbit
+         ========================================== -->
+    <section id="evadesk" class="py-20 sm:py-28 bg-[#09090B] text-[#F5F5F7] relative border-b border-white/[0.08] overflow-hidden">
+      <!-- Glow de Palco Sideral -->
+      <div class="absolute inset-0 pointer-events-none" aria-hidden="true">
+        <div class="absolute top-1/4 left-1/2 -translate-x-1/2 w-[900px] h-[500px] rounded-full bg-gradient-to-b from-[#F8701C]/[0.05] via-white/[0.02] to-transparent blur-3xl"></div>
+      </div>
+
+      <div class="max-w-7xl mx-auto px-4 sm:px-6 relative z-10">
+        
+        <!-- Cabeçalho de Pré-Venda & Lançamento Flagship -->
+        <div class="flex flex-col lg:flex-row lg:items-end justify-between mb-12 gap-8">
+          <div>
+            <div class="inline-flex items-center gap-2 px-3 py-1.5 rounded-full bg-[#F8701C]/10 border border-[#F8701C]/30 mb-4">
+              <span class="w-2 h-2 rounded-full bg-[#F8701C] animate-pulse"></span>
+              <span class="text-[11px] font-mono uppercase tracking-[0.16em] text-[#F8701C] font-bold">
+                Pré-Venda Exclusiva · Lote Fundador (Limitado a 20 Unidades)
+              </span>
+            </div>
+            <h2 class="text-3xl sm:text-5xl font-black text-[#F5F5F7] tracking-tight">
+              EVADESK™ Flagship <span class="text-[#F8701C]">1600×800</span>
+            </h2>
+            <p class="pretty-copy text-[#A1A1A6] text-base sm:text-lg mt-3 max-w-2xl leading-relaxed">
+              A primeira estação de trabalho motorizada com ecossistema de setup 100% integrado ao tampo. Rebaixo zero-gap para mousepad, berço Stream Deck Neo, indução Qi2 MagSafe 15W, proteção iCLAMPER NBR 14136 e coluna bi-motor TiMOTION com 5 anos de garantia.
+            </p>
+          </div>
+
+          <!-- Card de Precificação de Pré-Venda (-30% OFF) -->
+          <div class="bg-[#141418] border border-white/10 rounded-3xl p-6 sm:p-7 flex flex-col justify-between shadow-2xl min-w-[320px] lg:max-w-[380px] relative overflow-hidden">
+            <div class="absolute -top-12 -right-12 w-32 h-32 bg-[#F8701C]/10 rounded-full blur-2xl pointer-events-none"></div>
+            
+            <div class="flex items-center justify-between gap-2 mb-3">
+              <span class="text-[10px] font-mono uppercase tracking-widest text-[#A1A1A6]">Condição de Lançamento</span>
+              <span class="px-2.5 py-1 rounded-full bg-[#F8701C] text-[#09090B] text-xs font-black uppercase tracking-wider">
+                30% OFF
+              </span>
+            </div>
+
+            <div class="mb-4">
+              <span class="text-xs text-[#6E6E73] line-through block">De R$ 6.990,00</span>
+              <div class="flex items-baseline gap-2">
+                <span class="text-3xl sm:text-4xl font-black text-[#F5F5F7]">R$ 4.890,00</span>
+                <span class="text-xs text-[#F8701C] font-bold font-mono">à vista no Pix</span>
+              </div>
+              <span class="text-xs text-[#A1A1A6] mt-1 block">ou em até 12x de R$ 459,00 sem juros</span>
+            </div>
+
+            <!-- Barra de Escassez do Lote -->
+            <div class="mb-5 pt-3 border-t border-white/[0.06]">
+              <div class="flex items-center justify-between text-[11px] font-mono text-[#A1A1A6] mb-1.5">
+                <span>Lote Fundador Numerado</span>
+                <span class="text-[#F8701C] font-bold">7 / 20 restantes</span>
+              </div>
+              <div class="w-full h-1.5 rounded-full bg-white/10 overflow-hidden">
+                <div class="h-full bg-gradient-to-r from-[#F8701C] to-amber-400 rounded-full" style="width: 65%;"></div>
+              </div>
+            </div>
+
+            <!-- CTAs -->
+            <div class="flex flex-col gap-2.5">
+              <a 
+                href="https://wa.me/5561992282898?text=Ol%C3%A1%20EVAZ!%20Quero%20garantir%20minha%20unidade%20da%20EVADESK%20Flagship%201600x800%20no%20Lote%20Fundador%20(-30%25%20OFF)%20com%20os%204%20mousepads%20inclusos."
+                target="_blank" 
+                rel="noopener noreferrer" 
+                class="btn-laser w-full py-3.5 rounded-2xl text-xs font-bold text-center flex items-center justify-center gap-2 shadow-lg shadow-[#F8701C]/20"
+              >
+                <span>Garantir no Lote Fundador</span>
+                <svg class="w-4 h-4" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M14 5l7 7m0 0l-7 7m7-7H3"/></svg>
+              </a>
+              <button 
+                type="button" 
+                onclick="openEvadeskModal()" 
+                class="w-full py-2.5 rounded-2xl bg-white/[0.04] hover:bg-white/[0.08] text-xs font-medium text-[#A1A1A6] hover:text-white border border-white/10 transition-colors"
+              >
+                Ver Ficha Técnica de Engenharia
+              </button>
+            </div>
+          </div>
+        </div>
+
+        <!-- ==========================================
+             ESTÚDIO 3D INTERATIVO & SELETOR DE ÂNGULOS
+             Three.js WebGL Orbit + Hotspots + 8K Photo Switcher
+             ========================================== -->
+        <div class="bg-[#0C0C0F] border border-white/10 rounded-[32px] p-4 sm:p-6 mb-12 shadow-2xl relative">
+          
+          <!-- Barra Superior de Controle do 3D -->
+          <div class="flex flex-wrap items-center justify-between gap-4 pb-4 border-b border-white/[0.08] mb-4">
+            <div class="flex items-center gap-3">
+              <span class="inline-flex items-center gap-1.5 px-3 py-1 rounded-full bg-white/[0.06] border border-white/[0.1] text-xs font-mono text-[#F5F5F7]">
+                <svg class="w-3.5 h-3.5 text-[#F8701C] animate-spin" style="animation-duration: 8s;" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><circle cx="12" cy="12" r="10"/><path d="M12 2a10 10 0 0 1 10 10"/></svg>
+                <span>3D INTERATIVO · CLIQUE E ARRASTE PARA GIRAR 360°</span>
+              </span>
+              <span class="hidden sm:inline-block text-[11px] text-[#6E6E73] font-mono">Role o scroll para zoom</span>
+            </div>
+
+            <!-- Alternador de Modo: 3D WebGL vs Renders 8K -->
+            <div class="inline-flex p-1 rounded-xl bg-[#141418] border border-white/10">
+              <button 
+                id="btn-mode-3d" 
+                type="button" 
+                onclick="switchEvadeskMode('3d')" 
+                class="px-3.5 py-1.5 rounded-lg text-xs font-semibold bg-[#F8701C] text-[#09090B] transition-all"
+              >
+                3D WebGL (Órbita)
+              </button>
+              <button 
+                id="btn-mode-gallery" 
+                type="button" 
+                onclick="switchEvadeskMode('gallery')" 
+                class="px-3.5 py-1.5 rounded-lg text-xs font-medium text-[#A1A1A6] hover:text-white transition-all"
+              >
+                Renders 8K de Estúdio
+              </button>
+            </div>
+          </div>
+
+          <!-- Palco Visualizador (Canvas 3D / Imagem 8K) -->
+          <div class="relative w-full aspect-[16/9] min-h-[380px] sm:min-h-[520px] rounded-2xl bg-[#09090B] overflow-hidden border border-white/[0.06] flex items-center justify-center">
+            
+            <!-- 1. Canvas 3D Three.js -->
+            <div id="evadesk-3d-wrapper" class="w-full h-full relative cursor-grab active:cursor-grabbing">
+              <canvas id="evadesk-3d-canvas" class="w-full h-full block"></canvas>
+
+              <!-- Dica de Arraste Sobreposta -->
+              <div id="evadesk-drag-hint" class="absolute bottom-5 left-1/2 -translate-x-1/2 px-4 py-2 rounded-full bg-[#09090B]/80 backdrop-blur-md border border-white/10 text-xs font-mono text-[#A1A1A6] pointer-events-none transition-opacity duration-500 flex items-center gap-2">
+                <svg class="w-4 h-4 text-[#F8701C]" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M7 16V4m0 0L3 8m4-4l4 4m6 0v12m0 0l4-4m-4 4l-4-4"/></svg>
+                <span>Arraste com o mouse para orbitar em 360°</span>
+              </div>
+
+              <!-- Controles Flutuantes de Zoom (Canto Superior Direito) -->
+              <div class="absolute top-4 right-4 flex flex-col gap-2 z-20">
+                <button 
+                  type="button" 
+                  onclick="zoomEvadesk(0.8)" 
+                  title="Aproximar Zoom" 
+                  class="w-9 h-9 rounded-xl bg-[#141418]/90 hover:bg-[#1E1E24] border border-white/10 text-[#F5F5F7] flex items-center justify-center text-sm font-bold shadow-lg transition-transform active:scale-95"
+                >
+                  +
+                </button>
+                <button 
+                  type="button" 
+                  onclick="zoomEvadesk(1.25)" 
+                  title="Afastar Zoom" 
+                  class="w-9 h-9 rounded-xl bg-[#141418]/90 hover:bg-[#1E1E24] border border-white/10 text-[#F5F5F7] flex items-center justify-center text-sm font-bold shadow-lg transition-transform active:scale-95"
+                >
+                  −
+                </button>
+                <button 
+                  type="button" 
+                  onclick="resetEvadeskCamera()" 
+                  title="Restaurar Visão Geral" 
+                  class="w-9 h-9 rounded-xl bg-[#141418]/90 hover:bg-[#1E1E24] border border-white/10 text-[#F8701C] flex items-center justify-center text-xs font-bold shadow-lg transition-transform active:scale-95"
+                >
+                  <svg class="w-4 h-4" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M4 4v5h.582m15.356 2A8.001 8.001 0 004.582 9m0 0H9m11 11v-5h-.581m0 0a8.003 8.003 0 01-15.357-2m15.357 2H15"/></svg>
+                </button>
+              </div>
+            </div>
+
+            <!-- 2. Galeria Fotográfica 8K Studio (Alternativa ao 3D) -->
+            <div id="evadesk-gallery-wrapper" class="w-full h-full relative hidden">
+              <img 
+                id="evadesk-gallery-main" 
+                src="assets/evadesk/01_hero_render_3d.jpg" 
+                alt="EVADESK Flagship 1600x800 Render Fotográfico 8K" 
+                class="w-full h-full object-contain p-4"
+              >
+            </div>
+
+          </div>
+
+          <!-- Seletor de Ângulos Rápidos & Focos Técnicos com 1 Clique -->
+          <div class="mt-4 pt-4 border-t border-white/[0.08]">
+            <div class="flex items-center justify-between mb-3">
+              <span class="text-[11px] font-mono uppercase tracking-wider text-[#A1A1A6] font-semibold flex items-center gap-1.5">
+                <span class="w-1.5 h-1.5 rounded-full bg-[#F8701C]"></span>
+                Ângulos &amp; Focos em Tecnologias (Clique para navegar com zoom):
+              </span>
+              <span id="evadesk-focus-desc" class="text-[11px] font-mono text-[#F8701C] hidden sm:inline-block">
+                Visão Geral 3D · 360° Livre
+              </span>
+            </div>
+
+            <div class="flex flex-wrap gap-2">
+              <button 
+                type="button" 
+                onclick="setEvadeskAngle('geral')" 
+                class="angle-btn px-3.5 py-2 rounded-xl bg-[#141418] hover:bg-white/10 border border-white/10 text-xs font-medium text-[#F5F5F7] transition-all flex items-center gap-2 active:scale-95"
+              >
+                <span>🌐</span> <span>360° Geral</span>
+              </button>
+              <button 
+                type="button" 
+                onclick="setEvadeskAngle('mousepad')" 
+                class="angle-btn px-3.5 py-2 rounded-xl bg-[#141418] hover:bg-white/10 border border-white/10 text-xs font-medium text-[#A1A1A6] hover:text-white transition-all flex items-center gap-2 active:scale-95"
+              >
+                <span>🖱️</span> <span>Tampo &amp; Mousepad Flush</span>
+              </button>
+              <button 
+                type="button" 
+                onclick="setEvadeskAngle('streamdeck')" 
+                class="angle-btn px-3.5 py-2 rounded-xl bg-[#141418] hover:bg-white/10 border border-white/10 text-xs font-medium text-[#A1A1A6] hover:text-white transition-all flex items-center gap-2 active:scale-95"
+              >
+                <span>🕹️</span> <span>Stream Deck Neo (15°)</span>
+              </button>
+              <button 
+                type="button" 
+                onclick="setEvadeskAngle('qi2')" 
+                class="angle-btn px-3.5 py-2 rounded-xl bg-[#141418] hover:bg-white/10 border border-white/10 text-xs font-medium text-[#A1A1A6] hover:text-white transition-all flex items-center gap-2 active:scale-95"
+              >
+                <span>⚡</span> <span>Qi2 15W MagSafe</span>
+              </button>
+              <button 
+                type="button" 
+                onclick="setEvadeskAngle('calha')" 
+                class="angle-btn px-3.5 py-2 rounded-xl bg-[#141418] hover:bg-white/10 border border-white/10 text-xs font-medium text-[#A1A1A6] hover:text-white transition-all flex items-center gap-2 active:scale-95"
+              >
+                <span>🔌</span> <span>Calha &amp; iCLAMPER NBR</span>
+              </button>
+              <button 
+                type="button" 
+                onclick="setEvadeskAngle('copo')" 
+                class="angle-btn px-3.5 py-2 rounded-xl bg-[#141418] hover:bg-white/10 border border-white/10 text-xs font-medium text-[#A1A1A6] hover:text-white transition-all flex items-center gap-2 active:scale-95"
+              >
+                <span>☕</span> <span>Porta-Copos c/ Dreno</span>
+              </button>
+              <button 
+                type="button" 
+                onclick="setEvadeskAngle('timotion')" 
+                class="angle-btn px-3.5 py-2 rounded-xl bg-[#141418] hover:bg-white/10 border border-white/10 text-xs font-medium text-[#A1A1A6] hover:text-white transition-all flex items-center gap-2 active:scale-95"
+              >
+                <span>📐</span> <span>TiMOTION &amp; Frase Laser</span>
+              </button>
+            </div>
+          </div>
+        </div>
+
+        <!-- ==========================================
+             BENTO GRID: 4 PILARES DE ENGENHARIA DA EVADESK
+             ========================================== -->
+        <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
+          
+          <!-- Card 1: Rebaixo Zero Gap & Micropontos -->
+          <div class="sideral-card rounded-[28px] p-6 flex flex-col justify-between">
+            <div>
+              <div class="w-10 h-10 rounded-2xl bg-[#F8701C]/10 border border-[#F8701C]/30 text-[#F8701C] flex items-center justify-center mb-5 font-mono font-bold text-sm">
+                01
+              </div>
+              <span class="text-[10px] font-mono uppercase tracking-widest text-[#F8701C] block mb-1">Engenharia de Superfície</span>
+              <h3 class="text-base font-bold text-[#F5F5F7] mb-2">Rebaixo Flush 900×400 mm</h3>
+              <p class="text-xs text-[#A1A1A6] leading-relaxed mb-4">
+                Tolerância de nivelamento milimétrica (degrau zero $\le \pm 0,15\text{ mm}$). Fundo usinado em micropontos brancos integrados ao mesmo material do tampo, retendo os 4 inserts de silicone sem cola.
+              </p>
+            </div>
+            <div class="pt-3 border-t border-white/[0.06] text-[11px] font-mono text-[#6E6E73]">
+              4 Inserts Inclusos de Fábrica
+            </div>
+          </div>
+
+          <!-- Card 2: Calha Oculta & iCLAMPER -->
+          <div class="sideral-card rounded-[28px] p-6 flex flex-col justify-between">
+            <div>
+              <div class="w-10 h-10 rounded-2xl bg-[#F8701C]/10 border border-[#F8701C]/30 text-[#F8701C] flex items-center justify-center mb-5 font-mono font-bold text-sm">
+                02
+              </div>
+              <span class="text-[10px] font-mono uppercase tracking-widest text-[#F8701C] block mb-1">Proteção Elétrica NBR 14136</span>
+              <h3 class="text-base font-bold text-[#F5F5F7] mb-2">iCLAMPER Energia 8 Transparente</h3>
+              <p class="text-xs text-[#A1A1A6] leading-relaxed mb-4">
+                Filtro de linha original e certificado Classe III integrado na calha técnica ventilada. Microdisjuntor de 10A, janela de inspeção de LEDs e apenas 1 cabo único saindo por coluna articulada.
+              </p>
+            </div>
+            <div class="pt-3 border-t border-white/[0.06] text-[11px] font-mono text-[#6E6E73]">
+              DPS Clamper + 8 Tomadas NBR
+            </div>
+          </div>
+
+          <!-- Card 3: Hub Qi2 & Stream Deck -->
+          <div class="sideral-card rounded-[28px] p-6 flex flex-col justify-between">
+            <div>
+              <div class="w-10 h-10 rounded-2xl bg-[#F8701C]/10 border border-[#F8701C]/30 text-[#F8701C] flex items-center justify-center mb-5 font-mono font-bold text-sm">
+                03
+              </div>
+              <span class="text-[10px] font-mono uppercase tracking-widest text-[#F8701C] block mb-1">Módulos Tech Dedicados</span>
+              <h3 class="text-base font-bold text-[#F5F5F7] mb-2">Qi2 15W + Stream Deck Neo</h3>
+              <p class="text-xs text-[#A1A1A6] leading-relaxed mb-4">
+                Carregador magnético horizontal MagSafe para smartphone (modo StandBy) + nicho smartwatch/buds, além do berço ergonômico inclinado a $15^\circ$ (com tampa cega nivelada inclusa).
+              </p>
+            </div>
+            <div class="pt-3 border-t border-white/[0.06] text-[11px] font-mono text-[#6E6E73]">
+              Berço Híbrido 2-em-1 + Qi2
+            </div>
+          </div>
+
+          <!-- Card 4: Colunas TiMOTION & Suporte de Copos -->
+          <div class="sideral-card rounded-[28px] p-6 flex flex-col justify-between">
+            <div>
+              <div class="w-10 h-10 rounded-2xl bg-[#F8701C]/10 border border-[#F8701C]/30 text-[#F8701C] flex items-center justify-center mb-5 font-mono font-bold text-sm">
+                04
+              </div>
+              <span class="text-[10px] font-mono uppercase tracking-widest text-[#F8701C] block mb-1">Estrutura &amp; Segurança</span>
+              <h3 class="text-base font-bold text-[#F5F5F7] mb-2">TiMOTION 3 Estágios + Dreno</h3>
+              <p class="text-xs text-[#A1A1A6] leading-relaxed mb-4">
+                Colunas retangulares motorizadas silenciosas ($\le 42\text{ dBA}$), painel touch com 3 memórias e suporte de bebidas usinado em alumínio com retenção magnética N52 e escape de condensação.
+              </p>
+            </div>
+            <div class="pt-3 border-t border-white/[0.06] text-[11px] font-mono text-[#6E6E73]">
+              5 Anos de Garantia no Motor
+            </div>
+          </div>
+
+        </div>
+
+      </div>
+    </section>
+
+    <!-- Modal Técnico de Pré-Venda & Engenharia EVADESK -->
+    <div id="evadesk-modal" class="fixed inset-0 z-50 bg-[#09090B]/90 backdrop-blur-xl hidden flex items-center justify-center p-4">
+      <div class="bg-[#141418] border border-white/10 rounded-[32px] max-w-2xl w-full p-6 sm:p-8 max-h-[90vh] overflow-y-auto shadow-2xl relative">
+        <button 
+          type="button" 
+          onclick="closeEvadeskModal()" 
+          class="absolute top-6 right-6 w-9 h-9 rounded-full bg-white/10 hover:bg-white/20 text-[#F5F5F7] flex items-center justify-center transition-colors"
+        >
+          ✕
+        </button>
+
+        <div class="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-[#F8701C]/10 border border-[#F8701C]/30 mb-3">
+          <span class="text-[10px] font-mono uppercase tracking-widest text-[#F8701C] font-bold">Dossiê Técnico · Gate 1 Congelado</span>
+        </div>
+        <h3 class="text-2xl font-black text-[#F5F5F7] mb-2">Ficha Técnica Oficial · EVADESK™ 1600×800</h3>
+        <p class="text-xs text-[#A1A1A6] mb-6 leading-relaxed">
+          Especificações milimétricas validadas pelo Conselho Multidisciplinar de Engenharia da EVAZ.
+        </p>
+
+        <div class="space-y-4 text-xs">
+          <div class="p-4 rounded-2xl bg-[#09090B] border border-white/[0.06]">
+            <h4 class="font-bold text-[#F8701C] mb-2 font-mono uppercase tracking-wider">1. Geometria &amp; Tampo</h4>
+            <ul class="space-y-1 text-[#A1A1A6]">
+              <li>• Dimensões: $1600\text{ mm}$ (L) $\times 800\text{ mm}$ (P) $\times 34\text{ mm}$ (E)</li>
+              <li>• Material: Sanduíche HDF Naval $850\text{ kg/m}^3$ usinado em CNC 5 eixos + 2 vigas de aço SAE 1020 embutidas</li>
+              <li>• Acabamento: Poliuretano (PU) automotivo branco fosco acetinado RAL 9003 (Gloss 8–12 GU, Dureza 2H)</li>
+              <li>• Cantos: Raios perimétricos $R = 30\text{ mm}$ e alívio ergonômico frontal $R = 8\text{ mm}$</li>
+            </ul>
+          </div>
+
+          <div class="p-4 rounded-2xl bg-[#09090B] border border-white/[0.06]">
+            <h4 class="font-bold text-[#F8701C] mb-2 font-mono uppercase tracking-wider">2. Mousepad &amp; Micropontos</h4>
+            <ul class="space-y-1 text-[#A1A1A6]">
+              <li>• Rebaixo: $900 \times 400 \times 4,0\text{ mm} \pm 0,15\text{ mm}$ (degrau zero imperceptível)</li>
+              <li>• Fundo: Matriz de micropontos brancos $\varnothing 0,8\text{ mm} \times 0,35\text{ mm}$ (passo $2,5\text{ mm}$) usinados na peça</li>
+              <li>• 4 Inserts: Tecido Híbrido, Speed Cordura, Couro Napa e Feltro Nórdico (base equalizadora de silicone de 4,0 mm)</li>
+              <li>• Extração: Nicho semicircular $\varnothing 18\text{ mm}$ na quina traseira direita</li>
+            </ul>
+          </div>
+
+          <div class="p-4 rounded-2xl bg-[#09090B] border border-white/[0.06]">
+            <h4 class="font-bold text-[#F8701C] mb-2 font-mono uppercase tracking-wider">3. Elétrica, iCLAMPER &amp; Módulos</h4>
+            <ul class="space-y-1 text-[#A1A1A6]">
+              <li>• Proteção: 1x iCLAMPER Energia 8 Transparente (8 tomadas NBR 14136, DPS Classe III, microdisjuntor 10A)</li>
+              <li>• Carregamento: Módulo Qi2 MagSafe 15W horizontal + indução dupla para Apple Watch e AirPods</li>
+              <li>• Stream Deck: Berço inclinado $15^\circ$ com passa-cabo em silicone + tampa cega nivelada em branco fosco</li>
+              <li>• Bebidas: Suporte de alumínio com ímãs N52 ($25\text{ N}$) e mangueira de dreno para o piso</li>
+            </ul>
+          </div>
+
+          <div class="p-4 rounded-2xl bg-[#09090B] border border-white/[0.06]">
+            <h4 class="font-bold text-[#F8701C] mb-2 font-mono uppercase tracking-wider">4. Elevação Motorizada TiMOTION</h4>
+            <ul class="space-y-1 text-[#A1A1A6]">
+              <li>• Colunas: 3 estágios retangulares com cantos suaves ($90 \times 60\text{ mm}$) em aço branco fosco</li>
+              <li>• Faixa de Altura: $620\text{ mm}$ a $1270\text{ mm}$ (atende sentados ou em pé do percentil 5 ao 95)</li>
+              <li>• Ruído: $\le 42\text{ dBA}$ com sensores Hall duplos, parada anti-colisão giroscópica e 3 memórias touch</li>
+              <li>• Garantia: 5 anos de garantia total com peças e assistência técnica no Brasil</li>
+            </ul>
+          </div>
+        </div>
+
+        <div class="mt-6 pt-4 border-t border-white/10 flex flex-col sm:flex-row items-center justify-between gap-4">
+          <div>
+            <span class="text-xs text-[#6E6E73] block">Preço Especial Lote Fundador</span>
+            <span class="text-xl font-black text-[#F5F5F7]">R$ 4.890,00 <span class="text-xs text-[#F8701C] font-mono">(-30% OFF)</span></span>
+          </div>
+          <a 
+            href="https://wa.me/5561992282898?text=Ol%C3%A1%20EVAZ!%20Quero%20reservar%20minha%20unidade%20da%20EVADESK%20Flagship%201600x800%20no%20Lote%20Fundador%20(-30%25%20OFF)%20com%20os%204%20mousepads%20inclusos."
+            target="_blank" 
+            rel="noopener noreferrer" 
+            class="btn-laser px-6 py-3 rounded-xl text-xs font-bold"
+          >
+            Reservar no WhatsApp Concierge
+          </a>
+        </div>
+      </div>
+    </div>
 
     <!-- ==========================================
          VITRINE SÉRIE PRO & CURADORIA (#vitrine)
@@ -7259,18 +7669,445 @@
       if (elAuthorLink) elAuthorLink.href = item.url;
     }
 
-    function changeDailyReel(step) {
-      renderDailyReel(currentReelIndex + step);
+    /* ==========================================
+       EVADESK™ 3D INTERACTIVE WEBGL & GALLERY ENGINE
+       Three.js OrbitControls, Real-Time PBR Shader & 8K Switcher
+       ========================================== */
+    let evadeskScene, evadeskCamera, evadeskRenderer, evadeskControls, evadeskDeskGroup;
+    let evadeskTargetCamPos = null, evadeskTargetLookAt = null;
+    let evadeskIsUserInteracting = false;
+    let evadeskAutoRotate = true;
+
+    const EVADESK_ANGLES = {
+      geral: {
+        cam: [0, 1.3, 2.3],
+        look: [0, 0, 0],
+        desc: "Visão Geral 3D · 360° Livre (Arraste para orbitar)",
+        img: "assets/evadesk/01_hero_render_3d.jpg"
+      },
+      mousepad: {
+        cam: [0, 0.88, 0.85],
+        look: [0, 0.05, 0],
+        desc: "Foco no Tampo · Rebaixo 900×400 mm e Tolerância Zero Gap",
+        img: "assets/evadesk/01_hero_render_3d.jpg"
+      },
+      streamdeck: {
+        cam: [-0.48, 0.48, 0.45],
+        look: [-0.48, 0.05, 0.02],
+        desc: "Foco no Berço Ergonômico do Stream Deck Neo (15°)",
+        img: "assets/evadesk/01_hero_render_3d.jpg"
+      },
+      qi2: {
+        cam: [0.55, 0.52, 0.38],
+        look: [0.55, 0.05, -0.15],
+        desc: "Foco na Indução Qi2 15W MagSafe Horizontal (Always-On)",
+        img: "assets/evadesk/08_carregamento_qi2.png"
+      },
+      calha: {
+        cam: [0, -0.35, 1.35],
+        look: [0, -0.22, 0],
+        desc: "Foco Inferior · Calha Oculta e iCLAMPER 8 Tomadas NBR",
+        img: "assets/evadesk/04_calha_iclamper.png"
+      },
+      copo: {
+        cam: [0.72, 0.42, 0.38],
+        look: [0.65, 0.03, 0.05],
+        desc: "Foco no Porta-Copos em Alumínio c/ Retenção Magnética e Dreno",
+        img: "assets/evadesk/10_suporte_copo.png"
+      },
+      timotion: {
+        cam: [0.48, -0.05, 0.75],
+        look: [0.48, -0.1, 0.2],
+        desc: "Foco no Painel Touch TiMOTION (Display 075 cm) e Frase a Laser",
+        img: "assets/evadesk/07_controlador_altura.png"
+      }
+    };
+
+    function initEvadesk3D() {
+      const container = document.getElementById('evadesk-3d-wrapper');
+      const canvas = document.getElementById('evadesk-3d-canvas');
+      if (!container || !canvas || typeof THREE === 'undefined') return;
+
+      const width = container.clientWidth || 800;
+      const height = container.clientHeight || 500;
+
+      // 1. Cena & Câmera
+      evadeskScene = new THREE.Scene();
+      evadeskScene.background = new THREE.Color(0x09090B);
+
+      evadeskCamera = new THREE.PerspectiveCamera(38, width / height, 0.1, 100);
+      evadeskCamera.position.set(0, 1.3, 2.3);
+
+      // 2. Renderizador WebGL
+      evadeskRenderer = new THREE.WebGLRenderer({ canvas: canvas, antialias: true, alpha: true });
+      evadeskRenderer.setSize(width, height);
+      evadeskRenderer.setPixelRatio(Math.min(window.devicePixelRatio, 2));
+      evadeskRenderer.shadowMap.enabled = true;
+      evadeskRenderer.shadowMap.type = THREE.PCFSoftShadowMap;
+
+      // 3. OrbitControls
+      if (typeof THREE.OrbitControls !== 'undefined') {
+        evadeskControls = new THREE.OrbitControls(evadeskCamera, evadeskRenderer.domElement);
+        evadeskControls.enableDamping = true;
+        evadeskControls.dampingFactor = 0.06;
+        evadeskControls.minDistance = 0.8;
+        evadeskControls.maxDistance = 4.5;
+        evadeskControls.maxPolarAngle = Math.PI / 2 + 0.08;
+        evadeskControls.target.set(0, 0, 0);
+
+        evadeskControls.addEventListener('start', function() {
+          evadeskIsUserInteracting = true;
+          evadeskAutoRotate = false;
+          evadeskTargetCamPos = null;
+          evadeskTargetLookAt = null;
+          const hint = document.getElementById('evadesk-drag-hint');
+          if (hint) hint.style.opacity = '0';
+        });
+
+        evadeskControls.addEventListener('end', function() {
+          evadeskIsUserInteracting = false;
+        });
+      }
+
+      // 4. Iluminação de Estúdio Industrial
+      const ambientLight = new THREE.AmbientLight(0xffffff, 0.95);
+      evadeskScene.add(ambientLight);
+
+      const keyLight = new THREE.DirectionalLight(0xffffff, 1.35);
+      keyLight.position.set(2.5, 4.0, 3.0);
+      keyLight.castShadow = true;
+      keyLight.shadow.mapSize.width = 1024;
+      keyLight.shadow.mapSize.height = 1024;
+      evadeskScene.add(keyLight);
+
+      const fillLight = new THREE.DirectionalLight(0xE2E8F0, 0.6);
+      fillLight.position.set(-3.0, 2.0, -1.5);
+      evadeskScene.add(fillLight);
+
+      // Orange Laser Rim Light (Assinatura EVAZ)
+      const orangeRimLight = new THREE.DirectionalLight(0xF8701C, 1.4);
+      orangeRimLight.position.set(-2.2, 2.5, -2.8);
+      evadeskScene.add(orangeRimLight);
+
+      // 5. Construção Paramétrica do Modelo 3D da EVADESK
+      evadeskDeskGroup = new THREE.Group();
+
+      // Materiais PBR
+      const matTopWhite = new THREE.MeshStandardMaterial({
+        color: 0xFAFAFC,
+        roughness: 0.22,
+        metalness: 0.03
+      });
+
+      const matLegsWhite = new THREE.MeshStandardMaterial({
+        color: 0xF0F0F3,
+        roughness: 0.35,
+        metalness: 0.15
+      });
+
+      const matMousepadBlack = new THREE.MeshStandardMaterial({
+        color: 0x141416,
+        roughness: 0.72,
+        metalness: 0.02
+      });
+
+      const matObsidian = new THREE.MeshStandardMaterial({
+        color: 0x0A0A0C,
+        roughness: 0.45,
+        metalness: 0.6
+      });
+
+      const matLaserOrange = new THREE.MeshStandardMaterial({
+        color: 0xF8701C,
+        roughness: 0.3,
+        metalness: 0.2,
+        emissive: 0xF8701C,
+        emissiveIntensity: 0.25
+      });
+
+      const matAluminum = new THREE.MeshStandardMaterial({
+        color: 0xE2E8F0,
+        roughness: 0.18,
+        metalness: 0.85
+      });
+
+      const matScreen = new THREE.MeshStandardMaterial({
+        color: 0x18181C,
+        roughness: 0.1,
+        metalness: 0.9,
+        emissive: 0x38BDF8,
+        emissiveIntensity: 0.15
+      });
+
+      // 5.1 Tampo 1600x800x34 mm (Escala 1 un = 1 metro: 1.60 x 0.80 x 0.034)
+      const topGeo = new THREE.BoxGeometry(1.60, 0.034, 0.80);
+      const topMesh = new THREE.Mesh(topGeo, matTopWhite);
+      topMesh.castShadow = true;
+      topMesh.receiveShadow = true;
+      evadeskDeskGroup.add(topMesh);
+
+      // 5.2 Rebaixo do Mousepad Flush (0.90 x 0.40 m) perfeitamente nivelado
+      const padGeo = new THREE.BoxGeometry(0.90, 0.002, 0.40);
+      const padMesh = new THREE.Mesh(padGeo, matMousepadBlack);
+      padMesh.position.set(0, 0.0175, 0.05); // Face superior
+      evadeskDeskGroup.add(padMesh);
+
+      // 5.3 Berço Stream Deck Neo (Inclinado a 15° à esquerda)
+      const sdGeo = new THREE.BoxGeometry(0.12, 0.025, 0.09);
+      const sdMesh = new THREE.Mesh(sdGeo, matTopWhite);
+      sdMesh.position.set(-0.48, 0.025, 0.08);
+      sdMesh.rotation.x = -0.26; // ~15 graus
+      evadeskDeskGroup.add(sdMesh);
+
+      const sdKeysGeo = new THREE.BoxGeometry(0.10, 0.005, 0.07);
+      const sdKeysMesh = new THREE.Mesh(sdKeysGeo, matLaserOrange);
+      sdKeysMesh.position.set(-0.48, 0.037, 0.08);
+      sdKeysMesh.rotation.x = -0.26;
+      evadeskDeskGroup.add(sdKeysMesh);
+
+      // 5.4 Base Qi2 Smartphone Horizontal (Traseira Direita)
+      const phoneGeo = new THREE.BoxGeometry(0.165, 0.008, 0.085);
+      const phoneMesh = new THREE.Mesh(phoneGeo, matObsidian);
+      phoneMesh.position.set(0.55, 0.022, -0.22);
+      evadeskDeskGroup.add(phoneMesh);
+
+      // Tela Always-On do Celular (Modo StandBy)
+      const phoneScreenGeo = new THREE.PlaneGeometry(0.155, 0.078);
+      const phoneScreenMesh = new THREE.Mesh(phoneScreenGeo, new THREE.MeshBasicMaterial({ color: 0x38BDF8 }));
+      phoneScreenMesh.rotation.x = -Math.PI / 2;
+      phoneScreenMesh.position.set(0.55, 0.027, -0.22);
+      evadeskDeskGroup.add(phoneScreenMesh);
+
+      // Dock Smartwatch/AirPods
+      const budsGeo = new THREE.CylinderGeometry(0.025, 0.025, 0.008, 24);
+      const budsMesh = new THREE.Mesh(budsGeo, matTopWhite);
+      budsMesh.position.set(0.40, 0.021, -0.22);
+      evadeskDeskGroup.add(budsMesh);
+
+      // 5.5 Porta-Copos em Alumínio com Dreno (Lateral Direita)
+      const cupHolderGeo = new THREE.CylinderGeometry(0.048, 0.046, 0.07, 32);
+      const cupHolderMesh = new THREE.Mesh(cupHolderGeo, matAluminum);
+      cupHolderMesh.position.set(0.72, 0.01, 0.05);
+      evadeskDeskGroup.add(cupHolderMesh);
+
+      const tumblerGeo = new THREE.CylinderGeometry(0.042, 0.038, 0.14, 32);
+      const tumblerMesh = new THREE.Mesh(tumblerGeo, matObsidian);
+      tumblerMesh.position.set(0.72, 0.08, 0.05);
+      evadeskDeskGroup.add(tumblerMesh);
+
+      // 5.6 Monitor Ultrawide Curvo Flutuante com Braço Articulado Branco
+      const armBaseGeo = new THREE.CylinderGeometry(0.03, 0.035, 0.05, 24);
+      const armBaseMesh = new THREE.Mesh(armBaseGeo, matTopWhite);
+      armBaseMesh.position.set(0, 0.03, -0.36);
+      evadeskDeskGroup.add(armBaseMesh);
+
+      const armPoleGeo = new THREE.CylinderGeometry(0.018, 0.018, 0.32, 24);
+      const armPoleMesh = new THREE.Mesh(armPoleGeo, matTopWhite);
+      armPoleMesh.position.set(0, 0.18, -0.36);
+      evadeskDeskGroup.add(armPoleMesh);
+
+      // Monitor Ultrawide 34" Curvo
+      const monitorGeo = new THREE.BoxGeometry(0.82, 0.35, 0.03);
+      const monitorMesh = new THREE.Mesh(monitorGeo, matScreen);
+      monitorMesh.position.set(0, 0.38, -0.30);
+      evadeskDeskGroup.add(monitorMesh);
+
+      // 5.7 Colunas Telescópicas TiMOTION Retangulares Brancas (3 Estágios)
+      const legLeftGeo = new THREE.BoxGeometry(0.08, 0.68, 0.05);
+      const legLeftMesh = new THREE.Mesh(legLeftGeo, matLegsWhite);
+      legLeftMesh.position.set(-0.55, -0.36, 0);
+      evadeskDeskGroup.add(legLeftMesh);
+
+      const footLeftGeo = new THREE.BoxGeometry(0.09, 0.024, 0.65);
+      const footLeftMesh = new THREE.Mesh(footLeftGeo, matLegsWhite);
+      footLeftMesh.position.set(-0.55, -0.70, 0);
+      evadeskDeskGroup.add(footLeftMesh);
+
+      const legRightGeo = new THREE.BoxGeometry(0.08, 0.68, 0.05);
+      const legRightMesh = new THREE.Mesh(legRightGeo, matLegsWhite);
+      legRightMesh.position.set(0.55, -0.36, 0);
+      evadeskDeskGroup.add(legRightMesh);
+
+      const footRightGeo = new THREE.BoxGeometry(0.09, 0.024, 0.65);
+      const footRightMesh = new THREE.Mesh(footRightGeo, matLegsWhite);
+      footRightMesh.position.set(0.55, -0.70, 0);
+      evadeskDeskGroup.add(footRightMesh);
+
+      // 5.8 Painel Touch TiMOTION Frontal Direito ("075 cm")
+      const ctrlGeo = new THREE.BoxGeometry(0.12, 0.022, 0.04);
+      const ctrlMesh = new THREE.Mesh(ctrlGeo, matObsidian);
+      ctrlMesh.position.set(0.55, -0.025, 0.38);
+      evadeskDeskGroup.add(ctrlMesh);
+
+      // Display LED 075 cm
+      const ledGeo = new THREE.BoxGeometry(0.05, 0.012, 0.002);
+      const ledMesh = new THREE.Mesh(ledGeo, new THREE.MeshBasicMaterial({ color: 0xF8701C }));
+      ledMesh.position.set(0.55, -0.025, 0.401);
+      evadeskDeskGroup.add(ledMesh);
+
+      // 5.9 Calha Técnica Inferior & iCLAMPER Energia 8
+      const trayGeo = new THREE.BoxGeometry(1.05, 0.12, 0.18);
+      const trayMesh = new THREE.Mesh(trayGeo, matObsidian);
+      trayMesh.position.set(0, -0.10, -0.18);
+      evadeskDeskGroup.add(trayMesh);
+
+      // iCLAMPER Transparente
+      const clamperGeo = new THREE.BoxGeometry(0.24, 0.04, 0.09);
+      const clamperMesh = new THREE.Mesh(clamperGeo, new THREE.MeshStandardMaterial({
+        color: 0x94A3B8,
+        transparent: true,
+        opacity: 0.75,
+        roughness: 0.1,
+        metalness: 0.1
+      }));
+      clamperMesh.position.set(-0.25, -0.08, -0.18);
+      evadeskDeskGroup.add(clamperMesh);
+
+      // 5.10 Coluna Vértebra Flexível de Cabos Branca (Snake Cable)
+      for (let i = 0; i < 9; i++) {
+        const vertebraGeo = new THREE.BoxGeometry(0.05, 0.04, 0.05);
+        const vertebraMesh = new THREE.Mesh(vertebraGeo, matLegsWhite);
+        const curveOffset = Math.sin(i / 8 * Math.PI) * 0.12;
+        vertebraMesh.position.set(-0.48 + curveOffset, -0.16 - (i * 0.06), -0.18);
+        evadeskDeskGroup.add(vertebraMesh);
+      }
+
+      // Adiciona conjunto à cena
+      evadeskScene.add(evadeskDeskGroup);
+
+      // Redimensionamento responsivo
+      window.addEventListener('resize', onEvadeskResize);
+
+      // Inicia loop de renderização
+      animateEvadesk();
     }
 
-    function selectReelByAuthor(authorHandle) {
-      const foundIdx = EVAZ_30_REELS.findIndex((r, i) => r.author === authorHandle && i > currentReelIndex);
-      const fallbackIdx = EVAZ_30_REELS.findIndex(r => r.author === authorHandle);
-      renderDailyReel(foundIdx !== -1 ? foundIdx : (fallbackIdx !== -1 ? fallbackIdx : 0));
+    function onEvadeskResize() {
+      const container = document.getElementById('evadesk-3d-wrapper');
+      if (!container || !evadeskRenderer || !evadeskCamera) return;
+      const width = container.clientWidth;
+      const height = container.clientHeight;
+      evadeskCamera.aspect = width / height;
+      evadeskCamera.updateProjectionMatrix();
+      evadeskRenderer.setSize(width, height);
     }
 
+    function animateEvadesk() {
+      requestAnimationFrame(animateEvadesk);
+
+      // Interpolação suave para ângulos de câmera (Smooth Camera Tween)
+      if (evadeskTargetCamPos && evadeskCamera) {
+        evadeskCamera.position.lerp(evadeskTargetCamPos, 0.065);
+        if (evadeskControls && evadeskTargetLookAt) {
+          evadeskControls.target.lerp(evadeskTargetLookAt, 0.065);
+        }
+        if (evadeskCamera.position.distanceTo(evadeskTargetCamPos) < 0.01) {
+          evadeskTargetCamPos = null;
+        }
+      }
+
+      // Auto-rotação sutil de vitrine quando inativo
+      if (evadeskAutoRotate && evadeskDeskGroup && !evadeskIsUserInteracting && !evadeskTargetCamPos) {
+        evadeskDeskGroup.rotation.y += 0.002;
+      }
+
+      if (evadeskControls) {
+        evadeskControls.update();
+      }
+
+      if (evadeskRenderer && evadeskScene && evadeskCamera) {
+        evadeskRenderer.render(evadeskScene, evadeskCamera);
+      }
+    }
+
+    function setEvadeskAngle(angleKey) {
+      const cfg = EVADESK_ANGLES[angleKey];
+      if (!cfg) return;
+
+      // Se estiver em galeria, atualiza imagem ou volta pro 3D
+      const galImg = document.getElementById('evadesk-gallery-main');
+      if (galImg && cfg.img) {
+        galImg.src = cfg.img;
+      }
+
+      // Atualiza texto da tecnologia
+      const descEl = document.getElementById('evadesk-focus-desc');
+      if (descEl) descEl.textContent = cfg.desc;
+
+      // Destaca botão ativo
+      document.querySelectorAll('.angle-btn').forEach(btn => {
+        btn.classList.remove('border-[#F8701C]', 'text-white', 'bg-[#1E1E24]');
+      });
+      if (window.event && window.event.currentTarget) {
+        window.event.currentTarget.classList.add('border-[#F8701C]', 'text-white', 'bg-[#1E1E24]');
+      }
+
+      // Interpola câmera 3D
+      if (evadeskDeskGroup) {
+        evadeskDeskGroup.rotation.y = 0; // Alinha modelo
+      }
+      evadeskAutoRotate = false;
+      evadeskTargetCamPos = new THREE.Vector3(...cfg.cam);
+      evadeskTargetLookAt = new THREE.Vector3(...cfg.look);
+    }
+
+    function zoomEvadesk(factor) {
+      if (!evadeskCamera || !evadeskControls) return;
+      evadeskAutoRotate = false;
+      const offset = new THREE.Vector3().subVectors(evadeskCamera.position, evadeskControls.target);
+      offset.multiplyScalar(factor);
+      evadeskTargetCamPos = new THREE.Vector3().addVectors(evadeskControls.target, offset);
+      evadeskTargetLookAt = evadeskControls.target.clone();
+    }
+
+    function resetEvadeskCamera() {
+      setEvadeskAngle('geral');
+    }
+
+    function switchEvadeskMode(mode) {
+      const wrapper3d = document.getElementById('evadesk-3d-wrapper');
+      const wrapperGal = document.getElementById('evadesk-gallery-wrapper');
+      const btn3d = document.getElementById('btn-mode-3d');
+      const btnGal = document.getElementById('btn-mode-gallery');
+
+      if (mode === '3d') {
+        if (wrapper3d) wrapper3d.classList.remove('hidden');
+        if (wrapperGal) wrapperGal.classList.add('hidden');
+        if (btn3d) {
+          btn3d.className = 'px-3.5 py-1.5 rounded-lg text-xs font-semibold bg-[#F8701C] text-[#09090B] transition-all';
+        }
+        if (btnGal) {
+          btnGal.className = 'px-3.5 py-1.5 rounded-lg text-xs font-medium text-[#A1A1A6] hover:text-white transition-all';
+        }
+        onEvadeskResize();
+      } else {
+        if (wrapper3d) wrapper3d.classList.add('hidden');
+        if (wrapperGal) wrapperGal.classList.remove('hidden');
+        if (btnGal) {
+          btnGal.className = 'px-3.5 py-1.5 rounded-lg text-xs font-semibold bg-[#F8701C] text-[#09090B] transition-all';
+        }
+        if (btn3d) {
+          btn3d.className = 'px-3.5 py-1.5 rounded-lg text-xs font-medium text-[#A1A1A6] hover:text-white transition-all';
+        }
+      }
+    }
+
+    function openEvadeskModal() {
+      const modal = document.getElementById('evadesk-modal');
+      if (modal) modal.classList.remove('hidden');
+    }
+
+    function closeEvadeskModal() {
+      const modal = document.getElementById('evadesk-modal');
+      if (modal) modal.classList.add('hidden');
+    }
+
+    // Inicialização ao carregar o DOM
     document.addEventListener('DOMContentLoaded', function() {
-      renderDailyReel(getDayOfYearIndex());
+      if (typeof renderDailyReel === 'function' && typeof getDayOfYearIndex === 'function') {
+        renderDailyReel(getDayOfYearIndex());
+      }
+      initEvadesk3D();
     });
   </script>
 </body>
