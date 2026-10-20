@@ -7941,6 +7941,8 @@
         evadeskRenderer = new THREE.WebGLRenderer({ canvas: canvas, antialias: true, alpha: true });
         evadeskRenderer.setSize(width, height);
         evadeskRenderer.setPixelRatio(Math.min(window.devicePixelRatio, 2));
+        evadeskRenderer.toneMapping = THREE.ACESFilmicToneMapping;
+        evadeskRenderer.toneMappingExposure = 1.05;
         evadeskRenderer.shadowMap.enabled = true;
         evadeskRenderer.shadowMap.type = THREE.PCFSoftShadowMap;
       } catch (e) {
@@ -7973,28 +7975,29 @@
         });
       }
 
-      // 4. Iluminação de Estúdio Industrial
-      const ambientLight = new THREE.AmbientLight(0xffffff, 0.95);
+      // 4. Iluminação de Estúdio Industrial PBR
+      const ambientLight = new THREE.AmbientLight(0xffffff, 0.40);
       evadeskScene.add(ambientLight);
 
-      const keyLight = new THREE.DirectionalLight(0xffffff, 1.4);
-      keyLight.position.set(2.5, 4.0, 3.0);
+      const keyLight = new THREE.DirectionalLight(0xffffff, 0.95);
+      keyLight.position.set(2.4, 3.8, 2.6);
       keyLight.castShadow = true;
       keyLight.shadow.mapSize.width = 1024;
       keyLight.shadow.mapSize.height = 1024;
+      keyLight.shadow.bias = -0.001;
       evadeskScene.add(keyLight);
 
-      const fillLight = new THREE.DirectionalLight(0xE2E8F0, 0.7);
-      fillLight.position.set(-3.0, 2.0, -1.5);
+      const fillLight = new THREE.DirectionalLight(0xE2E8F0, 0.45);
+      fillLight.position.set(-2.8, 2.2, 1.8);
       evadeskScene.add(fillLight);
 
-      const topLight = new THREE.DirectionalLight(0xFFFFFF, 0.85);
-      topLight.position.set(0, 4.5, 0);
+      const topLight = new THREE.DirectionalLight(0xFFFFFF, 0.50);
+      topLight.position.set(0, 4.2, 0);
       evadeskScene.add(topLight);
 
-      // Orange Laser Rim Light (Assinatura EVAZ)
-      const orangeRimLight = new THREE.DirectionalLight(0xF8701C, 1.5);
-      orangeRimLight.position.set(-2.2, 2.5, -2.8);
+      // Orange Laser Rim Light (Assinatura EVAZ 3.0)
+      const orangeRimLight = new THREE.DirectionalLight(0xF8701C, 1.25);
+      orangeRimLight.position.set(-2.4, 2.0, -2.6);
       evadeskScene.add(orangeRimLight);
 
       // Sombra de Contato Suave no Chão
@@ -8003,16 +8006,16 @@
       shadowCanvas.height = 512;
       const sCtx = shadowCanvas.getContext('2d');
       if (sCtx) {
-        const sGrad = sCtx.createRadialGradient(256, 256, 40, 256, 256, 250);
-        sGrad.addColorStop(0, 'rgba(0, 0, 0, 0.85)');
-        sGrad.addColorStop(0.5, 'rgba(0, 0, 0, 0.45)');
+        const sGrad = sCtx.createRadialGradient(256, 256, 30, 256, 256, 240);
+        sGrad.addColorStop(0, 'rgba(0, 0, 0, 0.75)');
+        sGrad.addColorStop(0.4, 'rgba(0, 0, 0, 0.35)');
         sGrad.addColorStop(1, 'rgba(0, 0, 0, 0)');
         sCtx.fillStyle = sGrad;
         sCtx.fillRect(0, 0, 512, 512);
         const shadowTex = new THREE.CanvasTexture(shadowCanvas);
         const shadowPlane = new THREE.Mesh(
-          new THREE.PlaneGeometry(2.5, 1.5),
-          new THREE.MeshBasicMaterial({ map: shadowTex, transparent: true, opacity: 0.8 })
+          new THREE.PlaneGeometry(2.6, 1.6),
+          new THREE.MeshBasicMaterial({ map: shadowTex, transparent: true, opacity: 0.75 })
         );
         shadowPlane.rotation.x = -Math.PI / 2;
         shadowPlane.position.y = -0.71;
@@ -8023,23 +8026,9 @@
       evadeskDeskGroup = new THREE.Group();
 
       // Materiais PBR
-      const desktopTexture = createEvadeskDesktopTexture();
-      const matTopFace = new THREE.MeshStandardMaterial({
-        color: 0xFFFFFF,
-        map: desktopTexture,
-        roughness: 0.24,
-        metalness: 0.04
-      });
-
-      const matBevelSides = new THREE.MeshStandardMaterial({
-        color: 0xF5F5F7,
-        roughness: 0.28,
-        metalness: 0.06
-      });
-
       const matTopWhite = new THREE.MeshStandardMaterial({
-        color: 0xFDFDFD,
-        roughness: 0.22,
+        color: 0xF7F7F9,
+        roughness: 0.28,
         metalness: 0.05
       });
 
@@ -8077,7 +8066,7 @@
         emissiveIntensity: 0.45
       });
 
-      // 5.1 Tampo 1600x800x34 mm com Cantos Arredondados e Chanfros Suaves
+      // 5.1 Tampo 1600x800x34 mm em Branco Sinal Fosco (RAL 9003)
       const topShape = createRoundedRectShape(1.60, 0.80, 0.035);
       const extrudeSettings = {
         depth: 0.034,
@@ -8091,172 +8080,300 @@
       topGeo.rotateX(Math.PI / 2);
       topGeo.center();
 
-      const topMesh = new THREE.Mesh(topGeo, [matTopFace, matBevelSides]);
+      const topMesh = new THREE.Mesh(topGeo, matTopWhite);
       topMesh.castShadow = true;
       topMesh.receiveShadow = true;
       topMesh.position.set(0, 0, 0);
       evadeskDeskGroup.add(topMesh);
 
+      // Rebaixo e Mousepad Central Speed 900x400 mm Coplanar (Zero Gap)
+      const padShape = createRoundedRectShape(0.90, 0.40, 0.012);
+      const padGeo = new THREE.ShapeGeometry(padShape);
+      padGeo.rotateX(-Math.PI / 2);
+      const matMousepad = new THREE.MeshStandardMaterial({
+        color: 0x121215,
+        roughness: 0.88,
+        metalness: 0.04
+      });
+      const mousepadMesh = new THREE.Mesh(padGeo, matMousepad);
+      mousepadMesh.position.set(0, 0.0175, 0.02);
+      mousepadMesh.receiveShadow = true;
+      evadeskDeskGroup.add(mousepadMesh);
+
+      // Moldura chanfrada de precisão do rebaixo CNC (±0.15mm)
+      const padBorderShape = createRoundedRectShape(0.906, 0.406, 0.014);
+      const padBorderGeo = new THREE.ShapeGeometry(padBorderShape);
+      padBorderGeo.rotateX(-Math.PI / 2);
+      const matPadBorder = new THREE.MeshStandardMaterial({
+        color: 0x27272A,
+        roughness: 0.5
+      });
+      const padBorderMesh = new THREE.Mesh(padBorderGeo, matPadBorder);
+      padBorderMesh.position.set(0, 0.0172, 0.02);
+      evadeskDeskGroup.add(padBorderMesh);
+
       // 5.2 Berço Stream Deck Neo (Inclinado a 15° à esquerda)
-      const sdGeo = new THREE.BoxGeometry(0.125, 0.026, 0.095);
-      const sdMesh = new THREE.Mesh(sdGeo, matTopWhite);
-      sdMesh.position.set(-0.50, 0.024, 0.08);
-      sdMesh.rotation.x = -0.26; // ~15 graus
-      evadeskDeskGroup.add(sdMesh);
+      const sdGroup = new THREE.Group();
+      sdGroup.position.set(-0.52, 0.022, 0.08);
+      sdGroup.rotation.x = -0.26; // ~15 graus
 
-      // 8 Teclas LCD Iluminadas Transparentes
-      const sdKeysGeo = new THREE.BoxGeometry(0.105, 0.006, 0.072);
-      const sdKeysMesh = new THREE.Mesh(sdKeysGeo, matLaserOrange);
-      sdKeysMesh.position.set(-0.50, 0.036, 0.08);
-      sdKeysMesh.rotation.x = -0.26;
-      evadeskDeskGroup.add(sdKeysMesh);
+      const sdBase = new THREE.Mesh(
+        new THREE.BoxGeometry(0.125, 0.024, 0.096),
+        matTopWhite
+      );
+      sdGroup.add(sdBase);
 
-      // Infobar frontal do Stream Deck
-      const sdInfoGeo = new THREE.BoxGeometry(0.09, 0.003, 0.012);
-      const sdInfoMesh = new THREE.Mesh(sdInfoGeo, new THREE.MeshBasicMaterial({ color: 0xFFFFFF }));
-      sdInfoMesh.position.set(-0.50, 0.033, 0.12);
-      sdInfoMesh.rotation.x = -0.26;
-      evadeskDeskGroup.add(sdInfoMesh);
+      // Infobar frontal branca
+      const sdInfo = new THREE.Mesh(
+        new THREE.BoxGeometry(0.092, 0.003, 0.012),
+        new THREE.MeshBasicMaterial({ color: 0xFFFFFF })
+      );
+      sdInfo.position.set(0, 0.0125, 0.038);
+      sdGroup.add(sdInfo);
+
+      // 8 Teclas LCD Iluminadas Individuais (2 linhas x 4 colunas)
+      const keyCols = [-0.036, -0.012, 0.012, 0.036];
+      const keyRows = [0.016, -0.016];
+      const keyColors = [0xF8701C, 0x38BDF8, 0x10B981, 0xFBBF24, 0x3B82F6, 0xA855F7, 0x06B6D4, 0xEC4899];
+      let kIdx = 0;
+      for (let r = 0; r < 2; r++) {
+        for (let c = 0; c < 4; c++) {
+          const kMesh = new THREE.Mesh(
+            new THREE.BoxGeometry(0.020, 0.005, 0.020),
+            new THREE.MeshStandardMaterial({
+              color: 0x18181B,
+              emissive: keyColors[kIdx],
+              emissiveIntensity: 0.65,
+              roughness: 0.2
+            })
+          );
+          kMesh.position.set(keyCols[c], 0.014, keyRows[r]);
+          sdGroup.add(kMesh);
+          kIdx++;
+        }
+      }
+      evadeskDeskGroup.add(sdGroup);
 
       // 5.3 Base Qi2 Smartphone Horizontal (Traseira Direita)
-      const qiBaseGeo = new THREE.CylinderGeometry(0.046, 0.046, 0.004, 32);
-      const qiBaseMesh = new THREE.Mesh(qiBaseGeo, matAluminum);
-      qiBaseMesh.position.set(0.55, 0.020, -0.22);
-      evadeskDeskGroup.add(qiBaseMesh);
+      const qiGroup = new THREE.Group();
+      qiGroup.position.set(0.55, 0.018, -0.22);
 
-      const phoneGeo = new THREE.BoxGeometry(0.165, 0.008, 0.085);
-      const phoneMesh = new THREE.Mesh(phoneGeo, matObsidian);
-      phoneMesh.position.set(0.55, 0.024, -0.22);
-      evadeskDeskGroup.add(phoneMesh);
+      // Anel em Alumínio Chanfrado
+      const qiRing = new THREE.Mesh(
+        new THREE.CylinderGeometry(0.046, 0.046, 0.004, 32),
+        matAluminum
+      );
+      qiRing.position.y = 0.002;
+      qiGroup.add(qiRing);
 
-      // Tela Always-On do Celular (Modo StandBy "10:09")
-      const phoneScreenGeo = new THREE.PlaneGeometry(0.155, 0.078);
-      const phoneScreenMesh = new THREE.Mesh(phoneScreenGeo, new THREE.MeshBasicMaterial({ color: 0x38BDF8 }));
-      phoneScreenMesh.rotation.x = -Math.PI / 2;
-      phoneScreenMesh.position.set(0.55, 0.029, -0.22);
-      evadeskDeskGroup.add(phoneScreenMesh);
+      // Disco em Vidro Preto Fosco
+      const qiPuck = new THREE.Mesh(
+        new THREE.CylinderGeometry(0.042, 0.042, 0.005, 32),
+        matObsidian
+      );
+      qiPuck.position.y = 0.003;
+      qiGroup.add(qiPuck);
 
-      // Dock Smartwatch/AirPods
-      const budsGeo = new THREE.CylinderGeometry(0.025, 0.025, 0.006, 24);
-      const budsMesh = new THREE.Mesh(budsGeo, matTopWhite);
-      budsMesh.position.set(0.42, 0.021, -0.22);
-      evadeskDeskGroup.add(budsMesh);
+      // iPhone em Titânio Natural em StandBy Mode ("10:09")
+      const phoneMesh = new THREE.Mesh(
+        new THREE.BoxGeometry(0.155, 0.008, 0.076),
+        new THREE.MeshStandardMaterial({ color: 0x64748B, metalness: 0.8, roughness: 0.25 })
+      );
+      phoneMesh.position.set(0, 0.008, 0);
+      qiGroup.add(phoneMesh);
 
-      // 5.4 Porta-Copos em Alumínio Maciço com Dreno (Lateral Direita)
-      const cupHolderGeo = new THREE.CylinderGeometry(0.048, 0.046, 0.07, 32);
-      const cupHolderMesh = new THREE.Mesh(cupHolderGeo, matAluminum);
-      cupHolderMesh.position.set(0.70, 0.012, 0.05);
-      evadeskDeskGroup.add(cupHolderMesh);
+      // Tela StandBy com display azul/branco
+      const phoneScreen = new THREE.Mesh(
+        new THREE.PlaneGeometry(0.146, 0.068),
+        new THREE.MeshBasicMaterial({ color: 0x38BDF8 })
+      );
+      phoneScreen.rotation.x = -Math.PI / 2;
+      phoneScreen.position.set(0, 0.0125, 0);
+      qiGroup.add(phoneScreen);
 
-      const tumblerGeo = new THREE.CylinderGeometry(0.042, 0.038, 0.14, 32);
-      const tumblerMesh = new THREE.Mesh(tumblerGeo, matObsidian);
-      tumblerMesh.position.set(0.70, 0.085, 0.05);
-      evadeskDeskGroup.add(tumblerMesh);
+      // Dock Smartwatch/AirPods ao lado
+      const budsMesh = new THREE.Mesh(
+        new THREE.CylinderGeometry(0.024, 0.024, 0.006, 24),
+        matTopWhite
+      );
+      budsMesh.position.set(-0.12, 0.003, 0);
+      qiGroup.add(budsMesh);
+
+      evadeskDeskGroup.add(qiGroup);
+
+      // 5.4 Porta-Copos Usinado em Alumínio Maciço com Dreno
+      const cupGroup = new THREE.Group();
+      cupGroup.position.set(0.70, 0.018, 0.05);
+
+      const cupCollar = new THREE.Mesh(
+        new THREE.CylinderGeometry(0.048, 0.048, 0.020, 32),
+        matAluminum
+      );
+      cupCollar.position.y = 0.006;
+      cupGroup.add(cupCollar);
+
+      const cupWell = new THREE.Mesh(
+        new THREE.CylinderGeometry(0.042, 0.040, 0.022, 32),
+        matObsidian
+      );
+      cupWell.position.y = 0.007;
+      cupGroup.add(cupWell);
+
+      // Tumbler Térmico Preto Fosco com Borda de Inox
+      const tumblerBody = new THREE.Mesh(
+        new THREE.CylinderGeometry(0.040, 0.035, 0.14, 32),
+        matObsidian
+      );
+      tumblerBody.position.y = 0.085;
+      cupGroup.add(tumblerBody);
+
+      const tumblerRim = new THREE.Mesh(
+        new THREE.CylinderGeometry(0.0405, 0.0405, 0.008, 32),
+        matAluminum
+      );
+      tumblerRim.position.y = 0.155;
+      cupGroup.add(tumblerRim);
+
+      evadeskDeskGroup.add(cupGroup);
 
       // 5.5 Monitor Ultrawide Curvo 34" Flutuante com Braço Articulado Branco
-      const armBaseGeo = new THREE.CylinderGeometry(0.032, 0.036, 0.05, 24);
-      const armBaseMesh = new THREE.Mesh(armBaseGeo, matTopWhite);
-      armBaseMesh.position.set(0, 0.03, -0.36);
-      evadeskDeskGroup.add(armBaseMesh);
+      const armGroup = new THREE.Group();
+      armGroup.position.set(0, 0.018, -0.36);
 
-      const armPoleGeo = new THREE.CylinderGeometry(0.018, 0.018, 0.32, 24);
-      const armPoleMesh = new THREE.Mesh(armPoleGeo, matTopWhite);
-      armPoleMesh.position.set(0, 0.18, -0.36);
-      evadeskDeskGroup.add(armPoleMesh);
+      // Base de Fixação com Morsa Branca
+      const armBase = new THREE.Mesh(
+        new THREE.CylinderGeometry(0.032, 0.036, 0.05, 24),
+        matTopWhite
+      );
+      armBase.position.y = 0.025;
+      armGroup.add(armBase);
 
-      // Segmento Articulado Horizontal do Braço
-      const armUpperGeo = new THREE.BoxGeometry(0.03, 0.025, 0.18);
-      const armUpperMesh = new THREE.Mesh(armUpperGeo, matTopWhite);
-      armUpperMesh.position.set(0, 0.33, -0.30);
-      evadeskDeskGroup.add(armUpperMesh);
+      // Mastro Vertical
+      const armPole = new THREE.Mesh(
+        new THREE.CylinderGeometry(0.018, 0.018, 0.32, 24),
+        matTopWhite
+      );
+      armPole.position.set(0, 0.17, 0);
+      armGroup.add(armPole);
 
-      // Monitor Ultrawide Curvo (Arco 1800R com iluminação traseira)
-      const monitorCurvedGeo = new THREE.CylinderGeometry(2.0, 2.0, 0.35, 36, 1, true, Math.PI - 0.22, 0.44);
+      // Braço Articulado Horizontal a Gás
+      const armSegment = new THREE.Mesh(
+        new THREE.BoxGeometry(0.026, 0.024, 0.16),
+        matTopWhite
+      );
+      armSegment.position.set(0, 0.32, 0.06);
+      armSegment.rotation.x = 0.12;
+      armGroup.add(armSegment);
+
+      evadeskDeskGroup.add(armGroup);
+
+      // Monitor Ultrawide Curvo 34" (Curvatura 1800R voltada para o usuário)
+      const R_CURVE = 1.8;
+      const ARC_ANGLE = 0.44;
+      const monitorCurvedGeo = new THREE.CylinderGeometry(
+        R_CURVE, R_CURVE, 0.35, 36, 1, true, -ARC_ANGLE / 2, ARC_ANGLE
+      );
       const monitorMesh = new THREE.Mesh(monitorCurvedGeo, matScreen);
-      monitorMesh.position.set(0, 0.40, 1.70);
+      monitorMesh.position.set(0, 0.38, -0.32 - R_CURVE);
       evadeskDeskGroup.add(monitorMesh);
 
-      // Chassi Traseiro do Monitor
-      const monitorBackGeo = new THREE.CylinderGeometry(2.01, 2.01, 0.355, 36, 1, true, Math.PI - 0.22, 0.44);
+      // Chassi Traseiro Preto do Monitor
+      const monitorBackGeo = new THREE.CylinderGeometry(
+        R_CURVE + 0.008, R_CURVE + 0.008, 0.355, 36, 1, true, -ARC_ANGLE / 2, ARC_ANGLE
+      );
       const monitorBackMesh = new THREE.Mesh(monitorBackGeo, matObsidian);
-      monitorBackMesh.position.set(0, 0.40, 1.70);
+      monitorBackMesh.position.set(0, 0.38, -0.32 - R_CURVE);
       evadeskDeskGroup.add(monitorBackMesh);
 
-      // Luz Ambiente Traseira do Monitor (Bias Backlight)
-      const monitorBacklight = new THREE.PointLight(0x38BDF8, 0.9, 1.8);
-      monitorBacklight.position.set(0, 0.40, -0.35);
+      // Luz Ambiente Traseira do Monitor (Bias Backlight Azul Ciano)
+      const monitorBacklight = new THREE.PointLight(0x0284C7, 0.85, 1.8);
+      monitorBacklight.position.set(0, 0.38, -0.38);
       evadeskDeskGroup.add(monitorBacklight);
 
-      // 5.6 Colunas Telescópicas TiMOTION Bi-Motor Brancas (3 Estágios com Pés Bevel)
-      // Travessa Estrutural Inferior (Crossbar de Aço)
-      const crossbarGeo = new THREE.BoxGeometry(0.98, 0.032, 0.045);
-      const crossbarMesh = new THREE.Mesh(crossbarGeo, matLegsWhite);
+      // 5.6 Colunas Telescópicas TiMOTION Bi-Motor Brancas (3 Estágios)
+      // Travessa Estrutural de Aço
+      const crossbarMesh = new THREE.Mesh(
+        new THREE.BoxGeometry(0.98, 0.032, 0.045),
+        matLegsWhite
+      );
       crossbarMesh.position.set(0, -0.032, 0);
       evadeskDeskGroup.add(crossbarMesh);
 
-      // Coluna Esquerda: 3 Estágios Telescópicos
-      const legL1 = new THREE.Mesh(new THREE.BoxGeometry(0.082, 0.24, 0.054), matLegsWhite);
-      legL1.position.set(-0.55, -0.14, 0);
-      evadeskDeskGroup.add(legL1);
-      const legL2 = new THREE.Mesh(new THREE.BoxGeometry(0.074, 0.24, 0.048), matLegsWhite);
-      legL2.position.set(-0.55, -0.36, 0);
-      evadeskDeskGroup.add(legL2);
-      const legL3 = new THREE.Mesh(new THREE.BoxGeometry(0.066, 0.22, 0.042), matLegsWhite);
-      legL3.position.set(-0.55, -0.56, 0);
-      evadeskDeskGroup.add(legL3);
+      // Função auxiliar para pernas de 3 estágios
+      function createTiMotionLeg(xPos) {
+        const legGroup = new THREE.Group();
+        legGroup.position.set(xPos, 0, 0);
 
-      // Pé Esquerdo Plano com Extremidades Arredondadas
-      const footLeftMesh = new THREE.Mesh(new THREE.BoxGeometry(0.088, 0.026, 0.66), matLegsWhite);
-      footLeftMesh.position.set(-0.55, -0.685, 0);
-      evadeskDeskGroup.add(footLeftMesh);
+        // Estágio Superior (mais largo)
+        const s1 = new THREE.Mesh(new THREE.BoxGeometry(0.082, 0.22, 0.054), matLegsWhite);
+        s1.position.set(0, -0.13, 0);
+        legGroup.add(s1);
 
-      // Coluna Direita: 3 Estágios Telescópicos
-      const legR1 = new THREE.Mesh(new THREE.BoxGeometry(0.082, 0.24, 0.054), matLegsWhite);
-      legR1.position.set(0.55, -0.14, 0);
-      evadeskDeskGroup.add(legR1);
-      const legR2 = new THREE.Mesh(new THREE.BoxGeometry(0.074, 0.24, 0.048), matLegsWhite);
-      legR2.position.set(0.55, -0.36, 0);
-      evadeskDeskGroup.add(legR2);
-      const legR3 = new THREE.Mesh(new THREE.BoxGeometry(0.066, 0.22, 0.042), matLegsWhite);
-      legR3.position.set(0.55, -0.56, 0);
-      evadeskDeskGroup.add(legR3);
+        // Estágio Intermediário
+        const s2 = new THREE.Mesh(new THREE.BoxGeometry(0.074, 0.22, 0.048), matLegsWhite);
+        s2.position.set(0, -0.33, 0);
+        legGroup.add(s2);
 
-      // Pé Direito Plano
-      const footRightMesh = new THREE.Mesh(new THREE.BoxGeometry(0.088, 0.026, 0.66), matLegsWhite);
-      footRightMesh.position.set(0.55, -0.685, 0);
-      evadeskDeskGroup.add(footRightMesh);
+        // Estágio Inferior
+        const s3 = new THREE.Mesh(new THREE.BoxGeometry(0.066, 0.22, 0.042), matLegsWhite);
+        s3.position.set(0, -0.53, 0);
+        legGroup.add(s3);
+
+        // Pé Plano com Cantos Arredondados
+        const foot = new THREE.Mesh(new THREE.BoxGeometry(0.088, 0.026, 0.66), matLegsWhite);
+        foot.position.set(0, -0.65, 0);
+        legGroup.add(foot);
+
+        // Sapatas niveladoras
+        const glideF = new THREE.Mesh(new THREE.CylinderGeometry(0.016, 0.016, 0.008, 16), matObsidian);
+        glideF.position.set(0, -0.667, 0.28);
+        legGroup.add(glideF);
+        const glideB = new THREE.Mesh(new THREE.CylinderGeometry(0.016, 0.016, 0.008, 16), matObsidian);
+        glideB.position.set(0, -0.667, -0.28);
+        legGroup.add(glideB);
+
+        return legGroup;
+      }
+
+      evadeskDeskGroup.add(createTiMotionLeg(-0.55));
+      evadeskDeskGroup.add(createTiMotionLeg(0.55));
 
       // 5.7 Painel Touch TiMOTION Frontal Direito ("75.0 cm")
-      const ctrlGeo = new THREE.BoxGeometry(0.12, 0.022, 0.045);
-      const ctrlMesh = new THREE.Mesh(ctrlGeo, matObsidian);
+      const ctrlMesh = new THREE.Mesh(
+        new THREE.BoxGeometry(0.12, 0.022, 0.045),
+        matObsidian
+      );
       ctrlMesh.position.set(0.55, -0.025, 0.385);
       evadeskDeskGroup.add(ctrlMesh);
 
-      // Display OLED Laranja Laser "75.0 cm"
-      const ledGeo = new THREE.BoxGeometry(0.055, 0.012, 0.003);
-      const ledMesh = new THREE.Mesh(ledGeo, matLaserOrange);
+      const ledMesh = new THREE.Mesh(
+        new THREE.BoxGeometry(0.055, 0.012, 0.003),
+        matLaserOrange
+      );
       ledMesh.position.set(0.55, -0.025, 0.408);
       evadeskDeskGroup.add(ledMesh);
 
       // 5.8 Calha Técnica Inferior & iCLAMPER Energia 8
-      const trayGeo = new THREE.BoxGeometry(1.08, 0.11, 0.18);
-      const trayMesh = new THREE.Mesh(trayGeo, matObsidian);
+      const trayMesh = new THREE.Mesh(
+        new THREE.BoxGeometry(1.08, 0.11, 0.18),
+        matObsidian
+      );
       trayMesh.position.set(0, -0.09, -0.18);
       evadeskDeskGroup.add(trayMesh);
 
-      // iCLAMPER Transparente Fumê com LED Verde de Status
-      const clamperGeo = new THREE.BoxGeometry(0.26, 0.038, 0.085);
-      const clamperMesh = new THREE.Mesh(clamperGeo, new THREE.MeshStandardMaterial({
-        color: 0x94A3B8,
-        transparent: true,
-        opacity: 0.8,
-        roughness: 0.1,
-        metalness: 0.2
-      }));
+      const clamperMesh = new THREE.Mesh(
+        new THREE.BoxGeometry(0.26, 0.038, 0.085),
+        new THREE.MeshStandardMaterial({
+          color: 0x94A3B8,
+          transparent: true,
+          opacity: 0.8,
+          roughness: 0.1,
+          metalness: 0.2
+        })
+      );
       clamperMesh.position.set(-0.25, -0.075, -0.18);
       evadeskDeskGroup.add(clamperMesh);
 
-      // Micro LED Verde DPS Ativo
       const clamperLed = new THREE.Mesh(
         new THREE.BoxGeometry(0.008, 0.004, 0.008),
         new THREE.MeshBasicMaterial({ color: 0x10B981 })
@@ -8266,8 +8383,10 @@
 
       // 5.9 Coluna Vértebra Flexível de Cabos Branca (11 Elos Articulados)
       for (let i = 0; i < 11; i++) {
-        const vertebraGeo = new THREE.BoxGeometry(0.048, 0.038, 0.048);
-        const vertebraMesh = new THREE.Mesh(vertebraGeo, matLegsWhite);
+        const vertebraMesh = new THREE.Mesh(
+          new THREE.BoxGeometry(0.048, 0.038, 0.048),
+          matLegsWhite
+        );
         const curveOffset = Math.sin(i / 10 * Math.PI) * 0.11;
         vertebraMesh.position.set(-0.48 + curveOffset, -0.12 - (i * 0.052), -0.18);
         evadeskDeskGroup.add(vertebraMesh);
