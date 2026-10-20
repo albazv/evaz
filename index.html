@@ -8054,28 +8054,28 @@
       const screenTexCanvas = document.createElement('canvas');
       screenTexCanvas.width = 1024;
       screenTexCanvas.height = 432;
-      const sCtx = screenTexCanvas.getContext('2d');
-      if (sCtx) {
-        sCtx.fillStyle = '#09090B';
-        sCtx.fillRect(0, 0, 1024, 432);
-        const sGrad = sCtx.createRadialGradient(512, 216, 40, 512, 216, 420);
-        sGrad.addColorStop(0, 'rgba(14, 165, 233, 0.28)');
-        sGrad.addColorStop(1, 'rgba(9, 9, 11, 0)');
-        sCtx.fillStyle = sGrad;
-        sCtx.fillRect(0, 0, 1024, 432);
-        sCtx.strokeStyle = 'rgba(248, 112, 28, 0.5)';
-        sCtx.lineWidth = 2;
-        sCtx.beginPath();
-        sCtx.moveTo(412, 216);
-        sCtx.lineTo(612, 216);
-        sCtx.stroke();
-        sCtx.fillStyle = '#F5F5F7';
-        sCtx.font = 'bold 32px sans-serif';
-        sCtx.textAlign = 'center';
-        sCtx.fillText('10:09', 512, 195);
-        sCtx.fillStyle = '#94A3B8';
-        sCtx.font = 'bold 12px monospace';
-        sCtx.fillText('EVAZ WORKSPACE PRO', 512, 248);
+      const scrCtx = screenTexCanvas.getContext('2d');
+      if (scrCtx) {
+        scrCtx.fillStyle = '#09090B';
+        scrCtx.fillRect(0, 0, 1024, 432);
+        const scrGrad = scrCtx.createRadialGradient(512, 216, 40, 512, 216, 420);
+        scrGrad.addColorStop(0, 'rgba(14, 165, 233, 0.28)');
+        scrGrad.addColorStop(1, 'rgba(9, 9, 11, 0)');
+        scrCtx.fillStyle = scrGrad;
+        scrCtx.fillRect(0, 0, 1024, 432);
+        scrCtx.strokeStyle = 'rgba(248, 112, 28, 0.5)';
+        scrCtx.lineWidth = 2;
+        scrCtx.beginPath();
+        scrCtx.moveTo(412, 216);
+        scrCtx.lineTo(612, 216);
+        scrCtx.stroke();
+        scrCtx.fillStyle = '#F5F5F7';
+        scrCtx.font = 'bold 32px sans-serif';
+        scrCtx.textAlign = 'center';
+        scrCtx.fillText('10:09', 512, 195);
+        scrCtx.fillStyle = '#94A3B8';
+        scrCtx.font = 'bold 12px monospace';
+        scrCtx.fillText('EVAZ WORKSPACE PRO', 512, 248);
       }
       const screenTex = new THREE.CanvasTexture(screenTexCanvas);
 
