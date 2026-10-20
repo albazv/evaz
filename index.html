@@ -7694,24 +7694,24 @@
 
     const EVADESK_ANGLES = {
       geral: {
-        cam: [0, 1.3, 2.3],
-        look: [0, 0, 0],
+        cam: [0.65, 1.15, 1.85],
+        look: [0, -0.05, 0],
         desc: "Visão Geral 3D · Perspectiva 3/4 Master Keynote (Arraste para orbitar 360°)",
         pipTitle: "360° Geral Keynote",
         img: "assets/evadesk/01_hero_render_3d.webp",
         tag: "Foto Oficial Keynote 8K · Perspectiva Master"
       },
       mousepad: {
-        cam: [0, 0.88, 0.85],
-        look: [0, 0.05, 0],
+        cam: [0, 0.72, 0.65],
+        look: [0, 0.02, 0.02],
         desc: "Tampo Usinado CNC · Rebaixo 900×400 mm e Tolerância Zero Gap (Coplanar)",
         pipTitle: "Tampo & Zero Gap",
         img: "assets/evadesk/02_tampo_mousepad_zerogap.webp",
         tag: "Macro 8K · Rebaixo CNC 900×400mm e Tolerância Zero-Gap"
       },
       streamdeck: {
-        cam: [-0.48, 0.48, 0.45],
-        look: [-0.48, 0.05, 0.02],
+        cam: [-0.52, 0.42, 0.38],
+        look: [-0.52, 0.02, 0.08],
         desc: "Berço Ergonômico do Elgato Stream Deck Neo · 15° com 8 Teclas LCD",
         pipTitle: "Stream Deck Neo 15°",
         img: "assets/evadesk/03_streamdeck_neo_15graus.webp",
@@ -7934,7 +7934,7 @@
       evadeskScene.background = new THREE.Color(0x09090B);
 
       evadeskCamera = new THREE.PerspectiveCamera(38, width / height, 0.1, 100);
-      evadeskCamera.position.set(0, 1.3, 2.3);
+      evadeskCamera.position.set(0.65, 1.15, 1.85);
 
       // 2. Renderizador WebGL
       try {
@@ -7959,7 +7959,7 @@
         evadeskControls.minDistance = 0.8;
         evadeskControls.maxDistance = 4.5;
         evadeskControls.maxPolarAngle = Math.PI / 2 + 0.08;
-        evadeskControls.target.set(0, 0, 0);
+        evadeskControls.target.set(0, -0.05, 0);
 
         evadeskControls.addEventListener('start', function() {
           evadeskIsUserInteracting = true;
@@ -8087,21 +8087,21 @@
       evadeskDeskGroup.add(topMesh);
 
       // Rebaixo e Mousepad Central Speed 900x400 mm Coplanar (Zero Gap)
-      const padShape = createRoundedRectShape(0.90, 0.40, 0.012);
+      const padShape = createRoundedRectShape(0.90, 0.40, 0.016);
       const padGeo = new THREE.ShapeGeometry(padShape);
       padGeo.rotateX(-Math.PI / 2);
       const matMousepad = new THREE.MeshStandardMaterial({
         color: 0x121215,
         roughness: 0.88,
-        metalness: 0.04
+        metalness: 0.02
       });
       const mousepadMesh = new THREE.Mesh(padGeo, matMousepad);
-      mousepadMesh.position.set(0, 0.0175, 0.02);
+      mousepadMesh.position.set(0, 0.0238, 0.02);
       mousepadMesh.receiveShadow = true;
       evadeskDeskGroup.add(mousepadMesh);
 
       // Moldura chanfrada de precisão do rebaixo CNC (±0.15mm)
-      const padBorderShape = createRoundedRectShape(0.906, 0.406, 0.014);
+      const padBorderShape = createRoundedRectShape(0.908, 0.408, 0.018);
       const padBorderGeo = new THREE.ShapeGeometry(padBorderShape);
       padBorderGeo.rotateX(-Math.PI / 2);
       const matPadBorder = new THREE.MeshStandardMaterial({
@@ -8109,12 +8109,21 @@
         roughness: 0.5
       });
       const padBorderMesh = new THREE.Mesh(padBorderGeo, matPadBorder);
-      padBorderMesh.position.set(0, 0.0172, 0.02);
+      padBorderMesh.position.set(0, 0.0234, 0.02);
       evadeskDeskGroup.add(padBorderMesh);
+
+      // Logo EVAZ sutil no canto inferior direito do mousepad
+      const padLogoMesh = new THREE.Mesh(
+        new THREE.PlaneGeometry(0.045, 0.014),
+        new THREE.MeshBasicMaterial({ color: 0xF8701C })
+      );
+      padLogoMesh.rotation.x = -Math.PI / 2;
+      padLogoMesh.position.set(0.38, 0.0240, 0.17);
+      evadeskDeskGroup.add(padLogoMesh);
 
       // 5.2 Berço Stream Deck Neo (Inclinado a 15° à esquerda)
       const sdGroup = new THREE.Group();
-      sdGroup.position.set(-0.52, 0.022, 0.08);
+      sdGroup.position.set(-0.52, 0.024, 0.08);
       sdGroup.rotation.x = -0.26; // ~15 graus
 
       const sdBase = new THREE.Mesh(
@@ -8156,7 +8165,7 @@
 
       // 5.3 Base Qi2 Smartphone Horizontal (Traseira Direita)
       const qiGroup = new THREE.Group();
-      qiGroup.position.set(0.55, 0.018, -0.22);
+      qiGroup.position.set(0.55, 0.020, -0.22);
 
       // Anel em Alumínio Chanfrado
       const qiRing = new THREE.Mesh(
@@ -8203,7 +8212,7 @@
 
       // 5.4 Porta-Copos Usinado em Alumínio Maciço com Dreno
       const cupGroup = new THREE.Group();
-      cupGroup.position.set(0.70, 0.018, 0.05);
+      cupGroup.position.set(0.70, 0.020, 0.05);
 
       const cupCollar = new THREE.Mesh(
         new THREE.CylinderGeometry(0.048, 0.048, 0.020, 32),
@@ -8238,7 +8247,7 @@
 
       // 5.5 Monitor Ultrawide Curvo 34" Flutuante com Braço Articulado Branco
       const armGroup = new THREE.Group();
-      armGroup.position.set(0, 0.018, -0.36);
+      armGroup.position.set(0, 0.020, -0.36);
 
       // Base de Fixação com Morsa Branca
       const armBase = new THREE.Mesh(
@@ -8256,13 +8265,12 @@
       armPole.position.set(0, 0.17, 0);
       armGroup.add(armPole);
 
-      // Braço Articulado Horizontal a Gás
+      // Braço Articulado Horizontal a Gás posicionado ATRÁS do monitor
       const armSegment = new THREE.Mesh(
-        new THREE.BoxGeometry(0.026, 0.024, 0.16),
+        new THREE.BoxGeometry(0.026, 0.024, 0.10),
         matTopWhite
       );
-      armSegment.position.set(0, 0.32, 0.06);
-      armSegment.rotation.x = 0.12;
+      armSegment.position.set(0, 0.32, 0.02);
       armGroup.add(armSegment);
 
       evadeskDeskGroup.add(armGroup);
@@ -8426,9 +8434,10 @@
         }
       }
 
-      // Auto-rotação sutil de vitrine quando inativo
+      // Oscilação cinematográfica elegante de vitrine em 3/4 quando inativo
       if (evadeskAutoRotate && evadeskDeskGroup && !evadeskIsUserInteracting && !evadeskTargetCamPos) {
-        evadeskDeskGroup.rotation.y += 0.002;
+        const t = performance.now() * 0.0005;
+        evadeskDeskGroup.rotation.y = -0.32 + Math.sin(t) * 0.15;
       }
 
       if (evadeskControls) {
