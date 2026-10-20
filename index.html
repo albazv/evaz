@@ -814,6 +814,15 @@
                 <span>Arraste com o mouse para orbitar em 360°</span>
               </div>
 
+              <!-- Miniatura Flutuante de Inspeção Macro 8K (Picture-in-Picture) -->
+              <div id="evadesk-pip-badge" class="absolute bottom-4 right-4 z-20 max-w-[240px] sm:max-w-[290px] bg-[#141418]/90 backdrop-blur-xl border border-white/15 rounded-2xl p-2.5 shadow-2xl flex items-center gap-3 transition-all duration-300">
+                <img id="evadesk-pip-thumb" src="assets/evadesk/01_hero_render_3d.webp" alt="Inspeção Macro 8K" class="w-16 h-12 object-cover rounded-xl border border-white/10 shrink-0">
+                <div class="min-w-0 flex-1">
+                  <span id="evadesk-pip-title" class="text-[10px] font-mono text-[#F8701C] uppercase tracking-wider block font-bold truncate">360° Geral Keynote</span>
+                  <button type="button" onclick="switchEvadeskMode('gallery')" class="text-[11px] text-[#F5F5F7] hover:text-[#F8701C] font-semibold underline decoration-white/30 hover:decoration-[#F8701C] transition-colors block text-left">Ver Fotografia 8K ›</button>
+                </div>
+              </div>
+
               <!-- Controles Flutuantes de Zoom (Canto Superior Direito) -->
               <div class="absolute top-4 right-4 flex flex-col gap-2 z-20">
                 <button 
@@ -845,9 +854,14 @@
 
             <!-- 2. Galeria Fotográfica 8K Studio (Alternativa ao 3D) -->
             <div id="evadesk-gallery-wrapper" class="w-full h-full relative hidden">
+              <!-- Overlay Informativo na Galeria -->
+              <div class="absolute top-4 left-4 z-20 px-3.5 py-1.5 rounded-full bg-[#09090B]/85 backdrop-blur-md border border-white/10 text-xs font-mono text-[#F5F5F7] flex items-center gap-2">
+                <span class="w-2 h-2 rounded-full bg-[#F8701C]"></span>
+                <span id="evadesk-gallery-tag">Foto Oficial Keynote 8K · Perspectiva Master</span>
+              </div>
               <img 
                 id="evadesk-gallery-main" 
-                src="assets/evadesk/01_hero_render_3d.jpg" 
+                src="assets/evadesk/01_hero_render_3d.webp" 
                 alt="EVADESK Flagship 1600x800 Render Fotográfico 8K" 
                 class="w-full h-full object-contain p-4"
               >
@@ -7682,46 +7696,230 @@
       geral: {
         cam: [0, 1.3, 2.3],
         look: [0, 0, 0],
-        desc: "Visão Geral 3D · 360° Livre (Arraste para orbitar)",
-        img: "assets/evadesk/01_hero_render_3d.jpg"
+        desc: "Visão Geral 3D · Perspectiva 3/4 Master Keynote (Arraste para orbitar 360°)",
+        pipTitle: "360° Geral Keynote",
+        img: "assets/evadesk/01_hero_render_3d.webp",
+        tag: "Foto Oficial Keynote 8K · Perspectiva Master"
       },
       mousepad: {
         cam: [0, 0.88, 0.85],
         look: [0, 0.05, 0],
-        desc: "Foco no Tampo · Rebaixo 900×400 mm e Tolerância Zero Gap",
-        img: "assets/evadesk/01_hero_render_3d.jpg"
+        desc: "Tampo Usinado CNC · Rebaixo 900×400 mm e Tolerância Zero Gap (Coplanar)",
+        pipTitle: "Tampo & Zero Gap",
+        img: "assets/evadesk/02_tampo_mousepad_zerogap.webp",
+        tag: "Macro 8K · Rebaixo CNC 900×400mm e Tolerância Zero-Gap"
       },
       streamdeck: {
         cam: [-0.48, 0.48, 0.45],
         look: [-0.48, 0.05, 0.02],
-        desc: "Foco no Berço Ergonômico do Stream Deck Neo (15°)",
-        img: "assets/evadesk/01_hero_render_3d.jpg"
+        desc: "Berço Ergonômico do Elgato Stream Deck Neo · 15° com 8 Teclas LCD",
+        pipTitle: "Stream Deck Neo 15°",
+        img: "assets/evadesk/03_streamdeck_neo_15graus.webp",
+        tag: "Macro 8K · Berço Usinado 15° e Stream Deck Neo Iluminado"
       },
       qi2: {
         cam: [0.55, 0.52, 0.38],
         look: [0.55, 0.05, -0.15],
-        desc: "Foco na Indução Qi2 15W MagSafe Horizontal (Always-On)",
-        img: "assets/evadesk/08_carregamento_qi2.png"
+        desc: "Indução Qi2 15W MagSafe Horizontal · Modo Standby iPhone & Fones",
+        pipTitle: "Qi2 15W MagSafe",
+        img: "assets/evadesk/04_qi2_magsafe_standby.webp",
+        tag: "Macro 8K · Indução Qi2 MagSafe 15W em Modo StandBy"
       },
       calha: {
         cam: [0, -0.35, 1.35],
         look: [0, -0.22, 0],
-        desc: "Foco Inferior · Calha Oculta e iCLAMPER 8 Tomadas NBR",
-        img: "assets/evadesk/04_calha_iclamper.png"
+        desc: "Calha Oculta de Aço Carbono & iCLAMPER 8 Tomadas NBR Transparente",
+        pipTitle: "Calha & iCLAMPER NBR",
+        img: "assets/evadesk/05_calha_iclamper_energia8.webp",
+        tag: "Macro 8K · Calha de Aço e DPS iCLAMPER Energia 8 Transparente"
       },
       copo: {
         cam: [0.72, 0.42, 0.38],
         look: [0.65, 0.03, 0.05],
-        desc: "Foco no Porta-Copos em Alumínio c/ Retenção Magnética e Dreno",
-        img: "assets/evadesk/10_suporte_copo.png"
+        desc: "Porta-Copos Usinado em Alumínio Maciço com Retenção Magnética e Dreno",
+        pipTitle: "Porta-Copos Alumínio",
+        img: "assets/evadesk/06_portacopos_aluminio_dreno.webp",
+        tag: "Macro 8K · Porta-Copos Usinado em Bloco Maciço de Alumínio"
       },
       timotion: {
         cam: [0.48, -0.05, 0.75],
         look: [0.48, -0.1, 0.2],
-        desc: "Foco no Painel Touch TiMOTION (Display 075 cm) e Frase a Laser",
-        img: "assets/evadesk/07_controlador_altura.png"
+        desc: "Painel Touch TiMOTION com Display OLED 75.0 cm e Frase a Laser na Quina",
+        pipTitle: "TiMOTION OLED & Laser",
+        img: "assets/evadesk/07_timotion_oled_laser.webp",
+        tag: "Macro 8K · Display OLED 75.0 cm e Frase a Laser na Quina"
       }
     };
+
+    function createRoundedRectShape(w, h, r) {
+      const shape = new THREE.Shape();
+      shape.moveTo(-w / 2 + r, -h / 2);
+      shape.lineTo(w / 2 - r, -h / 2);
+      shape.quadraticCurveTo(w / 2, -h / 2, w / 2, -h / 2 + r);
+      shape.lineTo(w / 2, h / 2 - r);
+      shape.quadraticCurveTo(w / 2, h / 2, w / 2 - r, h / 2);
+      shape.lineTo(-w / 2 + r, h / 2);
+      shape.quadraticCurveTo(-w / 2, h / 2, -w / 2, h / 2 - r);
+      shape.lineTo(-w / 2, -h / 2 + r);
+      shape.quadraticCurveTo(-w / 2, -h / 2, -w / 2 + r, -h / 2);
+      return shape;
+    }
+
+    function createEvadeskDesktopTexture() {
+      const c = document.createElement('canvas');
+      c.width = 2048;
+      c.height = 1024;
+      const ctx = c.getContext('2d');
+      if (!ctx) return null;
+
+      // 1. Tampo Branco Sinal Fosco (RAL 9003)
+      ctx.fillStyle = '#FAFAFC';
+      ctx.fillRect(0, 0, 2048, 1024);
+
+      // 2. Rebaixo CNC Flush do Mousepad (900x400 mm)
+      const padW = 1152, padH = 512;
+      const padX = (2048 - padW) / 2;
+      const padY = (1024 - padH) / 2 + 25;
+
+      ctx.save();
+      ctx.fillStyle = '#09090B';
+      roundRect(ctx, padX, padY, padW, padH, 20);
+      ctx.fill();
+
+      ctx.fillStyle = '#141418';
+      roundRect(ctx, padX + 3, padY + 3, padW - 6, padH - 6, 18);
+      ctx.fill();
+
+      ctx.strokeStyle = '#27272A';
+      ctx.lineWidth = 1.5;
+      roundRect(ctx, padX + 8, padY + 8, padW - 16, padH - 16, 14);
+      ctx.stroke();
+      ctx.restore();
+
+      // 3. Berço Stream Deck Neo (15°) na esquerda
+      const sdX = 220, sdY = 430;
+      ctx.save();
+      ctx.translate(sdX, sdY);
+      ctx.fillStyle = '#FFFFFF';
+      ctx.shadowColor = 'rgba(0,0,0,0.3)';
+      ctx.shadowBlur = 14;
+      roundRect(ctx, 0, 0, 160, 130, 16);
+      ctx.fill();
+      ctx.shadowBlur = 0;
+
+      ctx.fillStyle = '#71717A';
+      ctx.font = 'bold 9px monospace';
+      ctx.fillText('STREAM DECK', 42, 18);
+
+      const colors = ['#F8701C', '#38BDF8', '#10B981', '#FBBF24', '#3B82F6', '#A855F7', '#06B6D4', '#EC4899'];
+      for (let r = 0; r < 2; r++) {
+        for (let col = 0; col < 4; col++) {
+          const kx = 16 + col * 32;
+          const ky = 28 + r * 44;
+          const ci = r * 4 + col;
+          ctx.fillStyle = '#18181B';
+          roundRect(ctx, kx, ky, 26, 36, 6);
+          ctx.fill();
+          ctx.strokeStyle = colors[ci];
+          ctx.lineWidth = 2;
+          roundRect(ctx, kx + 1, ky + 1, 24, 34, 5);
+          ctx.stroke();
+        }
+      }
+      ctx.restore();
+
+      // 4. Base Qi2 MagSafe e iPhone em Standby (Traseira Direita)
+      const qiX = 1660, qiY = 220;
+      ctx.save();
+      ctx.translate(qiX, qiY);
+      ctx.fillStyle = '#1E293B';
+      ctx.beginPath();
+      ctx.arc(0, 0, 60, 0, Math.PI * 2);
+      ctx.fill();
+      ctx.strokeStyle = '#94A3B8';
+      ctx.lineWidth = 3;
+      ctx.stroke();
+
+      ctx.fillStyle = '#09090B';
+      roundRect(ctx, -95, -45, 190, 90, 16);
+      ctx.fill();
+      ctx.strokeStyle = '#D1D5DB';
+      ctx.lineWidth = 2;
+      roundRect(ctx, -95, -45, 190, 90, 16);
+      ctx.stroke();
+
+      ctx.fillStyle = '#FFFFFF';
+      ctx.font = 'bold 36px sans-serif';
+      ctx.textAlign = 'center';
+      ctx.textBaseline = 'middle';
+      ctx.fillText('10:09', 0, 0);
+
+      ctx.fillStyle = '#F1F5F9';
+      roundRect(ctx, -145, -25, 40, 50, 12);
+      ctx.fill();
+      ctx.fillStyle = '#F59E0B';
+      ctx.beginPath();
+      ctx.arc(-125, 16, 2.5, 0, Math.PI * 2);
+      ctx.fill();
+      ctx.restore();
+
+      // 5. Porta-Copos em Alumínio Maciço com Dreno (Direita)
+      const cupX = 1860, cupY = 512;
+      ctx.save();
+      ctx.translate(cupX, cupY);
+      ctx.fillStyle = '#E2E8F0';
+      ctx.beginPath();
+      ctx.arc(0, 0, 58, 0, Math.PI * 2);
+      ctx.fill();
+      ctx.fillStyle = '#0A0A0C';
+      ctx.beginPath();
+      ctx.arc(0, 0, 48, 0, Math.PI * 2);
+      ctx.fill();
+      ctx.fillStyle = '#18181B';
+      ctx.beginPath();
+      ctx.arc(0, 0, 42, 0, Math.PI * 2);
+      ctx.fill();
+      ctx.strokeStyle = '#27272A';
+      ctx.lineWidth = 2;
+      ctx.stroke();
+      ctx.restore();
+
+      // 6. Frase a Laser na Quina Frontal
+      ctx.save();
+      ctx.fillStyle = '#94A3B8';
+      ctx.font = 'bold 15px sans-serif';
+      ctx.textAlign = 'center';
+      ctx.fillText('O MELHOR DA TECNOLOGIA AO SEU ALCANCE', 1024, 988);
+      ctx.restore();
+
+      // 7. Logo EVAZ na Quina Direita
+      ctx.save();
+      ctx.fillStyle = '#F8701C';
+      ctx.font = 'bold 16px sans-serif';
+      ctx.fillText('EVAZ', 1820, 920);
+      ctx.fillStyle = '#71717A';
+      ctx.font = '10px monospace';
+      ctx.fillText('ORIGINALS', 1820, 936);
+      ctx.restore();
+
+      const tex = new THREE.CanvasTexture(c);
+      tex.anisotropy = 16;
+      return tex;
+    }
+
+    function roundRect(ctx, x, y, w, h, r) {
+      ctx.beginPath();
+      ctx.moveTo(x + r, y);
+      ctx.lineTo(x + w - r, y);
+      ctx.quadraticCurveTo(x + w, y, x + w, y + r);
+      ctx.lineTo(x + w, y + h - r);
+      ctx.quadraticCurveTo(x + w, y + h, x + w - r, y + h);
+      ctx.lineTo(x + r, y + h);
+      ctx.quadraticCurveTo(x, y + h, x, y + h - r);
+      ctx.lineTo(x, y + r);
+      ctx.quadraticCurveTo(x, y, x + r, y);
+      ctx.closePath();
+    }
 
     function initEvadesk3D() {
       const container = document.getElementById('evadesk-3d-wrapper');
@@ -7773,30 +7971,64 @@
       const ambientLight = new THREE.AmbientLight(0xffffff, 0.95);
       evadeskScene.add(ambientLight);
 
-      const keyLight = new THREE.DirectionalLight(0xffffff, 1.35);
+      const keyLight = new THREE.DirectionalLight(0xffffff, 1.4);
       keyLight.position.set(2.5, 4.0, 3.0);
       keyLight.castShadow = true;
       keyLight.shadow.mapSize.width = 1024;
       keyLight.shadow.mapSize.height = 1024;
       evadeskScene.add(keyLight);
 
-      const fillLight = new THREE.DirectionalLight(0xE2E8F0, 0.6);
+      const fillLight = new THREE.DirectionalLight(0xE2E8F0, 0.7);
       fillLight.position.set(-3.0, 2.0, -1.5);
       evadeskScene.add(fillLight);
 
+      const topLight = new THREE.DirectionalLight(0xFFFFFF, 0.85);
+      topLight.position.set(0, 4.5, 0);
+      evadeskScene.add(topLight);
+
       // Orange Laser Rim Light (Assinatura EVAZ)
-      const orangeRimLight = new THREE.DirectionalLight(0xF8701C, 1.4);
+      const orangeRimLight = new THREE.DirectionalLight(0xF8701C, 1.5);
       orangeRimLight.position.set(-2.2, 2.5, -2.8);
       evadeskScene.add(orangeRimLight);
+
+      // Sombra de Contato Suave no Chão
+      const shadowCanvas = document.createElement('canvas');
+      shadowCanvas.width = 512;
+      shadowCanvas.height = 512;
+      const sCtx = shadowCanvas.getContext('2d');
+      if (sCtx) {
+        const sGrad = sCtx.createRadialGradient(256, 256, 40, 256, 256, 250);
+        sGrad.addColorStop(0, 'rgba(0, 0, 0, 0.85)');
+        sGrad.addColorStop(0.5, 'rgba(0, 0, 0, 0.45)');
+        sGrad.addColorStop(1, 'rgba(0, 0, 0, 0)');
+        sCtx.fillStyle = sGrad;
+        sCtx.fillRect(0, 0, 512, 512);
+        const shadowTex = new THREE.CanvasTexture(shadowCanvas);
+        const shadowPlane = new THREE.Mesh(
+          new THREE.PlaneGeometry(2.5, 1.5),
+          new THREE.MeshBasicMaterial({ map: shadowTex, transparent: true, opacity: 0.8 })
+        );
+        shadowPlane.rotation.x = -Math.PI / 2;
+        shadowPlane.position.y = -0.71;
+        evadeskScene.add(shadowPlane);
+      }
 
       // 5. Construção Paramétrica do Modelo 3D da EVADESK
       evadeskDeskGroup = new THREE.Group();
 
       // Materiais PBR
-      const matTopWhite = new THREE.MeshStandardMaterial({
-        color: 0xFAFAFC,
-        roughness: 0.22,
-        metalness: 0.03
+      const desktopTexture = createEvadeskDesktopTexture();
+      const matTopFace = new THREE.MeshStandardMaterial({
+        color: 0xFFFFFF,
+        map: desktopTexture,
+        roughness: 0.24,
+        metalness: 0.04
+      });
+
+      const matBevelSides = new THREE.MeshStandardMaterial({
+        color: 0xF5F5F7,
+        roughness: 0.28,
+        metalness: 0.06
       });
 
       const matLegsWhite = new THREE.MeshStandardMaterial({
@@ -7805,24 +8037,10 @@
         metalness: 0.15
       });
 
-      const matMousepadBlack = new THREE.MeshStandardMaterial({
-        color: 0x141416,
-        roughness: 0.72,
-        metalness: 0.02
-      });
-
       const matObsidian = new THREE.MeshStandardMaterial({
         color: 0x0A0A0C,
         roughness: 0.45,
         metalness: 0.6
-      });
-
-      const matLaserOrange = new THREE.MeshStandardMaterial({
-        color: 0xF8701C,
-        roughness: 0.3,
-        metalness: 0.2,
-        emissive: 0xF8701C,
-        emissiveIntensity: 0.25
       });
 
       const matAluminum = new THREE.MeshStandardMaterial({
@@ -7839,22 +8057,29 @@
         emissiveIntensity: 0.15
       });
 
-      // 5.1 Tampo 1600x800x34 mm (Escala 1 un = 1 metro: 1.60 x 0.80 x 0.034)
-      const topGeo = new THREE.BoxGeometry(1.60, 0.034, 0.80);
-      const topMesh = new THREE.Mesh(topGeo, matTopWhite);
+      // 5.1 Tampo 1600x800x34 mm com Cantos Arredondados e Chanfros Suaves
+      const topShape = createRoundedRectShape(1.60, 0.80, 0.035);
+      const extrudeSettings = {
+        depth: 0.034,
+        bevelEnabled: true,
+        bevelSegments: 4,
+        steps: 1,
+        bevelSize: 0.008,
+        bevelThickness: 0.006
+      };
+      const topGeo = new THREE.ExtrudeGeometry(topShape, extrudeSettings);
+      topGeo.rotateX(Math.PI / 2);
+      topGeo.center();
+
+      const topMesh = new THREE.Mesh(topGeo, [matTopFace, matBevelSides]);
       topMesh.castShadow = true;
       topMesh.receiveShadow = true;
+      topMesh.position.set(0, 0, 0);
       evadeskDeskGroup.add(topMesh);
-
-      // 5.2 Rebaixo do Mousepad Flush (0.90 x 0.40 m) perfeitamente nivelado
-      const padGeo = new THREE.BoxGeometry(0.90, 0.002, 0.40);
-      const padMesh = new THREE.Mesh(padGeo, matMousepadBlack);
-      padMesh.position.set(0, 0.0175, 0.05); // Face superior
-      evadeskDeskGroup.add(padMesh);
 
       // 5.3 Berço Stream Deck Neo (Inclinado a 15° à esquerda)
       const sdGeo = new THREE.BoxGeometry(0.12, 0.025, 0.09);
-      const sdMesh = new THREE.Mesh(sdGeo, matTopWhite);
+      const sdMesh = new THREE.Mesh(sdGeo, matBevelSides);
       sdMesh.position.set(-0.48, 0.025, 0.08);
       sdMesh.rotation.x = -0.26; // ~15 graus
       evadeskDeskGroup.add(sdMesh);
@@ -8024,10 +8249,24 @@
       const cfg = EVADESK_ANGLES[angleKey];
       if (!cfg) return;
 
-      // Se estiver em galeria, atualiza imagem ou volta pro 3D
+      // Atualiza imagem e tag na galeria 8K
       const galImg = document.getElementById('evadesk-gallery-main');
       if (galImg && cfg.img) {
         galImg.src = cfg.img;
+      }
+      const galTag = document.getElementById('evadesk-gallery-tag');
+      if (galTag && cfg.tag) {
+        galTag.textContent = cfg.tag;
+      }
+
+      // Atualiza badge Picture-in-Picture no 3D
+      const pipThumb = document.getElementById('evadesk-pip-thumb');
+      if (pipThumb && cfg.img) {
+        pipThumb.src = cfg.img;
+      }
+      const pipTitle = document.getElementById('evadesk-pip-title');
+      if (pipTitle && cfg.pipTitle) {
+        pipTitle.textContent = cfg.pipTitle;
       }
 
       // Atualiza texto da tecnologia
