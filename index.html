@@ -8050,12 +8050,44 @@
         metalness: 0.88
       });
 
+      // Tela do Monitor com papel de parede sideral minimalista
+      const screenTexCanvas = document.createElement('canvas');
+      screenTexCanvas.width = 1024;
+      screenTexCanvas.height = 432;
+      const sCtx = screenTexCanvas.getContext('2d');
+      if (sCtx) {
+        sCtx.fillStyle = '#09090B';
+        sCtx.fillRect(0, 0, 1024, 432);
+        const sGrad = sCtx.createRadialGradient(512, 216, 40, 512, 216, 420);
+        sGrad.addColorStop(0, 'rgba(14, 165, 233, 0.28)');
+        sGrad.addColorStop(1, 'rgba(9, 9, 11, 0)');
+        sCtx.fillStyle = sGrad;
+        sCtx.fillRect(0, 0, 1024, 432);
+        sCtx.strokeStyle = 'rgba(248, 112, 28, 0.5)';
+        sCtx.lineWidth = 2;
+        sCtx.beginPath();
+        sCtx.moveTo(412, 216);
+        sCtx.lineTo(612, 216);
+        sCtx.stroke();
+        sCtx.fillStyle = '#F5F5F7';
+        sCtx.font = 'bold 32px sans-serif';
+        sCtx.textAlign = 'center';
+        sCtx.fillText('10:09', 512, 195);
+        sCtx.fillStyle = '#94A3B8';
+        sCtx.font = 'bold 12px monospace';
+        sCtx.fillText('EVAZ WORKSPACE PRO', 512, 248);
+      }
+      const screenTex = new THREE.CanvasTexture(screenTexCanvas);
+
       const matScreen = new THREE.MeshStandardMaterial({
-        color: 0x09090B,
-        roughness: 0.12,
-        metalness: 0.85,
-        emissive: 0x0EA5E9,
-        emissiveIntensity: 0.18
+        color: 0xFFFFFF,
+        map: screenTex,
+        roughness: 0.2,
+        metalness: 0.1,
+        emissive: 0xFFFFFF,
+        emissiveMap: screenTex,
+        emissiveIntensity: 0.35,
+        side: THREE.DoubleSide
       });
 
       const matLaserOrange = new THREE.MeshStandardMaterial({
@@ -8265,12 +8297,32 @@
       armPole.position.set(0, 0.17, 0);
       armGroup.add(armPole);
 
+      // Frase gravada a laser na borda frontal
+      const laserCanvas = document.createElement('canvas');
+      laserCanvas.width = 1024;
+      laserCanvas.height = 64;
+      const lCtx = laserCanvas.getContext('2d');
+      if (lCtx) {
+        lCtx.clearRect(0, 0, 1024, 64);
+        lCtx.fillStyle = '#64748B';
+        lCtx.font = 'bold 22px sans-serif';
+        lCtx.textAlign = 'center';
+        lCtx.fillText('O MELHOR DA TECNOLOGIA AO SEU ALCANCE', 512, 40);
+      }
+      const laserTex = new THREE.CanvasTexture(laserCanvas);
+      const laserMesh = new THREE.Mesh(
+        new THREE.PlaneGeometry(0.55, 0.024),
+        new THREE.MeshBasicMaterial({ map: laserTex, transparent: true, opacity: 0.75 })
+      );
+      laserMesh.position.set(0, -0.002, 0.409);
+      evadeskDeskGroup.add(laserMesh);
+
       // Braço Articulado Horizontal a Gás posicionado ATRÁS do monitor
       const armSegment = new THREE.Mesh(
         new THREE.BoxGeometry(0.026, 0.024, 0.10),
         matTopWhite
       );
-      armSegment.position.set(0, 0.32, 0.02);
+      armSegment.position.set(0, 0.32, -0.04);
       armGroup.add(armSegment);
 
       evadeskDeskGroup.add(armGroup);
