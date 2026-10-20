@@ -7937,11 +7937,17 @@
       evadeskCamera.position.set(0, 1.3, 2.3);
 
       // 2. Renderizador WebGL
-      evadeskRenderer = new THREE.WebGLRenderer({ canvas: canvas, antialias: true, alpha: true });
-      evadeskRenderer.setSize(width, height);
-      evadeskRenderer.setPixelRatio(Math.min(window.devicePixelRatio, 2));
-      evadeskRenderer.shadowMap.enabled = true;
-      evadeskRenderer.shadowMap.type = THREE.PCFSoftShadowMap;
+      try {
+        evadeskRenderer = new THREE.WebGLRenderer({ canvas: canvas, antialias: true, alpha: true });
+        evadeskRenderer.setSize(width, height);
+        evadeskRenderer.setPixelRatio(Math.min(window.devicePixelRatio, 2));
+        evadeskRenderer.shadowMap.enabled = true;
+        evadeskRenderer.shadowMap.type = THREE.PCFSoftShadowMap;
+      } catch (e) {
+        console.warn("WebGL indisponível. Alternando para Galeria Keynote 8K.", e);
+        switchEvadeskMode('gallery');
+        return;
+      }
 
       // 3. OrbitControls
       if (typeof THREE.OrbitControls !== 'undefined') {
@@ -8055,6 +8061,14 @@
         metalness: 0.9,
         emissive: 0x38BDF8,
         emissiveIntensity: 0.15
+      });
+
+      const matLaserOrange = new THREE.MeshStandardMaterial({
+        color: 0xF8701C,
+        roughness: 0.3,
+        metalness: 0.2,
+        emissive: 0xF8701C,
+        emissiveIntensity: 0.35
       });
 
       // 5.1 Tampo 1600x800x34 mm com Cantos Arredondados e Chanfros Suaves
