@@ -1,489 +1,466 @@
 <!DOCTYPE html>
 <html lang="pt-BR" class="scroll-smooth">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>Comelva | Tecnologia que conecta</title>
-    
-    <!-- Metatags SEO e OpenGraph -->
-    <meta name="description" content="Precisão para o seu setup, potência para o seu espaço. Compre os melhores equipamentos de tecnologia na Comelva.">
-    <meta property="og:title" content="Comelva | Tecnologia que conecta">
-    <meta property="og:description" content="Precisão para o seu setup, potência para o seu espaço.">
-    <meta property="og:image" content="assets/banner-1200x630.jpg">
-    <meta property="og:site_name" content="Comelva">
-    <meta name="twitter:card" content="summary_large_image">
-    
-    <!-- Favicons -->
-    <link rel="icon" href="assets/favicon.ico" sizes="any">
-    <link rel="apple-touch-icon" href="assets/apple-touch-icon.png">
-    <link rel="manifest" href="assets/site.webmanifest">
+    <meta name="description" content="Precisão para o seu setup, potência para o seu espaço. Compre tecnologia premium com a Comelva." />
+    <meta property="og:title" content="Comelva | Tecnologia que conecta" />
+    <meta property="og:description" content="Precisão para o seu setup, potência para o seu espaço." />
+    <meta property="og:image" content="assets/reel-1-poster.jpg" />
+    <meta property="og:image:width" content="1200" />
+    <meta property="og:image:height" content="630" />
+    <meta property="og:site_name" content="Comelva" />
+    <meta property="og:type" content="website" />
+    <meta name="twitter:card" content="summary_large_image" />
+    <meta name="theme-color" content="#FFE600" />
 
-    <!-- Tipografia DM Sans -->
-    <link rel="preconnect" href="https://fonts.googleapis.com">
-    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;500;700;800&display=swap" rel="stylesheet">
-    
-    <!-- Tailwind CSS (Standalone) -->
+    <link rel="icon" href="assets/favicon.svg" type="image/svg+xml" />
+    <link rel="icon" href="assets/favicon-32.png" type="image/png" sizes="32x32" />
+    <link rel="apple-touch-icon" href="assets/favicon-32.png" />
+    <link rel="manifest" href="assets/site.webmanifest" />
+
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;500;700;800&display=swap" rel="stylesheet" />
+
     <script src="https://cdn.tailwindcss.com"></script>
     <script>
-        tailwind.config = {
-            theme: {
-                extend: {
-                    colors: {
-                        comelva: {
-                            yellow: '#FFE600',
-                            black: '#111111',
-                            graphite: '#303238',
-                            alabaster: '#F5F5F7'
-                        }
-                    },
-                    fontFamily: {
-                        sans: ['"DM Sans"', 'sans-serif'],
-                    }
-                }
+      tailwind.config = {
+        theme: {
+          extend: {
+            colors: {
+              comelva: {
+                yellow: '#FFE600',
+                black: '#111111',
+                graphite: '#303238',
+                alabaster: '#F5F5F7'
+              }
+            },
+            fontFamily: {
+              sans: ['"DM Sans"', 'sans-serif']
             }
+          }
         }
+      };
     </script>
 
-    <!-- Dados Estruturados JSON-LD -->
     <script type="application/ld+json">
-    {
-      "@context": "https://schema.org",
-      "@type": "OnlineStore",
-      "name": "Comelva",
-      "url": "https://www.comelva.com.br",
-      "logo": "https://www.comelva.com.br/assets/logo.png",
-      "description": "Precisão para o seu setup, potência para o seu espaço. Equipamentos de alta performance.",
-      "parentOrganization": {
-        "@type": "Organization",
-        "name": "HANA FERREIRA PONTE",
-        "taxID": "69.355.087/0001-16",
+      {
+        "@context": "https://schema.org",
+        "@type": "OnlineStore",
+        "name": "Comelva",
+        "url": "https://www.comelva.com.br",
+        "logo": "https://www.comelva.com.br/assets/favicon-32.png",
+        "description": "Precisão para o seu setup, potência para o seu espaço.",
+        "brand": {
+          "@type": "Brand",
+          "name": "Comelva"
+        },
         "address": {
           "@type": "PostalAddress",
           "addressLocality": "Brasília",
           "addressRegion": "DF",
           "addressCountry": "BR"
+        },
+        "parentOrganization": {
+          "@type": "Organization",
+          "name": "69.355.087 HANA FERREIRA PONTE",
+          "taxID": "69.355.087/0001-16"
         }
       }
-    }
     </script>
-    
-    <!-- Ícones Lucide -->
+
     <script src="https://unpkg.com/lucide@latest"></script>
-</head>
-<body class="bg-comelva-alabaster text-comelva-black font-sans antialiased">
-
-    <!-- Header -->
+  </head>
+  <body class="bg-comelva-alabaster text-comelva-black font-sans antialiased">
     <header class="bg-comelva-black text-white sticky top-0 z-40 w-full shadow-sm">
-        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-            <div class="flex justify-between items-center h-20">
-                <!-- Logo -->
-                <div class="flex items-center gap-3">
-                    <svg class="w-8 h-8 text-comelva-yellow" viewBox="0 0 100 100" fill="none" xmlns="http://www.w3.org/2000/svg">
-                        <path d="M75 22 50 8 18 27v46l32 19 25-14" stroke="currentColor" stroke-width="10" stroke-linecap="square" stroke-linejoin="bevel" />
-                        <path d="M75 22 60 34H43L32 44v13l11 10h17l15 11" stroke="currentColor" stroke-width="5" stroke-linejoin="bevel" />
-                        <circle cx="77" cy="78" r="6" fill="currentColor" />
-                    </svg>
-                    <span class="text-2xl font-extrabold tracking-tight">comelva</span>
-                </div>
-                
-                <!-- Nav -->
-                <nav class="hidden md:flex space-x-8 text-sm font-bold">
-                    <a href="#" class="hover:text-comelva-yellow transition-colors">Hardware PRO</a>
-                    <a href="#" class="hover:text-comelva-yellow transition-colors">Armazenamento</a>
-                    <a href="#" class="hover:text-comelva-yellow transition-colors">Cabos & Conexões</a>
-                    <a href="#" class="hover:text-comelva-yellow transition-colors">Linha Originals</a>
-                </nav>
-
-                <!-- Ações -->
-                <div class="flex items-center gap-6">
-                    <div class="hidden lg:flex items-center gap-2 text-xs font-bold bg-comelva-graphite px-3 py-1.5 rounded-full">
-                        <i data-lucide="truck" class="w-4 h-4 text-comelva-yellow"></i>
-                        <span>Frete Grátis Sul/Sudeste/DF</span>
-                    </div>
-                    <button onclick="toggleCart()" class="relative flex items-center hover:text-comelva-yellow transition-colors" aria-label="Abrir Carrinho">
-                        <i data-lucide="shopping-cart" class="w-6 h-6"></i>
-                        <span id="cart-counter" class="absolute -top-2 -right-2 bg-comelva-yellow text-comelva-black text-[10px] font-extrabold w-5 h-5 flex items-center justify-center rounded-full">0</span>
-                    </button>
-                </div>
+      <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+        <div class="flex justify-between items-center h-20">
+          <div class="flex items-center gap-3">
+            <div class="w-10 h-10 rounded-xl bg-comelva-yellow flex items-center justify-center text-comelva-black shadow-lg">
+              <svg viewBox="0 0 100 100" class="w-6 h-6" aria-hidden="true" fill="none" xmlns="http://www.w3.org/2000/svg">
+                <path d="M75 22 50 8 18 27v46l32 19 25-14" stroke="currentColor" stroke-width="10" stroke-linecap="square" stroke-linejoin="bevel" />
+                <path d="M75 22 60 34H43L32 44v13l11 10h17l15 11" stroke="currentColor" stroke-width="5" stroke-linejoin="bevel" />
+                <circle cx="77" cy="78" r="6" fill="currentColor" />
+              </svg>
             </div>
+            <span class="text-2xl font-extrabold tracking-tight">comelva</span>
+          </div>
+
+          <nav class="hidden md:flex space-x-8 text-sm font-bold">
+            <a href="#" class="hover:text-comelva-yellow transition-colors">Hardware PRO</a>
+            <a href="#" class="hover:text-comelva-yellow transition-colors">Armazenamento</a>
+            <a href="#" class="hover:text-comelva-yellow transition-colors">Cabos &amp; Conexões</a>
+            <a href="#" class="hover:text-comelva-yellow transition-colors">Linha Originals</a>
+          </nav>
+
+          <div class="flex items-center gap-6">
+            <div class="hidden lg:flex items-center gap-2 text-xs font-bold bg-comelva-graphite px-3 py-1.5 rounded-full">
+              <i data-lucide="truck" class="w-4 h-4 text-comelva-yellow"></i>
+              <span>Frete Grátis Sul/Sudeste/DF</span>
+            </div>
+            <button onclick="toggleCart()" class="relative flex items-center hover:text-comelva-yellow transition-colors" aria-label="Abrir Carrinho">
+              <i data-lucide="shopping-cart" class="w-6 h-6"></i>
+              <span id="cart-counter" class="absolute -top-2 -right-2 bg-comelva-yellow text-comelva-black text-[10px] font-extrabold w-5 h-5 flex items-center justify-center rounded-full">0</span>
+            </button>
+          </div>
         </div>
+      </div>
     </header>
 
-    <!-- Hero Section -->
     <section class="bg-comelva-yellow text-comelva-black pt-16 pb-24 lg:pt-24 lg:pb-32 overflow-hidden">
-        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 flex flex-col lg:flex-row items-center gap-12">
-            <div class="w-full lg:w-1/2 space-y-8">
-                <p class="uppercase tracking-[0.16em] text-[11px] font-extrabold">Novos Equipamentos</p>
-                <h1 class="text-5xl lg:text-7xl font-extrabold tracking-tight leading-[1.05]">Precisão para o seu setup,<br>potência para o seu espaço.</h1>
-                <p class="text-lg lg:text-xl max-w-lg font-medium opacity-90">Tecnologia conectada, acessível e confiável. Escolhas claras para você trabalhar e jogar no seu melhor ritmo.</p>
-                <div class="flex flex-col sm:flex-row gap-4 pt-4">
-                    <button class="bg-comelva-black text-white px-8 py-4 rounded-xl font-bold hover:bg-comelva-graphite transition-all text-lg flex items-center justify-center gap-2">
-                        Comprar Agora <i data-lucide="arrow-right" class="w-5 h-5"></i>
-                    </button>
-                    <button class="bg-transparent border-2 border-comelva-black text-comelva-black px-8 py-4 rounded-xl font-bold hover:bg-black hover:text-white transition-all text-lg flex items-center justify-center">
-                        Explorar Catálogo
-                    </button>
-                </div>
-            </div>
-            <div class="w-full lg:w-1/2 relative">
-                <!-- Mockup Visual -->
-                <div class="aspect-square bg-white rounded-3xl shadow-2xl overflow-hidden border border-black/10 flex items-center justify-center p-12 relative">
-                    <!-- Produto Hero (Placeholder) -->
-                    <div class="absolute inset-0 bg-gradient-to-tr from-gray-100 to-white"></div>
-                    <div class="relative z-10 text-center space-y-4">
-                        <i data-lucide="mouse" class="w-48 h-48 mx-auto text-comelva-black drop-shadow-2xl"></i>
-                        <div class="inline-block bg-comelva-black text-white text-xs font-bold px-3 py-1 rounded-full uppercase tracking-wider">Logitech G PRO X2</div>
-                    </div>
-                </div>
-            </div>
+      <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 flex flex-col lg:flex-row items-center gap-12">
+        <div class="w-full lg:w-1/2 space-y-8">
+          <p class="uppercase tracking-[0.16em] text-[11px] font-extrabold">Novos Equipamentos</p>
+          <h1 class="text-5xl lg:text-7xl font-extrabold tracking-tight leading-[1.05]">Precisão para o seu setup,<br />potência para o seu espaço.</h1>
+          <p class="text-lg lg:text-xl max-w-lg font-medium opacity-90">Tecnologia conectada, acessível e confiável. Escolhas claras para você trabalhar e jogar no seu melhor ritmo.</p>
+          <div class="flex flex-col sm:flex-row gap-4 pt-4">
+            <button class="bg-comelva-black text-white px-8 py-4 rounded-xl font-bold hover:bg-comelva-graphite transition-all text-lg flex items-center justify-center gap-2">
+              Comprar Agora <i data-lucide="arrow-right" class="w-5 h-5"></i>
+            </button>
+            <button class="bg-transparent border-2 border-comelva-black text-comelva-black px-8 py-4 rounded-xl font-bold hover:bg-black hover:text-white transition-all text-lg flex items-center justify-center gap-2">
+              Explorar Catálogo
+            </button>
+          </div>
         </div>
+
+        <div class="w-full lg:w-1/2 relative">
+          <div class="aspect-square bg-white rounded-3xl shadow-2xl overflow-hidden border border-black/10 p-6 lg:p-10">
+            <img src="assets/evadesk-flagship-3d-render.webp" alt="Produto flagship Comelva" class="w-full h-full object-cover rounded-2xl" />
+          </div>
+        </div>
+      </div>
     </section>
 
-    <!-- Bento Grid de Produtos -->
     <section class="py-24 max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-        <div class="mb-12">
-            <h2 class="text-4xl font-extrabold tracking-tight">Catálogo Tech</h2>
-            <p class="text-gray-500 mt-2 font-medium">Os setups mais desejados do momento.</p>
-        </div>
+      <div class="mb-12">
+        <h2 class="text-4xl font-extrabold tracking-tight">Catálogo Tech</h2>
+        <p class="text-gray-500 mt-2 font-medium">Os setups mais desejados do momento.</p>
+      </div>
 
-        <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
-            
-            <!-- Card 1 -->
-            <div class="bg-white rounded-2xl border border-gray-200 p-6 hover:shadow-xl transition-shadow flex flex-col">
-                <div class="aspect-square bg-comelva-alabaster rounded-xl mb-6 flex items-center justify-center overflow-hidden relative">
-                    <span class="absolute top-3 left-3 bg-comelva-yellow text-comelva-black text-xs font-bold px-2 py-1 rounded">-15% Pix</span>
-                    <i data-lucide="mouse" class="w-24 h-24 text-comelva-graphite"></i>
-                </div>
-                <h3 class="text-xl font-bold tracking-tight">Logitech G PRO X2 Superlight</h3>
-                <p class="text-sm text-gray-500 mt-2 mb-4 line-clamp-2">Mouse gamer sem fio ultraleve com sensor Hero 2 e switches híbridos óptico-mecânicos.</p>
-                <div class="mt-auto pt-4 flex items-center justify-between border-t border-gray-100">
-                    <div>
-                        <p class="text-xs text-gray-400 line-through">R$ 999,90</p>
-                        <p class="text-2xl font-extrabold text-comelva-black">R$ 849,90</p>
-                    </div>
-                    <button onclick="addToCart('Logitech G PRO X2', 849.90)" class="w-12 h-12 bg-comelva-black text-white rounded-full flex items-center justify-center hover:bg-comelva-yellow hover:text-comelva-black transition-colors" aria-label="Adicionar ao carrinho">
-                        <i data-lucide="plus" class="w-5 h-5"></i>
-                    </button>
-                </div>
+      <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+        <article class="bg-white rounded-2xl border border-gray-200 p-6 hover:shadow-xl transition-shadow flex flex-col">
+          <div class="aspect-square bg-comelva-alabaster rounded-xl mb-6 flex items-center justify-center overflow-hidden relative">
+            <span class="absolute top-3 left-3 bg-comelva-yellow text-comelva-black text-xs font-bold px-2 py-1 rounded">-15% Pix</span>
+            <img src="assets/produto-logitech-pro-x2-superstrike.webp" alt="Logitech G Pro X2 Superstrike" class="w-full h-full object-contain p-3" />
+          </div>
+          <h3 class="text-xl font-bold tracking-tight">Logitech G PRO X2 Superstrike</h3>
+          <p class="text-sm text-gray-500 mt-2 mb-4 line-clamp-2">Mouse gamer sem fio ultraleve com sensor Hero 2 e switches híbridos óptico-mecânicos.</p>
+          <div class="mt-auto pt-4 flex items-center justify-between border-t border-gray-100">
+            <div>
+              <p class="text-xs text-gray-400 line-through">R$ 999,90</p>
+              <p class="text-2xl font-extrabold text-comelva-black">R$ 849,90</p>
             </div>
+            <button onclick="addToCart('Logitech G PRO X2 Superstrike', 849.90)" class="w-12 h-12 bg-comelva-black text-white rounded-full flex items-center justify-center hover:bg-comelva-yellow hover:text-comelva-black transition-all">
+              <i data-lucide="plus" class="w-5 h-5"></i>
+            </button>
+          </div>
+        </article>
 
-            <!-- Card 2 -->
-            <div class="bg-white rounded-2xl border border-gray-200 p-6 hover:shadow-xl transition-shadow flex flex-col">
-                <div class="aspect-square bg-comelva-alabaster rounded-xl mb-6 flex items-center justify-center overflow-hidden">
-                    <i data-lucide="keyboard" class="w-24 h-24 text-comelva-graphite"></i>
-                </div>
-                <h3 class="text-xl font-bold tracking-tight">G PRO X TKL Wireless</h3>
-                <p class="text-sm text-gray-500 mt-2 mb-4 line-clamp-2">Teclado mecânico gamer tenkeyless com iluminação RGB Lightsync.</p>
-                <div class="mt-auto pt-4 flex items-center justify-between border-t border-gray-100">
-                    <div>
-                        <p class="text-xs text-transparent">.</p>
-                        <p class="text-2xl font-extrabold text-comelva-black">R$ 1.299,00</p>
-                    </div>
-                    <button onclick="addToCart('G PRO X TKL Wireless', 1299.00)" class="w-12 h-12 bg-comelva-black text-white rounded-full flex items-center justify-center hover:bg-comelva-yellow hover:text-comelva-black transition-colors" aria-label="Adicionar ao carrinho">
-                        <i data-lucide="plus" class="w-5 h-5"></i>
-                    </button>
-                </div>
+        <article class="bg-white rounded-2xl border border-gray-200 p-6 hover:shadow-xl transition-shadow flex flex-col">
+          <div class="aspect-square bg-comelva-alabaster rounded-xl mb-6 flex items-center justify-center overflow-hidden">
+            <img src="assets/produto-logitech-g-pro-x-tkl-magenta.webp" alt="G PRO X TKL" class="w-full h-full object-contain p-3" />
+          </div>
+          <h3 class="text-xl font-bold tracking-tight">G PRO X TKL Wireless</h3>
+          <p class="text-sm text-gray-500 mt-2 mb-4 line-clamp-2">Teclado mecânico gamer tenkeyless com iluminação RGB Lightsync.</p>
+          <div class="mt-auto pt-4 flex items-center justify-between border-t border-gray-100">
+            <div>
+              <p class="text-xs text-transparent">.</p>
+              <p class="text-2xl font-extrabold text-comelva-black">R$ 1.299,00</p>
             </div>
+            <button onclick="addToCart('G PRO X TKL Wireless', 1299.00)" class="w-12 h-12 bg-comelva-black text-white rounded-full flex items-center justify-center hover:bg-comelva-yellow hover:text-comelva-black transition-all">
+              <i data-lucide="plus" class="w-5 h-5"></i>
+            </button>
+          </div>
+        </article>
 
-            <!-- Card 3 -->
-            <div class="bg-white rounded-2xl border border-gray-200 p-6 hover:shadow-xl transition-shadow flex flex-col">
-                <div class="aspect-square bg-comelva-alabaster rounded-xl mb-6 flex items-center justify-center overflow-hidden relative">
-                    <span class="absolute top-3 left-3 bg-comelva-black text-white text-xs font-bold px-2 py-1 rounded">Mais Vendido</span>
-                    <i data-lucide="speaker" class="w-24 h-24 text-comelva-graphite"></i>
-                </div>
-                <h3 class="text-xl font-bold tracking-tight">Echo Dot Max (5ª Geração)</h3>
-                <p class="text-sm text-gray-500 mt-2 mb-4 line-clamp-2">Smart speaker com Alexa, som vibrante, graves potentes e display LED.</p>
-                <div class="mt-auto pt-4 flex items-center justify-between border-t border-gray-100">
-                    <div>
-                        <p class="text-xs text-transparent">.</p>
-                        <p class="text-2xl font-extrabold text-comelva-black">R$ 429,00</p>
-                    </div>
-                    <button onclick="addToCart('Echo Dot Max', 429.00)" class="w-12 h-12 bg-comelva-black text-white rounded-full flex items-center justify-center hover:bg-comelva-yellow hover:text-comelva-black transition-colors" aria-label="Adicionar ao carrinho">
-                        <i data-lucide="plus" class="w-5 h-5"></i>
-                    </button>
-                </div>
+        <article class="bg-white rounded-2xl border border-gray-200 p-6 hover:shadow-xl transition-shadow flex flex-col">
+          <div class="aspect-square bg-comelva-alabaster rounded-xl mb-6 flex items-center justify-center overflow-hidden relative">
+            <span class="absolute top-3 left-3 bg-comelva-black text-white text-xs font-bold px-2 py-1 rounded">Mais Vendido</span>
+            <img src="assets/produto-echo-dot-max.webp" alt="Echo Dot Max" class="w-full h-full object-contain p-3" />
+          </div>
+          <h3 class="text-xl font-bold tracking-tight">Echo Dot Max</h3>
+          <p class="text-sm text-gray-500 mt-2 mb-4 line-clamp-2">Smart speaker com Alexa, som vibrante, graves potentes e display LED.</p>
+          <div class="mt-auto pt-4 flex items-center justify-between border-t border-gray-100">
+            <div>
+              <p class="text-xs text-transparent">.</p>
+              <p class="text-2xl font-extrabold text-comelva-black">R$ 429,00</p>
             </div>
+            <button onclick="addToCart('Echo Dot Max', 429.00)" class="w-12 h-12 bg-comelva-black text-white rounded-full flex items-center justify-center hover:bg-comelva-yellow hover:text-comelva-black transition-all">
+              <i data-lucide="plus" class="w-5 h-5"></i>
+            </button>
+          </div>
+        </article>
 
-            <!-- Card 4 -->
-            <div class="bg-white rounded-2xl border border-gray-200 p-6 hover:shadow-xl transition-shadow flex flex-col md:col-span-2 lg:col-span-2 relative overflow-hidden">
-                <div class="absolute inset-0 bg-comelva-graphite opacity-[0.03] z-0"></div>
-                <div class="relative z-10 flex flex-col md:flex-row gap-8 h-full">
-                    <div class="flex-1 flex flex-col justify-center">
-                        <div class="inline-flex mb-4">
-                            <span class="bg-comelva-yellow text-comelva-black text-xs font-bold px-2 py-1 rounded">Linha Originals</span>
-                        </div>
-                        <h3 class="text-2xl font-extrabold tracking-tight">Kit Organização & Cabos 240W</h3>
-                        <p class="text-base text-gray-500 mt-3 mb-6">Setup limpo e alta performance. Cabo trançado USB-C de 240W PD e organizadores magnéticos modulares.</p>
-                        <div class="mt-auto flex items-center gap-6">
-                            <p class="text-3xl font-extrabold text-comelva-black">R$ 189,90</p>
-                            <button onclick="addToCart('Kit Cabos 240W', 189.90)" class="bg-comelva-black text-white px-6 py-3 rounded-xl font-bold hover:bg-comelva-yellow hover:text-comelva-black transition-colors">
-                                Adicionar ao Carrinho
-                            </button>
-                        </div>
-                    </div>
-                    <div class="w-full md:w-1/3 aspect-square bg-comelva-alabaster rounded-xl flex items-center justify-center">
-                        <i data-lucide="cable" class="w-32 h-32 text-comelva-graphite"></i>
-                    </div>
-                </div>
+        <article class="bg-white rounded-2xl border border-gray-200 p-6 hover:shadow-xl transition-shadow flex flex-col md:col-span-2 lg:col-span-2 relative overflow-hidden">
+          <div class="absolute inset-0 bg-comelva-graphite opacity-[0.03] z-0"></div>
+          <div class="relative z-10 flex flex-col md:flex-row gap-8 h-full">
+            <div class="flex-1 flex flex-col justify-center">
+              <div class="inline-flex mb-4">
+                <span class="bg-comelva-yellow text-comelva-black text-xs font-bold px-2 py-1 rounded">Linha Originals</span>
+              </div>
+              <h3 class="text-2xl font-extrabold tracking-tight">Kit Organização &amp; Cabos 240W</h3>
+              <p class="text-base text-gray-500 mt-3 mb-6">Setup limpo e alta performance. Cabo trançado USB-C de 240W PD e organizadores magnéticos modulares.</p>
+              <div class="mt-auto flex items-center gap-6">
+                <p class="text-3xl font-extrabold text-comelva-black">R$ 189,90</p>
+                <button onclick="addToCart('Kit Cabos 240W', 189.90)" class="bg-comelva-black text-white px-6 py-3 rounded-xl font-bold hover:bg-comelva-yellow hover:text-comelva-black transition-all">
+                  Adicionar ao Carrinho
+                </button>
+              </div>
             </div>
-
-            <!-- Card 5 -->
-            <div class="bg-white rounded-2xl border border-gray-200 p-6 hover:shadow-xl transition-shadow flex flex-col">
-                <div class="aspect-square bg-comelva-alabaster rounded-xl mb-6 flex items-center justify-center overflow-hidden">
-                    <i data-lucide="mouse-pointer-2" class="w-24 h-24 text-comelva-graphite"></i>
-                </div>
-                <h3 class="text-xl font-bold tracking-tight">Combo Sem Fio MK250</h3>
-                <p class="text-sm text-gray-500 mt-2 mb-4 line-clamp-2">Teclado e mouse sem fio compactos para produtividade em qualquer lugar.</p>
-                <div class="mt-auto pt-4 flex items-center justify-between border-t border-gray-100">
-                    <div>
-                        <p class="text-xs text-transparent">.</p>
-                        <p class="text-2xl font-extrabold text-comelva-black">R$ 149,90</p>
-                    </div>
-                    <button onclick="addToCart('Combo MK250', 149.90)" class="w-12 h-12 bg-comelva-black text-white rounded-full flex items-center justify-center hover:bg-comelva-yellow hover:text-comelva-black transition-colors" aria-label="Adicionar ao carrinho">
-                        <i data-lucide="plus" class="w-5 h-5"></i>
-                    </button>
-                </div>
+            <div class="w-full md:w-1/3 aspect-square bg-comelva-alabaster rounded-xl flex items-center justify-center overflow-hidden">
+              <img src="assets/kit-backup-pro-evaz.webp" alt="Kit de organização e cabos" class="w-full h-full object-cover" />
             </div>
+          </div>
+        </article>
 
-        </div>
+        <article class="bg-white rounded-2xl border border-gray-200 p-6 hover:shadow-xl transition-shadow flex flex-col">
+          <div class="aspect-square bg-comelva-alabaster rounded-xl mb-6 flex items-center justify-center overflow-hidden">
+            <img src="assets/produto-logitech-mk250-combo.webp" alt="Combo MK250" class="w-full h-full object-contain p-3" />
+          </div>
+          <h3 class="text-xl font-bold tracking-tight">Combo Sem Fio MK250</h3>
+          <p class="text-sm text-gray-500 mt-2 mb-4 line-clamp-2">Teclado e mouse sem fio compactos para produtividade em qualquer lugar.</p>
+          <div class="mt-auto pt-4 flex items-center justify-between border-t border-gray-100">
+            <div>
+              <p class="text-xs text-transparent">.</p>
+              <p class="text-2xl font-extrabold text-comelva-black">R$ 149,90</p>
+            </div>
+            <button onclick="addToCart('Combo MK250', 149.90)" class="w-12 h-12 bg-comelva-black text-white rounded-full flex items-center justify-center hover:bg-comelva-yellow hover:text-comelva-black transition-all">
+              <i data-lucide="plus" class="w-5 h-5"></i>
+            </button>
+          </div>
+        </article>
+      </div>
     </section>
 
-    <!-- Trust Section -->
     <section class="bg-white border-t border-gray-200 py-16">
-        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 grid grid-cols-1 md:grid-cols-3 gap-8 text-center">
-            <div class="flex flex-col items-center">
-                <div class="w-16 h-16 bg-comelva-yellow rounded-full flex items-center justify-center mb-4">
-                    <i data-lucide="package-check" class="w-8 h-8 text-comelva-black"></i>
-                </div>
-                <h4 class="font-bold text-lg">Entrega Expressa de Brasília</h4>
-                <p class="text-gray-500 text-sm mt-2">Envio rápido e seguro para todo o território nacional direto do DF.</p>
-            </div>
-            <div class="flex flex-col items-center">
-                <div class="w-16 h-16 bg-comelva-yellow rounded-full flex items-center justify-center mb-4">
-                    <i data-lucide="shield-check" class="w-8 h-8 text-comelva-black"></i>
-                </div>
-                <h4 class="font-bold text-lg">Garantia Oficial</h4>
-                <p class="text-gray-500 text-sm mt-2">Produtos originais com garantia direto com o fabricante.</p>
-            </div>
-            <div class="flex flex-col items-center">
-                <div class="w-16 h-16 bg-comelva-yellow rounded-full flex items-center justify-center mb-4">
-                    <i data-lucide="refresh-ccw" class="w-8 h-8 text-comelva-black"></i>
-                </div>
-                <h4 class="font-bold text-lg">7 Dias para Devolução</h4>
-                <p class="text-gray-500 text-sm mt-2">Não gostou? Você tem 7 dias de devolução incondicional.</p>
-            </div>
+      <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 grid grid-cols-1 md:grid-cols-3 gap-8 text-center">
+        <div class="flex flex-col items-center">
+          <div class="w-16 h-16 bg-comelva-yellow rounded-full flex items-center justify-center mb-4">
+            <i data-lucide="package-check" class="w-8 h-8 text-comelva-black"></i>
+          </div>
+          <h4 class="font-bold text-lg">Entrega Expressa de Brasília</h4>
+          <p class="text-gray-500 text-sm mt-2">Envio rápido e seguro para todo o território nacional direto do DF.</p>
         </div>
+        <div class="flex flex-col items-center">
+          <div class="w-16 h-16 bg-comelva-yellow rounded-full flex items-center justify-center mb-4">
+            <i data-lucide="shield-check" class="w-8 h-8 text-comelva-black"></i>
+          </div>
+          <h4 class="font-bold text-lg">Garantia Oficial</h4>
+          <p class="text-gray-500 text-sm mt-2">Produtos originais com garantia direto com o fabricante.</p>
+        </div>
+        <div class="flex flex-col items-center">
+          <div class="w-16 h-16 bg-comelva-yellow rounded-full flex items-center justify-center mb-4">
+            <i data-lucide="refresh-ccw" class="w-8 h-8 text-comelva-black"></i>
+          </div>
+          <h4 class="font-bold text-lg">7 Dias para Devolução</h4>
+          <p class="text-gray-500 text-sm mt-2">Não gostou? Você tem 7 dias de devolução incondicional.</p>
+        </div>
+      </div>
     </section>
 
-    <!-- Footer -->
     <footer class="bg-comelva-black text-white pt-16 pb-8 border-t-[8px] border-comelva-yellow">
-        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-            <div class="grid grid-cols-1 md:grid-cols-4 gap-12 mb-12">
-                <div class="col-span-1 md:col-span-2">
-                    <div class="flex items-center gap-3 mb-6">
-                        <svg class="w-8 h-8 text-comelva-yellow" viewBox="0 0 100 100" fill="none" xmlns="http://www.w3.org/2000/svg">
-                            <path d="M75 22 50 8 18 27v46l32 19 25-14" stroke="currentColor" stroke-width="10" stroke-linecap="square" stroke-linejoin="bevel" />
-                            <path d="M75 22 60 34H43L32 44v13l11 10h17l15 11" stroke="currentColor" stroke-width="5" stroke-linejoin="bevel" />
-                            <circle cx="77" cy="78" r="6" fill="currentColor" />
-                        </svg>
-                        <span class="text-2xl font-extrabold tracking-tight">comelva</span>
-                    </div>
-                    <p class="text-gray-400 font-medium max-w-sm mb-6">Tecnologia conectada, acessível e confiável. Mais próxima, simples e útil para a vida real.</p>
-                </div>
-                <div>
-                    <h4 class="font-bold text-lg mb-4 text-comelva-yellow">Links Úteis</h4>
-                    <ul class="space-y-3 text-sm text-gray-400 font-medium">
-                        <li><a href="termos-de-uso.html" class="hover:text-white transition-colors">Termos de Uso</a></li>
-                        <li><a href="politica-de-privacidade.html" class="hover:text-white transition-colors">Política de Privacidade</a></li>
-                        <li><a href="#" class="hover:text-white transition-colors">Trocas e Devoluções</a></li>
-                        <li><a href="#" class="hover:text-white transition-colors">Rastreie seu pedido</a></li>
-                    </ul>
-                </div>
-                <div>
-                    <h4 class="font-bold text-lg mb-4 text-comelva-yellow">Atendimento</h4>
-                    <ul class="space-y-3 text-sm text-gray-400 font-medium">
-                        <li>Segunda a Sexta: 09h às 18h</li>
-                        <li>WhatsApp: (61) 99999-9999</li>
-                        <li>contato@comelva.com.br</li>
-                    </ul>
-                </div>
+      <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+        <div class="grid grid-cols-1 md:grid-cols-4 gap-12 mb-12">
+          <div class="col-span-1 md:col-span-2">
+            <div class="flex items-center gap-3 mb-6">
+              <div class="w-10 h-10 rounded-xl bg-comelva-yellow flex items-center justify-center text-comelva-black">
+                <svg viewBox="0 0 100 100" class="w-6 h-6" aria-hidden="true" fill="none" xmlns="http://www.w3.org/2000/svg">
+                  <path d="M75 22 50 8 18 27v46l32 19 25-14" stroke="currentColor" stroke-width="10" stroke-linecap="square" stroke-linejoin="bevel" />
+                  <path d="M75 22 60 34H43L32 44v13l11 10h17l15 11" stroke="currentColor" stroke-width="5" stroke-linejoin="bevel" />
+                  <circle cx="77" cy="78" r="6" fill="currentColor" />
+                </svg>
+              </div>
+              <span class="text-2xl font-extrabold tracking-tight">comelva</span>
             </div>
-            <div class="border-t border-white/10 pt-8 flex flex-col md:flex-row items-center justify-between gap-4">
-                <div class="text-xs text-gray-500 font-medium text-center md:text-left">
-                    <p>69.355.087 HANA FERREIRA PONTE | CNPJ: 69.355.087/0001-16 | Brasília - DF</p>
-                    <p class="mt-1">&copy; 2026 Comelva. Todos os direitos reservados.</p>
-                </div>
-                <div class="flex gap-4">
-                    <!-- Pagamentos placeholder -->
-                    <div class="bg-white/10 px-3 py-1.5 rounded flex items-center text-xs font-bold text-white">PIX</div>
-                    <div class="bg-white/10 px-3 py-1.5 rounded flex items-center text-xs font-bold text-white">VISA</div>
-                    <div class="bg-white/10 px-3 py-1.5 rounded flex items-center text-xs font-bold text-white">MASTERCARD</div>
-                </div>
-            </div>
+            <p class="text-gray-400 font-medium max-w-sm mb-6">Tecnologia conectada, acessível e confiável. Mais próxima, simples e útil para a vida real.</p>
+          </div>
+
+          <div>
+            <h4 class="font-bold text-lg mb-4 text-comelva-yellow">Links Úteis</h4>
+            <ul class="space-y-3 text-sm text-gray-400 font-medium">
+              <li><a href="termos-de-uso.html" class="hover:text-white transition-colors">Termos de Uso</a></li>
+              <li><a href="politica-de-privacidade.html" class="hover:text-white transition-colors">Política de Privacidade</a></li>
+              <li><a href="#" class="hover:text-white transition-colors">Trocas e Devoluções</a></li>
+              <li><a href="#" class="hover:text-white transition-colors">Rastreie seu pedido</a></li>
+            </ul>
+          </div>
+
+          <div>
+            <h4 class="font-bold text-lg mb-4 text-comelva-yellow">Atendimento</h4>
+            <ul class="space-y-3 text-sm text-gray-400 font-medium">
+              <li>Segunda a Sexta: 09h às 18h</li>
+              <li>WhatsApp: (61) 99999-9999</li>
+              <li>contato@comelva.com.br</li>
+            </ul>
+          </div>
         </div>
+
+        <div class="border-t border-white/10 pt-8 flex flex-col md:flex-row items-center justify-between gap-4">
+          <div class="text-xs text-gray-500 font-medium text-center md:text-left">
+            <p>69.355.087 HANA FERREIRA PONTE | CNPJ: 69.355.087/0001-16 | Brasília - DF</p>
+            <p class="mt-1">&copy; 2026 Comelva. Todos os direitos reservados.</p>
+          </div>
+          <div class="flex gap-4">
+            <div class="bg-white/10 px-3 py-1.5 rounded flex items-center text-xs font-bold text-white">PIX</div>
+            <div class="bg-white/10 px-3 py-1.5 rounded flex items-center text-xs font-bold text-white">VISA</div>
+            <div class="bg-white/10 px-3 py-1.5 rounded flex items-center text-xs font-bold text-white">MASTERCARD</div>
+          </div>
+        </div>
+      </div>
     </footer>
 
-    <!-- Carrinho Drawer (Escondido por padrão) -->
     <div id="cart-drawer-overlay" class="fixed inset-0 bg-black/50 z-50 hidden opacity-0 transition-opacity backdrop-blur-sm" onclick="toggleCart()"></div>
     <div id="cart-drawer" class="fixed top-0 right-0 w-full md:w-[400px] h-full bg-white z-50 transform translate-x-full transition-transform duration-300 ease-in-out flex flex-col shadow-2xl border-l border-gray-100">
-        <!-- Header Drawer -->
-        <div class="p-6 border-b border-gray-100 flex items-center justify-between bg-comelva-alabaster">
-            <h2 class="text-2xl font-extrabold flex items-center gap-3">
-                <i data-lucide="shopping-cart" class="w-6 h-6 text-comelva-black"></i> Carrinho
-            </h2>
-            <button onclick="toggleCart()" class="w-10 h-10 rounded-full hover:bg-gray-200 flex items-center justify-center transition-colors">
-                <i data-lucide="x" class="w-5 h-5"></i>
-            </button>
-        </div>
-        
-        <!-- Lista de Itens -->
-        <div id="cart-items" class="flex-1 overflow-y-auto p-6 space-y-4">
-            <div id="empty-cart-msg" class="text-center text-gray-500 mt-12 font-medium">
-                <i data-lucide="package-open" class="w-16 h-16 mx-auto mb-4 text-gray-300"></i>
-                Seu carrinho está vazio.<br>Explore nosso catálogo!
-            </div>
-            <!-- Itens injetados via JS -->
-        </div>
+      <div class="p-6 border-b border-gray-100 flex items-center justify-between bg-comelva-alabaster">
+        <h2 class="text-2xl font-extrabold flex items-center gap-3">
+          <i data-lucide="shopping-cart" class="w-6 h-6 text-comelva-black"></i> Carrinho
+        </h2>
+        <button onclick="toggleCart()" class="w-10 h-10 rounded-full hover:bg-gray-200 flex items-center justify-center transition-colors">
+          <i data-lucide="x" class="w-5 h-5"></i>
+        </button>
+      </div>
 
-        <!-- Footer Checkout -->
-        <div class="p-6 border-t border-gray-100 bg-white">
-            <div class="flex justify-between text-gray-500 mb-2 font-medium">
-                <span>Subtotal</span>
-                <span id="cart-subtotal">R$ 0,00</span>
-            </div>
-            <div class="flex justify-between text-gray-500 mb-4 font-medium">
-                <span>Frete (DF)</span>
-                <span class="text-green-600 font-bold">Grátis</span>
-            </div>
-            <div class="flex justify-between text-2xl font-extrabold mb-6">
-                <span>Total</span>
-                <span id="cart-total">R$ 0,00</span>
-            </div>
-            <button onclick="checkout()" class="w-full bg-comelva-yellow text-comelva-black py-4 rounded-xl font-extrabold text-lg flex items-center justify-center gap-2 hover:bg-comelva-black hover:text-white transition-all">
-                <i data-lucide="message-circle" class="w-5 h-5"></i> Fechar no WhatsApp
-            </button>
+      <div id="cart-items" class="flex-1 overflow-y-auto p-6 space-y-4">
+        <div id="empty-cart-msg" class="text-center text-gray-500 mt-12 font-medium">
+          <i data-lucide="package-open" class="w-16 h-16 mx-auto mb-4 text-gray-300"></i>
+          Seu carrinho está vazio.<br />Explore nosso catálogo!
         </div>
+      </div>
+
+      <div class="p-6 border-t border-gray-100 bg-white">
+        <div class="flex justify-between text-gray-500 mb-2 font-medium">
+          <span>Subtotal</span>
+          <span id="cart-subtotal">R$ 0,00</span>
+        </div>
+        <div class="flex justify-between text-gray-500 mb-4 font-medium">
+          <span>Frete (DF)</span>
+          <span class="text-green-600 font-bold">Grátis</span>
+        </div>
+        <div class="flex justify-between text-2xl font-extrabold mb-6">
+          <span>Total</span>
+          <span id="cart-total">R$ 0,00</span>
+        </div>
+        <button onclick="checkout()" class="w-full bg-comelva-yellow text-comelva-black py-4 rounded-xl font-extrabold text-lg flex items-center justify-center gap-2 hover:bg-comelva-black hover:text-white transition-all">
+          <i data-lucide="message-circle" class="w-5 h-5"></i> Fechar no WhatsApp
+        </button>
+      </div>
     </div>
 
-    <!-- Scripts de Interatividade -->
     <script>
-        // Inicializa ícones Lucide
-        lucide.createIcons();
+      lucide.createIcons();
 
-        // Estado do carrinho
-        let cart = [];
-        const formatter = new Intl.NumberFormat('pt-BR', { style: 'currency', currency: 'BRL' });
+      let cart = [];
+      const formatter = new Intl.NumberFormat('pt-BR', { style: 'currency', currency: 'BRL' });
 
-        function toggleCart() {
-            const drawer = document.getElementById('cart-drawer');
-            const overlay = document.getElementById('cart-drawer-overlay');
-            
-            if (drawer.classList.contains('translate-x-full')) {
-                // Abrir
-                drawer.classList.remove('translate-x-full');
-                overlay.classList.remove('hidden');
-                setTimeout(() => overlay.classList.remove('opacity-0'), 10);
-            } else {
-                // Fechar
-                drawer.classList.add('translate-x-full');
-                overlay.classList.add('opacity-0');
-                setTimeout(() => overlay.classList.add('hidden'), 300);
-            }
+      function toggleCart() {
+        const drawer = document.getElementById('cart-drawer');
+        const overlay = document.getElementById('cart-drawer-overlay');
+
+        if (drawer.classList.contains('translate-x-full')) {
+          drawer.classList.remove('translate-x-full');
+          overlay.classList.remove('hidden');
+          setTimeout(() => overlay.classList.remove('opacity-0'), 10);
+        } else {
+          drawer.classList.add('translate-x-full');
+          overlay.classList.add('opacity-0');
+          setTimeout(() => overlay.classList.add('hidden'), 300);
         }
+      }
 
-        function addToCart(name, price) {
-            const existingItem = cart.find(item => item.name === name);
-            if (existingItem) {
-                existingItem.quantity += 1;
-            } else {
-                cart.push({ name, price, quantity: 1 });
-            }
+      function addToCart(name, price) {
+        const existingItem = cart.find(item => item.name === name);
+        if (existingItem) {
+          existingItem.quantity += 1;
+        } else {
+          cart.push({ name, price, quantity: 1 });
+        }
+        updateCartUI();
+        toggleCart();
+      }
+
+      function removeFromCart(name) {
+        cart = cart.filter(item => item.name !== name);
+        updateCartUI();
+      }
+
+      function changeQuantity(name, delta) {
+        const item = cart.find(i => i.name === name);
+        if (item) {
+          item.quantity += delta;
+          if (item.quantity <= 0) {
+            removeFromCart(name);
+          } else {
             updateCartUI();
-            toggleCart(); // Abre o carrinho automaticamente
+          }
+        }
+      }
+
+      function updateCartUI() {
+        const itemsContainer = document.getElementById('cart-items');
+        const emptyMsg = document.getElementById('empty-cart-msg');
+        const counter = document.getElementById('cart-counter');
+        const subtotalEl = document.getElementById('cart-subtotal');
+        const totalEl = document.getElementById('cart-total');
+
+        itemsContainer.innerHTML = '';
+
+        let totalQuantity = 0;
+        let totalPrice = 0;
+
+        if (cart.length === 0) {
+          itemsContainer.appendChild(emptyMsg);
+          emptyMsg.style.display = 'block';
+        } else {
+          emptyMsg.style.display = 'none';
+
+          cart.forEach(item => {
+            totalQuantity += item.quantity;
+            totalPrice += item.price * item.quantity;
+
+            const div = document.createElement('div');
+            div.className = 'flex items-center gap-4 bg-white border border-gray-100 p-4 rounded-xl shadow-sm';
+            div.innerHTML = `
+              <div class="w-16 h-16 bg-comelva-alabaster rounded flex items-center justify-center">
+                <i data-lucide="package" class="w-8 h-8 text-gray-400"></i>
+              </div>
+              <div class="flex-1">
+                <h4 class="font-bold text-sm line-clamp-1">${item.name}</h4>
+                <p class="font-extrabold text-comelva-black">${formatter.format(item.price)}</p>
+                <div class="flex items-center gap-3 mt-2">
+                  <button onclick="changeQuantity('${item.name}', -1)" class="w-6 h-6 bg-gray-100 rounded flex items-center justify-center font-bold">-</button>
+                  <span class="text-sm font-bold">${item.quantity}</span>
+                  <button onclick="changeQuantity('${item.name}', 1)" class="w-6 h-6 bg-gray-100 rounded flex items-center justify-center font-bold">+</button>
+                </div>
+              </div>
+            `;
+            itemsContainer.appendChild(div);
+          });
+
+          lucide.createIcons();
         }
 
-        function removeFromCart(name) {
-            cart = cart.filter(item => item.name !== name);
-            updateCartUI();
+        counter.textContent = totalQuantity;
+        subtotalEl.textContent = formatter.format(totalPrice);
+        totalEl.textContent = formatter.format(totalPrice);
+      }
+
+      function checkout() {
+        if (cart.length === 0) {
+          alert('Adicione itens ao carrinho primeiro!');
+          return;
         }
 
-        function changeQuantity(name, delta) {
-            const item = cart.find(i => i.name === name);
-            if (item) {
-                item.quantity += delta;
-                if (item.quantity <= 0) {
-                    removeFromCart(name);
-                } else {
-                    updateCartUI();
-                }
-            }
-        }
+        let text = 'Olá! Gostaria de finalizar minha compra na Comelva:\n\n';
+        cart.forEach(item => {
+          text += `- ${item.quantity}x ${item.name} (${formatter.format(item.price)})\n`;
+        });
+        text += `\nTotal: ${document.getElementById('cart-total').textContent}`;
 
-        function updateCartUI() {
-            const itemsContainer = document.getElementById('cart-items');
-            const emptyMsg = document.getElementById('empty-cart-msg');
-            const counter = document.getElementById('cart-counter');
-            const subtotalEl = document.getElementById('cart-subtotal');
-            const totalEl = document.getElementById('cart-total');
-
-            itemsContainer.innerHTML = '';
-            
-            let totalQuantity = 0;
-            let totalPrice = 0;
-
-            if (cart.length === 0) {
-                itemsContainer.appendChild(emptyMsg);
-                emptyMsg.style.display = 'block';
-            } else {
-                emptyMsg.style.display = 'none';
-                
-                cart.forEach(item => {
-                    totalQuantity += item.quantity;
-                    totalPrice += (item.price * item.quantity);
-
-                    const div = document.createElement('div');
-                    div.className = 'flex items-center gap-4 bg-white border border-gray-100 p-4 rounded-xl shadow-sm';
-                    div.innerHTML = `
-                        <div class="w-16 h-16 bg-comelva-alabaster rounded flex items-center justify-center">
-                            <i data-lucide="package" class="w-8 h-8 text-gray-400"></i>
-                        </div>
-                        <div class="flex-1">
-                            <h4 class="font-bold text-sm line-clamp-1">${item.name}</h4>
-                            <p class="font-extrabold text-comelva-black">${formatter.format(item.price)}</p>
-                            <div class="flex items-center gap-3 mt-2">
-                                <button onclick="changeQuantity('${item.name}', -1)" class="w-6 h-6 bg-gray-100 rounded flex items-center justify-center font-bold">-</button>
-                                <span class="text-sm font-bold">${item.quantity}</span>
-                                <button onclick="changeQuantity('${item.name}', 1)" class="w-6 h-6 bg-gray-100 rounded flex items-center justify-center font-bold">+</button>
-                            </div>
-                        </div>
-                    `;
-                    itemsContainer.appendChild(div);
-                });
-                
-                // Reinicializa ícones recém-criados
-                lucide.createIcons();
-            }
-
-            counter.textContent = totalQuantity;
-            subtotalEl.textContent = formatter.format(totalPrice);
-            totalEl.textContent = formatter.format(totalPrice);
-        }
-
-        function checkout() {
-            if (cart.length === 0) {
-                alert('Adicione itens ao carrinho primeiro!');
-                return;
-            }
-            let text = "Olá! Gostaria de finalizar minha compra na Comelva:\n\n";
-            cart.forEach(item => {
-                text += `- ${item.quantity}x ${item.name} (${formatter.format(item.price)})\n`;
-            });
-            text += `\nTotal: ${document.getElementById('cart-total').textContent}`;
-            
-            const encodedText = encodeURIComponent(text);
-            window.open(`https://wa.me/5561999999999?text=${encodedText}`, '_blank');
-        }
+        const encodedText = encodeURIComponent(text);
+        window.open(`https://wa.me/5561999999999?text=${encodedText}`, '_blank');
+      }
     </script>
-</body>
+  </body>
 </html>

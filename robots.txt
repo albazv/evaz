@@ -1,4 +1,4 @@
 User-agent: *
 Allow: /
 
-Sitemap: https://evaz.com.br/sitemap.xml
+Sitemap: https://www.comelva.com.br/sitemap.xml
