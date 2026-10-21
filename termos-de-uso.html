@@ -1,232 +1,211 @@
 <!DOCTYPE html>
-<html lang="pt-BR" class="dark">
-<head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Termos de Uso, Garantia e Trocas (CDC) | EVAZ · Eletro &amp; Casa</title>
-  <meta name="description" content="Termos de Uso, Política de Garantia e Direito de Arrependimento (Art. 49 do CDC) da EVAZ · Eletro & Casa (CNPJ 69.355.087/0001-16).">
-  <meta name="robots" content="index, follow">
-  <meta name="theme-color" content="#09090B">
-  <link rel="canonical" href="https://evaz.com.br/termos-de-uso.html">
-  <link rel="icon" type="image/webp" href="assets/evaz-simbolo-caixa-4k.webp">
-  <link rel="preconnect" href="https://fonts.googleapis.com">
-  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&family=JetBrains+Mono:wght@400;500;600&display=swap" rel="stylesheet">
-  <style>
-    :root {
-      --space-black: #09090B;
-      --space-gray-900: #121215;
-      --space-gray-800: #18181C;
-      --space-border: rgba(255, 255, 255, 0.08);
-      --titanium-white: #F5F5F7;
-      --space-silver: #A1A1A6;
-      --space-muted: #6E6E73;
-      --signal-orange: #F8701C;
-      --font-sans: -apple-system, BlinkMacSystemFont, "SF Pro Display", "SF Pro Text", "Inter", sans-serif;
-      --font-mono: "JetBrains Mono", ui-monospace, SFMono-Regular, Menlo, monospace;
-    }
-    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
-    body {
-      font-family: var(--font-sans);
-      background-color: var(--space-black);
-      color: var(--titanium-white);
-      line-height: 1.6;
-      text-align: start;
-      overflow-wrap: break-word;
-      -webkit-font-smoothing: antialiased;
-    }
-    h1, h2, h3 {
-      letter-spacing: -0.03em;
-      text-wrap: balance;
-    }
-    p, li {
-      text-wrap: pretty;
-      max-width: 72ch;
-    }
-    a { color: var(--signal-orange); text-decoration: none; transition: opacity 0.2s ease; }
-    a:hover { text-decoration: underline; }
-    .container { max-width: 880px; margin: 0 auto; padding: 0 24px; }
-    .site-header {
-      background: rgba(9, 9, 11, 0.78);
-      backdrop-filter: saturate(180%) blur(24px);
-      -webkit-backdrop-filter: saturate(180%) blur(24px);
-      border-bottom: 1px solid var(--space-border);
-      position: sticky;
-      top: 0;
-      z-index: 50;
-      padding: 14px 0;
-    }
-    .header-inner {
-      max-width: 1200px;
-      margin: 0 auto;
-      padding: 0 24px;
-      display: flex;
-      align-items: center;
-      justify-content: space-between;
-      gap: 16px;
-    }
-    .brand-link {
-      display: inline-flex;
-      align-items: center;
-      gap: 12px;
-      text-decoration: none !important;
-      color: var(--titanium-white);
-    }
-    .brand-link img { height: 26px; width: auto; }
-    .back-btn {
-      display: inline-flex;
-      align-items: center;
-      gap: 8px;
-      padding: 8px 18px;
-      border-radius: 999px;
-      background: var(--space-gray-800);
-      border: 1px solid rgba(255, 255, 255, 0.12);
-      color: var(--titanium-white) !important;
-      font-weight: 500;
-      font-size: 0.8125rem;
-      text-decoration: none !important;
-      transition: all 0.2s ease;
-    }
-    .back-btn:hover { background: var(--signal-orange); color: #09090B !important; border-color: var(--signal-orange); }
-    .doc-card {
-      background: linear-gradient(180deg, rgba(24, 24, 28, 0.7) 0%, rgba(18, 18, 21, 0.95) 100%);
-      border: 1px solid var(--space-border);
-      border-radius: 28px;
-      padding: 48px;
-      margin: 48px 0 64px;
-      box-shadow: inset 0 1px 0 0 rgba(255, 255, 255, 0.06);
-    }
-    .eyebrow {
-      display: inline-flex;
-      align-items: center;
-      gap: 8px;
-      padding: 5px 12px;
-      border-radius: 999px;
-      background: rgba(255, 255, 255, 0.04);
-      border: 1px solid var(--space-border);
-      color: var(--signal-orange);
-      font-family: var(--font-mono);
-      font-size: 0.72rem;
-      font-weight: 600;
-      text-transform: uppercase;
-      letter-spacing: 0.12em;
-      margin-bottom: 18px;
-    }
-    h1 {
-      font-size: clamp(1.85rem, 1.2rem + 2.5vw, 2.5rem);
-      font-weight: 700;
-      line-height: 1.12;
-      margin-bottom: 12px;
-      color: var(--titanium-white);
-    }
-    .doc-meta {
-      font-family: var(--font-mono);
-      font-size: 0.78rem;
-      color: var(--space-muted);
-      padding-bottom: 28px;
-      margin-bottom: 32px;
-      border-bottom: 1px solid var(--space-border);
-    }
-    h2 {
-      font-size: 1.2rem;
-      font-weight: 700;
-      margin: 32px 0 12px;
-      color: var(--titanium-white);
-    }
-    p, li {
-      color: var(--space-silver);
-      font-size: 0.95rem;
-      margin-bottom: 14px;
-    }
-    strong { color: var(--titanium-white); font-weight: 600; }
-    ul { padding-left: 22px; margin-bottom: 18px; }
-    .info-box {
-      background: rgba(9, 9, 11, 0.7);
-      border: 1px solid var(--space-border);
-      border-left: 3px solid var(--signal-orange);
-      border-radius: 16px;
-      padding: 20px 24px;
-      margin: 24px 0;
-    }
-    .mono { font-family: var(--font-mono); font-size: 0.86rem; color: var(--titanium-white); font-weight: 500; }
-    footer {
-      border-top: 1px solid var(--space-border);
-      padding: 32px 0 48px;
-      text-align: center;
-      font-size: 0.82rem;
-      color: var(--space-muted);
-    }
-    @media (max-width: 640px) {
-      .doc-card { padding: 28px 22px; margin: 24px 0 40px; }
-    }
-  </style>
-</head>
-<body>
-  <header class="site-header">
-    <div class="header-inner">
-      <a href="index.html" class="brand-link" aria-label="EVAZ · Página Inicial">
-        <img src="assets/evaz-logo-4k-branca-laranja.webp" alt="EVAZ · Eletro &amp; Casa" height="26">
-      </a>
-      <a href="index.html" class="back-btn">&larr; Voltar ao site</a>
-    </div>
-  </header>
-
-  <main class="container">
-    <article class="doc-card">
-      <span class="eyebrow">Transparência Comercial · Código de Defesa do Consumidor</span>
-      <h1>Termos de Uso, Garantia e Trocas</h1>
-      <div class="doc-meta">Última atualização: Outubro de 2026 · Lei nº 8.078/1990 (CDC) e Decreto nº 7.962/2013</div>
-
-      <p>Estes Termos de Uso e Condições Comerciais regulam a utilização do portal oficial da <strong>EVAZ · Eletro &amp; Casa</strong> (<span class="mono">https://evaz.com.br</span>), bem como as vendas realizadas diretamente via atendimento consultivo ou por meio de nossas lojas oficiais em marketplaces parceiros.</p>
-
-      <div class="info-box">
-        <p style="margin-bottom:6px;"><strong>Identificação da Empresa (Decreto nº 7.962/2013):</strong></p>
-        <p style="margin-bottom:4px;"><strong>Nome Fantasia:</strong> EVAZ · Eletro &amp; Casa</p>
-        <p style="margin-bottom:4px;"><strong>CNPJ:</strong> <span class="mono">69.355.087/0001-16</span></p>
-        <p style="margin-bottom:4px;"><strong>Endereço:</strong> Águas Claras, Brasília - DF, CEP 71.931-360</p>
-        <p style="margin-bottom:0;"><strong>Suporte &amp; Atendimento:</strong> <a href="mailto:contato@evaz.com.br">contato@evaz.com.br</a> · WhatsApp: <a href="https://wa.me/5561992282898">(61) 99228-2898</a></p>
+<html lang="pt-BR">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Termos de Uso | Comelva</title>
+    <meta name="description" content="Termos de uso, garantia e políticas da Comelva." />
+    <meta name="robots" content="index, follow" />
+    <meta name="theme-color" content="#111111" />
+    <link rel="canonical" href="https://www.comelva.com.br/termos-de-uso.html" />
+    <link rel="icon" href="assets/favicon.svg" type="image/svg+xml" />
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;500;700;800&display=swap" rel="stylesheet" />
+    <style>
+      :root {
+        --yellow: #FFE600;
+        --black: #111111;
+        --graphite: #303238;
+        --white: #F5F5F7;
+        --muted: #5f6470;
+        --border: rgba(17, 17, 17, 0.12);
+        --font: 'DM Sans', 'Segoe UI', sans-serif;
+      }
+      * { box-sizing: border-box; }
+      html { scroll-behavior: smooth; }
+      body {
+        margin: 0;
+        font-family: var(--font);
+        background: #fff;
+        color: var(--black);
+        line-height: 1.7;
+      }
+      a { color: var(--black); text-decoration: none; }
+      a:hover { text-decoration: underline; }
+      .container { max-width: 980px; margin: 0 auto; padding: 0 24px; }
+      .site-header {
+        position: sticky;
+        top: 0;
+        z-index: 10;
+        background: rgba(17, 17, 17, 0.96);
+        backdrop-filter: blur(12px);
+        border-bottom: 1px solid rgba(255,255,255,0.06);
+      }
+      .header-inner {
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+        min-height: 76px;
+        gap: 20px;
+      }
+      .brand {
+        display: inline-flex;
+        align-items: center;
+        gap: 12px;
+        color: white;
+        font-weight: 800;
+        font-size: 1.1rem;
+        letter-spacing: -0.04em;
+      }
+      .brand-mark {
+        display: inline-flex;
+        align-items: center;
+        justify-content: center;
+        width: 36px;
+        height: 36px;
+        border-radius: 12px;
+        background: var(--yellow);
+        color: var(--black);
+      }
+      .brand-mark svg { width: 22px; height: 22px; }
+      .back-btn {
+        display: inline-flex;
+        align-items: center;
+        justify-content: center;
+        padding: 10px 18px;
+        border-radius: 999px;
+        background: rgba(255,255,255,0.05);
+        border: 1px solid rgba(255,255,255,0.12);
+        color: white;
+        font-weight: 700;
+        font-size: 0.85rem;
+      }
+      .doc-card {
+        margin: 42px auto 72px;
+        border: 1px solid var(--border);
+        border-radius: 28px;
+        padding: clamp(24px, 4vw, 52px);
+        background: linear-gradient(180deg, #fff 0%, #f9f9f9 100%);
+      }
+      .eyebrow {
+        display: inline-block;
+        padding: 7px 12px;
+        border-radius: 999px;
+        background: var(--yellow);
+        color: var(--black);
+        font-size: 0.72rem;
+        font-weight: 800;
+        letter-spacing: 0.12em;
+        text-transform: uppercase;
+        margin-bottom: 18px;
+      }
+      h1 {
+        font-size: clamp(2rem, 3vw, 3.1rem);
+        line-height: 1.08;
+        letter-spacing: -0.05em;
+        margin: 0 0 18px;
+      }
+      .doc-meta {
+        color: var(--muted);
+        font-size: 0.85rem;
+        margin-bottom: 26px;
+        padding-bottom: 18px;
+        border-bottom: 1px solid var(--border);
+      }
+      h2 {
+        font-size: 1.25rem;
+        margin: 32px 0 12px;
+        line-height: 1.25;
+      }
+      p, li {
+        color: #2e3138;
+        font-size: 1rem;
+      }
+      ul { padding-left: 1.2rem; }
+      .info-box {
+        background: #fff;
+        border: 1px solid var(--border);
+        border-left: 4px solid var(--yellow);
+        border-radius: 18px;
+        padding: 20px 22px;
+        margin: 24px 0;
+      }
+      strong { color: var(--black); }
+      footer {
+        background: #111111;
+        color: rgba(255,255,255,0.7);
+        padding: 32px 0 46px;
+      }
+      footer p { margin: 0; }
+      @media (max-width: 640px) {
+        .header-inner { min-height: 70px; }
+        .back-btn { padding: 9px 12px; font-size: 0.76rem; }
+      }
+    </style>
+  </head>
+  <body>
+    <header class="site-header">
+      <div class="container header-inner">
+        <a href="index.html" class="brand" aria-label="Comelva - Página Inicial">
+          <span class="brand-mark" aria-hidden="true">
+            <svg viewBox="0 0 100 100" fill="none" xmlns="http://www.w3.org/2000/svg">
+              <path d="M75 22 50 8 18 27v46l32 19 25-14" stroke="currentColor" stroke-width="10" stroke-linecap="square" stroke-linejoin="bevel" />
+              <path d="M75 22 60 34H43L32 44v13l11 10h17l15 11" stroke="currentColor" stroke-width="5" stroke-linejoin="bevel" />
+              <circle cx="77" cy="78" r="6" fill="currentColor" />
+            </svg>
+          </span>
+          comelva
+        </a>
+        <a href="index.html" class="back-btn">← Voltar ao site</a>
       </div>
+    </header>
 
-      <h2>1. Originalidade, Procedência e Documentação Fiscal</h2>
-      <p>A EVAZ comercializa exclusivamente produtos novos, originais, lacrados de fábrica e kits autorais da linha EVAZ Originals:</p>
-      <ul>
-        <li><strong>Nota Fiscal Eletrônica:</strong> Todos os pedidos são despachados acompanhados de sua respectiva Nota Fiscal Eletrônica oficial (DANFE e XML), assegurando procedência e cobertura de garantia no Brasil.</li>
-        <li><strong>Lacre de Autenticidade EVAZ Originals:</strong> Os kits da linha autoral EVAZ passam por inspeção individual de qualidade antes do envio e recebem lacre de segurança numerado.</li>
-      </ul>
+    <main class="container">
+      <article class="doc-card">
+        <span class="eyebrow">Política comercial</span>
+        <h1>Termos de Uso e Garantia</h1>
+        <div class="doc-meta">Última atualização: Outubro de 2026 · Comelva</div>
 
-      <h2>2. Prazos de Expedição e Entrega</h2>
-      <ul>
-        <li><strong>Horário de Corte (12h):</strong> Pedidos com pagamento confirmado até as 12h00 (horário de Brasília) em dias úteis são inspecionados e despachados no mesmo dia útil a partir de nossa operação em Águas Claras, Brasília - DF.</li>
-        <li><strong>Rastreamento:</strong> O código de rastreio e a Nota Fiscal Eletrônica são disponibilizados ao comprador assim que a encomenda é despachada.</li>
-      </ul>
+        <p>Estes Termos de Uso regulam o uso do site oficial da <strong>Comelva</strong> e o relacionamento comercial entre a empresa e os clientes. Ao acessar, navegar ou comprar em nossa loja, você concorda com as condições descritas abaixo.</p>
 
-      <h2>3. Direito de Arrependimento (Art. 49 do CDC)</h2>
-      <p>Em total conformidade com o artigo 49 do Código de Defesa do Consumidor (Lei nº 8.078/1990), o consumidor possui o prazo de <strong>7 (sete) dias corridos</strong>, contados a partir do recebimento físico do produto, para exercer o direito de arrependimento em compras realizadas fora do estabelecimento comercial:</p>
-      <ul>
-        <li>A devolução é <strong>100% gratuita</strong> e garante o reembolso integral dos valores pagos.</li>
-        <li>O produto deve ser devolvido em sua embalagem original, com todos os acessórios, manuais, lacres intactos e acompanhado da Nota Fiscal.</li>
-      </ul>
+        <div class="info-box">
+          <p><strong>Identificação da empresa:</strong></p>
+          <p><strong>Nome Fantasia:</strong> Comelva</p>
+          <p><strong>CNPJ:</strong> 69.355.087/0001-16</p>
+          <p><strong>Localização:</strong> Brasília - DF</p>
+          <p><strong>Contato:</strong> contato@comelva.com.br · WhatsApp: (61) 99999-9999</p>
+        </div>
 
-      <h2>4. Garantia Legal e Contratual (Art. 26 do CDC)</h2>
-      <ul>
-        <li><strong>Garantia Legal de 90 dias:</strong> Todos os produtos duráveis comercializados pela EVAZ contam com garantia legal mínima de 90 (noventa) dias contra vícios ou defeitos de fabricação, contados da data de entrega efetiva do produto (Art. 26, II do CDC).</li>
-        <li><strong>Garantia Contratual do Fabricante:</strong> Para marcas parceiras que oferecem garantia contratual complementar no Brasil (como Logitech e Amazon), a Nota Fiscal Eletrônica emitida pela EVAZ (<span class="mono">CNPJ 69.355.087/0001-16</span>) é o documento oficial exigido pelo fabricante para acionamento de suporte em território nacional.</li>
-        <li><strong>Suporte Direto EVAZ:</strong> Em qualquer necessidade de suporte técnico, configuração ou acionamento de garantia, nossa equipe atende diretamente pelo WhatsApp <a href="https://wa.me/5561992282898">(61) 99228-2898</a>.</li>
-      </ul>
+        <h2>1. Produtos e procedência</h2>
+        <p>A Comelva comercializa produtos novos, originais e devidamente acondicionados para entrega. Todo pedido é acompanhado de nota fiscal eletrônica e informações de rastreio sempre que aplicável.</p>
 
-      <h2>5. Propriedade Intelectual</h2>
-      <p>A marca <strong>EVAZ™</strong>, sua identidade visual, textos editoriais, fotografias autorais e o design dos Kits EVAZ Originals são de titularidade exclusiva da <strong>EVAZ · Eletro &amp; Casa</strong>. As marcas de terceiros citadas no catálogo (como Logitech, Logitech G, Amazon, Alexa e Echo Dot) pertencem aos seus respectivos fabricantes e são utilizadas estritamente para identificação técnica de produtos originais.</p>
+        <h2>2. Prazos de envio</h2>
+        <ul>
+          <li>Pedidos confirmados em dias úteis geralmente são processados no mesmo dia ou em até 24h.</li>
+          <li>O prazo final de entrega pode variar conforme a região e a transportadora.</li>
+          <li>Você receberá acompanhamento por e-mail ou WhatsApp com dados do rastreio.</li>
+        </ul>
 
-      <h2>6. Foro</h2>
-      <p>Fica eleito o foro da Circunscrição Judiciária de Águas Claras — Brasília/DF ou o foro do domicílio do consumidor (conforme Art. 101, I do CDC) para dirimir eventuais controvérsias oriundas destes Termos.</p>
-    </article>
-  </main>
+        <h2>3. Direito de arrependimento</h2>
+        <p>O cliente terá direito ao arrependimento em até 7 dias corridos após o recebimento do produto, conforme legislação vigente, desde que o item esteja em condições de revenda, sem uso e com embalagem original.</p>
 
-  <footer>
-    <div class="container">
-      <p><strong>EVAZ™ · Eletro &amp; Casa</strong> — CNPJ 69.355.087/0001-16 · Brasília - DF</p>
-      <p style="margin-top:8px;"><a href="index.html">Página Inicial</a> &nbsp;·&nbsp; <a href="politica-de-privacidade.html">Política de Privacidade (LGPD)</a></p>
-    </div>
-  </footer>
-</body>
+        <h2>4. Garantia</h2>
+        <p>A Comelva garante a qualidade dos produtos vendidos em conformidade com a legislação e com as políticas dos fabricantes. Casos o item apresente defeito, o cliente pode solicitar atendimento por meio do WhatsApp ou e-mail oficial.</p>
+
+        <h2>5. Propriedade intelectual</h2>
+        <p>Todos os textos, elementos visuais, marcas, logotipos, textos institucionais e layouts do site são de propriedade da Comelva ou utilizados com autorização. É proibida a reprodução sem autorização prévia.</p>
+
+        <h2>6. Foro</h2>
+        <p>Qualquer controvérsia relacionada a estes termos será resolvida no foro da Comarca de Brasília/DF, conforme legislação aplicável.</p>
+      </article>
+    </main>
+
+    <footer>
+      <div class="container">
+        <p><strong>Comelva</strong> — CNPJ 69.355.087/0001-16 · Brasília - DF</p>
+        <p style="margin-top:10px;"><a href="index.html" style="color:#fff;">Página Inicial</a> · <a href="politica-de-privacidade.html" style="color:#fff;">Política de Privacidade</a></p>
+      </div>
+    </footer>
+  </body>
 </html>
