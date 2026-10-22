@@ -93,6 +93,7 @@
             <a href="#armazenamento" class="hover:text-comelva-yellow transition-colors">Armazenamento</a>
             <a href="#cabos-conexoes" class="hover:text-comelva-yellow transition-colors">Cabos &amp; Conexões</a>
             <a href="#originais" class="hover:text-comelva-yellow transition-colors">Linha Originals</a>
+            <a href="#mercado-livre" class="hidden xl:inline hover:text-comelva-yellow transition-colors">Logitech</a>
           </nav>
 
           <div class="flex items-center gap-6">
@@ -234,6 +235,16 @@
       </div>
     </section>
 
+    <section id="mercado-livre" class="bg-comelva-alabaster border-y border-gray-200 py-20">
+      <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+        <div class="mb-10">
+          <h2 class="text-4xl font-extrabold tracking-tight">Logitech no Mercado Livre</h2>
+          <p class="text-gray-500 mt-2 font-medium">Confira preços e disponibilidade diretamente nos anúncios.</p>
+        </div>
+        <div id="mercado-livre-products" class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-6"></div>
+      </div>
+    </section>
+
     <section class="bg-white border-t border-gray-200 py-16">
       <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 grid grid-cols-1 md:grid-cols-3 gap-8 text-center">
         <div class="flex flex-col items-center">
@@ -349,6 +360,75 @@
     </div>
 
     <script>
+      const mercadoLivreProducts = [
+        { name: 'Headset sem fio Logitech G Astro A50 (5ª geração) branco', type: 'headphones', url: 'https://produto.mercadolivre.com.br/MLB-7853276482-fone-de-ouvido-sem-fio-logitech-g-astro-a50-a50-5-gen-branco-_JM' },
+        { name: 'Mouse gamer Logitech G PRO X2 Superstrike branco e preto', type: 'mouse', image: 'assets/produto-logitech-pro-x2-superstrike.webp', url: 'https://produto.mercadolivre.com.br/MLB-7846718350-mouse-gamer-sem-fio-logitech-g-pro-x2-superstrike-lightspeed-branco-com-preto-_JM' },
+        { name: 'Combo teclado e mouse Logitech MK250 grafite', type: 'keyboard', image: 'assets/produto-logitech-mk250-combo.webp', url: 'https://produto.mercadolivre.com.br/MLB-7751755716-combo-teclado-e-mouse-sem-fio-logitech-mk250-grafite-_JM' },
+        { name: 'Teclado gamer Logitech G PRO X TKL preto (US)', type: 'keyboard', url: 'https://produto.mercadolivre.com.br/MLB-7847653714-teclado-gamer-sem-fio-logitech-g-pro-x-tkl-preto-ingls-us-_JM' },
+        { name: 'Teclado gamer Logitech G PRO X TKL rosa magenta (US)', type: 'keyboard', image: 'assets/produto-logitech-g-pro-x-tkl-magenta.webp', url: 'https://produto.mercadolivre.com.br/MLB-7764672374-teclado-gamer-sem-fio-logitech-g-pro-x-tkl-rosa-magenta-ingls-us-_JM' },
+        { name: 'Teclado gamer Logitech PRO X RGB Lightspeed rosa chiclete (US)', type: 'keyboard', image: 'assets/produto-logitech-g-pro-x-tkl-magenta.webp', url: 'https://produto.mercadolivre.com.br/MLB-7764659668-teclado-para-jogos-sem-fio-logitech-pro-x-rgb-lightspeed-prm-pink-chewing-gum-idioma-ingls-eua-rosa-chiclete-ingls-us-_JM' },
+        { name: 'Mouse vertical ergonômico Logitech Lift branco', type: 'mouse', url: 'https://produto.mercadolivre.com.br/MLB-7847523090-mouse-logitech-serie-ergo-mouse-gamer-logitech-lift-vertical-wireless-ergonmico-branco-_JM' },
+        { name: 'Mouse sem fio Logitech M240 grafite', type: 'mouse', url: 'https://produto.mercadolivre.com.br/MLB-7847529792-mouse-sem-fio-bluetooth-logitech-m240-grafite-_JM' },
+        { name: 'Teclado mecânico gamer Logitech G915 TKL branco (US)', type: 'keyboard', url: 'https://produto.mercadolivre.com.br/MLB-7847647478-teclado-mecnico-gamer-sem-fio-logitech-g915-tkl-branco-ingls-us-_JM' },
+        { name: 'Mouse Logitech MX Anywhere 3S grafite', type: 'mouse', url: 'https://produto.mercadolivre.com.br/MLB-5426361597-910-006960-mouse-mx-anywhere-3s-grafite-color-black-preto-_JM' },
+        { name: 'Mouse sem fio Logitech M185 cinza', type: 'mouse', url: 'https://produto.mercadolivre.com.br/MLB-7847562188-mouse-sem-fio-logitech-m185-cinza-_JM' },
+        { name: 'Mouse sem fio Logitech Pebble M350s grafite', type: 'mouse', url: 'https://produto.mercadolivre.com.br/MLB-5426445073-mouse-sem-fio-logitech-pebble-m350s-grafite-_JM' },
+        { name: 'Mouse gamer Logitech G703 Lightspeed RGB preto', type: 'mouse', url: 'https://produto.mercadolivre.com.br/MLB-7847471758-mouse-gamer-sem-fio-logitech-g703-lightspeed-rgb-lightsync-6-botoes-programaveis-sensor-hero-25k-recarregavel-compativel-powerplay-preto-_JM' },
+        { name: 'Mouse gamer Logitech G PRO X Superlight 2 preto', type: 'mouse', url: 'https://produto.mercadolivre.com.br/MLB-5425811059-mouse-gamer-sem-fio-logitech-g-pro-x-superlight-2-lightspeed-switch-lightforce-sensor-44k-dpi-5-botoes-programaveis-recarregavel-preto-_JM' },
+        { name: 'Mouse gamer Logitech G PRO X Superlight 2 branco', type: 'mouse', url: 'https://produto.mercadolivre.com.br/MLB-7847032692-mouse-gamer-sem-fio-logitech-g-pro-x-superlight-2-lightspeed-switch-lightforce-sensor-44k-dpi-5-botoes-programaveis-recarregavel-branco-_JM' },
+        { name: 'Mouse gamer Logitech G305 branco', type: 'mouse', url: 'https://produto.mercadolivre.com.br/MLB-5426250949-mouse-gamer-logitech-g-series-lightspeed-g305-branco-_JM' },
+        { name: 'Mouse sem fio Logitech G305 preto', type: 'mouse', url: 'https://produto.mercadolivre.com.br/MLB-7847403870-mouse-sem-fio-logitech-g-series-lightspeed-g305-black-_JM' },
+        { name: 'Mouse sem fio Logitech G305 preto', type: 'mouse', url: 'https://produto.mercadolivre.com.br/MLB-5426238523-mouse-sem-fio-logitech-g-series-lightspeed-g305-black-_JM' },
+        { name: 'Mouse gamer Logitech G PRO 2 Lightspeed branco', type: 'mouse', url: 'https://produto.mercadolivre.com.br/MLB-5426216933-mouse-gamer-sem-fio-logitech-g-pro-2-lightspeed-para-destros-ou-canhotos-4-botoes-programaveis-sensor-hero-2-44k-dpi-pcmac-branco-_JM' },
+        { name: 'Mouse gamer Logitech G PRO 2 Lightspeed preto', type: 'mouse', url: 'https://produto.mercadolivre.com.br/MLB-7847319590-mouse-gamer-sem-fio-logitech-g-pro-2-lightspeed-para-destros-ou-canhotos-4-botoes-programaveis-sensor-hero-2-44k-dpi-pcmac-preto-_JM' },
+        { name: 'Mouse sem fio Logitech MX Master 3S preto', type: 'mouse', url: 'https://produto.mercadolivre.com.br/MLB-7847477362-mouse-sem-fio-logitech-mx-master-3s-preto-_JM' },
+        { name: 'Mouse sem fio Logitech MX Master 3S grafite', type: 'mouse', url: 'https://produto.mercadolivre.com.br/MLB-7847465258-mouse-sem-fio-logitech-mx-master-3s-grafite-_JM' },
+        { name: 'Mouse sem fio Logitech MX Master 3S cinza claro', type: 'mouse', url: 'https://produto.mercadolivre.com.br/MLB-5426302875-mouse-sem-fio-logitech-mx-master-3s-cinza-claro-_JM' },
+        { name: 'Mouse gamer Logitech G502 X Lightspeed preto', type: 'mouse', url: 'https://produto.mercadolivre.com.br/MLB-7847412564-mouse-gamer-logitech-g-g502-x-lightspeed-sem-fio-preto-_JM' },
+        { name: 'Mouse gamer Logitech G502 X Lightspeed branco', type: 'mouse', url: 'https://produto.mercadolivre.com.br/MLB-7847467228-mouse-logitech-g-g-series-g502-x-lightspeed-branco-_JM' }
+      ];
+
+      const marketplaceGrid = document.getElementById('mercado-livre-products');
+      mercadoLivreProducts.forEach(product => {
+        const card = document.createElement('article');
+        card.className = 'bg-white rounded-2xl border border-gray-200 p-5 hover:shadow-xl transition-shadow flex flex-col';
+
+        const imageArea = document.createElement('div');
+        imageArea.className = 'aspect-square bg-comelva-alabaster rounded-xl mb-5 flex items-center justify-center overflow-hidden';
+        if (product.image) {
+          const image = document.createElement('img');
+          image.src = product.image;
+          image.alt = product.name;
+          image.className = 'w-full h-full object-contain p-3';
+          imageArea.appendChild(image);
+        } else {
+          const icon = document.createElement('i');
+          icon.dataset.lucide = product.type;
+          icon.className = 'w-16 h-16 text-gray-300';
+          imageArea.appendChild(icon);
+        }
+        card.appendChild(imageArea);
+
+        const title = document.createElement('h3');
+        title.className = 'text-lg font-bold tracking-tight';
+        title.textContent = product.name;
+        card.appendChild(title);
+
+        const priceNote = document.createElement('p');
+        priceNote.className = 'text-sm text-gray-500 mt-2 mb-5';
+        priceNote.textContent = 'Consulte preço e disponibilidade no anúncio.';
+        card.appendChild(priceNote);
+
+        const link = document.createElement('a');
+        link.href = product.url;
+        link.target = '_blank';
+        link.rel = 'noopener noreferrer';
+        link.className = 'mt-auto bg-comelva-black text-white px-4 py-3 rounded-xl font-bold text-center hover:bg-comelva-yellow hover:text-comelva-black transition-all';
+        link.textContent = 'Ver no Mercado Livre';
+        card.appendChild(link);
+        marketplaceGrid.appendChild(card);
+      });
+
       lucide.createIcons();
 
       let cart = [];
