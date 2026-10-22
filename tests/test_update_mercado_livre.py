@@ -65,30 +65,101 @@ class MercadoLivreUpdaterTests(unittest.TestCase):
         self.assertEqual(updated_products[0].image, "assets/images/mercado-livre/headset-MLB-7853276482-01.webp")
         self.assertEqual([product.image for product in updated_products[1:]], [product.image for product in products[1:]])
 
-    def test_product_image_requires_matching_listing_and_model_identity(self):
-        page = b"""
-        <html><head>
-          <link rel="canonical" href="https://produto.mercadolivre.com.br/MLB-7847529792-m240">
-          <meta property="og:title" content="Mouse sem fio Logitech M240 grafite">
-          <meta property="og:image" content="https://http2.mlstatic.com/m240.webp">
-        </head></html>
+    def test_public_store_listing_image_is_matched_to_exact_model_and_variant(self):
+        markup = """
+        <ul>
+          <li class="item product product-item">
+            <div class="product-item-info">
+              <a class="product photo product-item-photo" href="https://www.logitechstore.com.br/g305-preto/">
+                <img src="https://www.logitechstore.com.br/media/catalog/product/g305_black.webp"
+                     alt="Mouse sem fio Logitech G305 preto">
+              </a>
+              <a class="product-item-link" href="https://www.logitechstore.com.br/g305-preto/">
+                Mouse sem fio Logitech G305 preto
+              </a>
+            </div>
+          </li>
+        </ul>
         """
-        matches = updater._image_candidates(
-            page,
-            "https://produto.mercadolivre.com.br/MLB-7847529792-m240",
-            "MLB-7847529792",
-            "Mouse sem fio Logitech M240 grafite",
+        products = updater.parse_store_products(markup, "https://www.logitechstore.com.br/gaming")
+        target = next(
+            product
+            for product in updater.parse_products((ROOT / "index.html").read_text(encoding="utf-8"))
+            if "G305 preto" in product.name
         )
-        self.assertEqual(matches, ["https://http2.mlstatic.com/m240.webp"])
 
-        page = page.replace(b"Logitech M240", b"Logitech M185")
-        with self.assertRaisesRegex(ValueError, "sem imagem de produto verificável"):
-            updater._image_candidates(
-                page,
-                "https://produto.mercadolivre.com.br/MLB-7847529792-m240",
-                "MLB-7847529792",
-                "Mouse sem fio Logitech M240 grafite",
-            )
+        match = updater.find_store_product(products, target)
+
+        self.assertIsNotNone(match)
+        self.assertEqual(match.image_url, "https://www.logitechstore.com.br/media/catalog/product/g305_black.webp")
+
+        repeated_listing = updater.StoreProduct(
+            "Mouse sem fio Logitech G305 preto promoção",
+            "https://www.logitechstore.com.br/g305-preto/",
+            "https://www.logitechstore.com.br/media/catalog/product/cache/other/g305_black.webp",
+        )
+        self.assertEqual(
+            updater.find_store_product(products + [repeated_listing], target),
+            match,
+        )
+
+        wrong_variant = markup.replace("g305-preto", "g305-branco").replace("G305 preto", "G305 branco")
+        wrong_products = updater.parse_store_products(wrong_variant, "https://www.logitechstore.com.br/gaming")
+        self.assertIsNone(updater.find_store_product(wrong_products, target))
+
+    def test_store_category_discovery_uses_public_navigation_and_excludes_search(self):
+        markup = """
+        <nav class="navigation">
+          <a href="https://www.logitechstore.com.br/gaming">Gaming</a>
+          <a href="/todas-as-categorias/mouse/">Mouse</a>
+          <a href="/catalogsearch/result/?q=mouse">Busca</a>
+          <a href="https://other.example/catalog">External</a>
+        </nav>
+        """
+
+        categories = updater.extract_store_categories(markup, "https://www.logitechstore.com.br/")
+
+        self.assertEqual(
+            categories,
+            [
+                "https://www.logitechstore.com.br/gaming",
+                "https://www.logitechstore.com.br/todas-as-categorias/mouse",
+            ],
+        )
+        self.assertTrue(updater._is_disallowed_store_path("https://www.logitechstore.com.br/catalogsearch/result/?q=mouse"))
+        self.assertFalse(updater._is_disallowed_store_path("https://www.logitechstore.com.br/gaming?p=2"))
+
+    def test_store_pagination_only_follows_public_page_number_links(self):
+        markup = """
+        <nav class="pages-items">
+          <a href="https://www.logitechstore.com.br/gaming?product_list_order=price&amp;p=2">2</a>
+          <a href="https://www.logitechstore.com.br/gaming?p=1">1</a>
+          <a href="https://www.logitechstore.com.br/gaming?dir=asc">Ordenar</a>
+          <a href="https://www.logitechstore.com.br/catalogsearch/result/?q=mouse&p=2">Busca</a>
+        </nav>
+        """
+
+        self.assertEqual(
+            updater.extract_store_page_links(markup, "https://www.logitechstore.com.br/gaming"),
+            ["https://www.logitechstore.com.br/gaming?p=2"],
+        )
+
+    def test_catalog_scan_prioritizes_categories_for_product_types(self):
+        products = updater.parse_products((ROOT / "index.html").read_text(encoding="utf-8"))
+        categories = [
+            "https://www.logitechstore.com.br/gaming",
+            "https://www.logitechstore.com.br/gaming/mouses",
+            "https://www.logitechstore.com.br/gaming/volantes/",
+            "https://www.logitechstore.com.br/audio/headsets/",
+            "https://www.logitechstore.com.br/exclusivos/",
+        ]
+
+        relevant = updater._relevant_store_categories(categories, products)
+
+        self.assertIn("https://www.logitechstore.com.br/gaming/mouses", relevant)
+        self.assertIn("https://www.logitechstore.com.br/audio/headsets/", relevant)
+        self.assertNotIn("https://www.logitechstore.com.br/gaming/volantes/", relevant)
+        self.assertNotIn("https://www.logitechstore.com.br/exclusivos/", relevant)
 
     def test_variant_color_must_match_before_using_listing_image(self):
         self.assertFalse(
