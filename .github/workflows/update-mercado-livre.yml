@@ -1,0 +1,49 @@
+name: Atualizar imagens do Mercado Livre
+
+on:
+  schedule:
+    - cron: "17 6 * * *"
+  workflow_dispatch:
+
+permissions:
+  contents: write
+
+concurrency:
+  group: mercado-livre-images-${{ github.ref }}
+  cancel-in-progress: false
+
+jobs:
+  update-products:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - name: Configure Python
+        uses: actions/setup-python@v5
+        with:
+          python-version: "3.12"
+
+      - name: Install test dependencies
+        run: python -m pip install --disable-pip-version-check -r requirements-dev.txt
+
+      - name: Run automated tests
+        run: python -m pytest
+
+      - name: Dry run
+        run: python scripts/update_mercado_livre.py --dry-run
+
+      - name: Update public product images
+        run: python scripts/update_mercado_livre.py
+
+      - name: Commit confirmed image updates
+        run: |
+          git add -- index.html assets/images/mercado-livre/
+          if git diff --cached --quiet; then
+            echo "Nenhuma imagem ou informação nova para commit."
+            exit 0
+          fi
+          git config user.name "github-actions[bot]"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          git commit -m "Atualiza imagens dos produtos do Mercado Livre"
+          git push origin "HEAD:${GITHUB_REF_NAME}"

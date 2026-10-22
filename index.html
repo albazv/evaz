@@ -366,7 +366,7 @@
         { name: 'Combo teclado e mouse Logitech MK250 grafite', type: 'keyboard', image: 'assets/produto-logitech-mk250-combo.webp', url: 'https://produto.mercadolivre.com.br/MLB-7751755716-combo-teclado-e-mouse-sem-fio-logitech-mk250-grafite-_JM' },
         { name: 'Teclado gamer Logitech G PRO X TKL preto (US)', type: 'keyboard', url: 'https://produto.mercadolivre.com.br/MLB-7847653714-teclado-gamer-sem-fio-logitech-g-pro-x-tkl-preto-ingls-us-_JM' },
         { name: 'Teclado gamer Logitech G PRO X TKL rosa magenta (US)', type: 'keyboard', image: 'assets/produto-logitech-g-pro-x-tkl-magenta.webp', url: 'https://produto.mercadolivre.com.br/MLB-7764672374-teclado-gamer-sem-fio-logitech-g-pro-x-tkl-rosa-magenta-ingls-us-_JM' },
-        { name: 'Teclado gamer Logitech PRO X RGB Lightspeed rosa chiclete (US)', type: 'keyboard', image: 'assets/produto-logitech-g-pro-x-tkl-magenta.webp', url: 'https://produto.mercadolivre.com.br/MLB-7764659668-teclado-para-jogos-sem-fio-logitech-pro-x-rgb-lightspeed-prm-pink-chewing-gum-idioma-ingls-eua-rosa-chiclete-ingls-us-_JM' },
+        { name: 'Teclado gamer Logitech PRO X RGB Lightspeed rosa chiclete (US)', type: 'keyboard', url: 'https://produto.mercadolivre.com.br/MLB-7764659668-teclado-para-jogos-sem-fio-logitech-pro-x-rgb-lightspeed-prm-pink-chewing-gum-idioma-ingls-eua-rosa-chiclete-ingls-us-_JM' },
         { name: 'Mouse vertical ergonômico Logitech Lift branco', type: 'mouse', url: 'https://produto.mercadolivre.com.br/MLB-7847523090-mouse-logitech-serie-ergo-mouse-gamer-logitech-lift-vertical-wireless-ergonmico-branco-_JM' },
         { name: 'Mouse sem fio Logitech M240 grafite', type: 'mouse', url: 'https://produto.mercadolivre.com.br/MLB-7847529792-mouse-sem-fio-bluetooth-logitech-m240-grafite-_JM' },
         { name: 'Teclado mecânico gamer Logitech G915 TKL branco (US)', type: 'keyboard', url: 'https://produto.mercadolivre.com.br/MLB-7847647478-teclado-mecnico-gamer-sem-fio-logitech-g915-tkl-branco-ingls-us-_JM' },
@@ -400,6 +400,8 @@
           image.src = product.image;
           image.alt = product.name;
           image.className = 'w-full h-full object-contain p-3';
+          image.loading = 'lazy';
+          image.decoding = 'async';
           imageArea.appendChild(image);
         } else {
           const icon = document.createElement('i');
