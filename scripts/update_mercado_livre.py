@@ -1,5 +1,5 @@
 #!/usr/bin/env python3
-"""Download only product images verifiably associated with Mercado Livre listings."""
+"""Update Mercado Livre product cards with matching images from Logitech's public catalog."""
 
 from __future__ import annotations
 
@@ -9,6 +9,7 @@ import html
 import json
 import os
 import re
+import ssl
 import sys
 import tempfile
 import time
@@ -19,9 +20,11 @@ from html.parser import HTMLParser
 from pathlib import Path
 from typing import Any
 from urllib.error import HTTPError, URLError
-from urllib.parse import urljoin, urlparse
-from urllib.request import HTTPRedirectHandler, Request, build_opener
+from urllib.parse import parse_qsl, urlencode, urljoin, urlparse, urlunparse
+from urllib.request import HTTPRedirectHandler, HTTPSHandler, Request, build_opener
 from urllib.robotparser import RobotFileParser
+
+import certifi
 
 
 ROOT = Path(__file__).resolve().parents[1]
@@ -32,6 +35,10 @@ REQUEST_TIMEOUT = 12
 MAX_PAGE_BYTES = 5 * 1024 * 1024
 MAX_IMAGE_BYTES = 15 * 1024 * 1024
 USER_AGENT = "ComelvaCatalogUpdater/1.0 (public listing image metadata)"
+LOGITECH_ORIGIN = "https://www.logitechstore.com.br"
+LOGITECH_HOSTS = {"www.logitechstore.com.br", "logitechstore.com.br"}
+MAX_CATALOG_PAGES = 300
+REQUEST_DELAY = 0.8
 ALLOWED_HOST_SUFFIXES = (".mercadolivre.com.br", ".mercadolibre.com", ".mlstatic.com")
 ALLOWED_HOSTS = {"mercadolivre.com.br", "mercadolibre.com", "mlstatic.com"}
 GENERIC_MODEL_WORDS = {
@@ -72,6 +79,118 @@ class Product:
     image: str | None
     listing_id: str | None
     error: str | None = None
+
+
+@dataclass(frozen=True)
+class StoreProduct:
+    name: str
+    product_url: str
+    image_url: str
+
+
+class StorePageParser(HTMLParser):
+    VOID_ELEMENTS = {
+        "area", "base", "br", "col", "embed", "hr", "img", "input", "link",
+        "meta", "param", "source", "track", "wbr",
+    }
+
+    def __init__(self, page_url: str) -> None:
+        super().__init__(convert_charrefs=True)
+        self.page_url = page_url
+        self.categories: list[str] = []
+        self.page_links: list[str] = []
+        self.products: list[StoreProduct] = []
+        self._stack: list[str] = []
+        self._in_navigation = 0
+        self._card: dict[str, Any] | None = None
+        self._anchor_href: str | None = None
+
+    def handle_starttag(self, tag: str, attrs: list[tuple[str, str | None]]) -> None:
+        values = {key.lower(): value for key, value in attrs if value is not None}
+        classes = set((values.get("class") or "").lower().split())
+        if tag == "nav" and "navigation" in classes:
+            self._in_navigation += 1
+        if self._in_navigation and tag == "a" and values.get("href"):
+            url = urljoin(self.page_url, values["href"])
+            if _allowed_store_url(url) and not _is_disallowed_store_path(url):
+                self.categories.append(url)
+
+        if tag == "a":
+            href = values.get("href")
+            self._anchor_href = urljoin(self.page_url, href) if href else None
+        if self._card is None and (
+            (tag == "li" and "product-item" in classes)
+            or (tag == "div" and "product-item-info" in classes)
+        ):
+            self._card = {"tag": tag, "depth": len(self._stack) + 1, "text": [], "images": [], "links": []}
+        elif self._card is not None and tag == "a" and self._anchor_href:
+            if "product-item-link" in classes or "product-item-photo" in classes or "product-photo" in classes:
+                self._card["links"].append(self._anchor_href)
+
+        if self._card is not None and tag == "img":
+            image_url = self._image_src(values)
+            if image_url:
+                self._card["images"].append(image_url)
+
+        for key in ("href", "data-href"):
+            href = values.get(key)
+            if href:
+                absolute = urljoin(self.page_url, href)
+                parsed = urlparse(absolute)
+                query = dict(parse_qsl(parsed.query))
+                if (
+                    _allowed_store_url(absolute)
+                    and not _is_disallowed_store_path(absolute)
+                    and parsed.path.rstrip("/") == urlparse(self.page_url).path.rstrip("/")
+                    and query.get("p", "").isdigit()
+                ):
+                    self.page_links.append(absolute)
+
+        if tag not in self.VOID_ELEMENTS:
+            self._stack.append(tag)
+
+    def handle_endtag(self, tag: str) -> None:
+        if tag == "nav" and self._in_navigation:
+            self._in_navigation -= 1
+        if self._card is not None and tag == self._card["tag"] and len(self._stack) == self._card["depth"]:
+            links = list(dict.fromkeys(self._card["links"]))
+            images = list(dict.fromkeys(self._card["images"]))
+            if links and images:
+                title = " ".join(self._card["text"])
+                for link in links:
+                    for image_url in images:
+                        self.products.append(StoreProduct(title, link, image_url))
+            self._card = None
+        for position in range(len(self._stack) - 1, -1, -1):
+            if self._stack[position] == tag:
+                del self._stack[position:]
+                break
+        if tag == "a":
+            self._anchor_href = None
+
+    def handle_data(self, data: str) -> None:
+        if self._card is not None and data.strip():
+            self._card["text"].append(data.strip())
+
+    def _image_src(self, values: dict[str, str]) -> str | None:
+        candidates = [
+            values.get("data-original"),
+            values.get("data-src"),
+            values.get("src"),
+            values.get("srcset", "").split(",")[0].strip().split(" ")[0],
+        ]
+        for candidate in candidates:
+            if not candidate:
+                continue
+            absolute = urljoin(self.page_url, candidate)
+            lowered = absolute.lower()
+            if (
+                _allowed_store_url(absolute)
+                and "/media/catalog/product/" in urlparse(absolute).path
+                and not any(token in lowered for token in ("placeholder", "no-image", "no_image"))
+            ):
+                return absolute
+        return None
 
 
 class ListingMetadataParser(HTMLParser):
@@ -239,19 +358,124 @@ def _allowed_url(url: str) -> bool:
     )
 
 
+def _allowed_store_url(url: str) -> bool:
+    parsed = urlparse(url)
+    return parsed.scheme == "https" and (parsed.hostname or "").lower() in LOGITECH_HOSTS
+
+
+def _is_disallowed_store_path(url: str) -> bool:
+    path = urlparse(url).path.lower()
+    return path.startswith(
+        (
+            "/catalogsearch/",
+            "/catalog/category/view/",
+            "/catalog/product/view/",
+            "/catalog/product_compare/",
+            "/customer/",
+            "/checkout/",
+            "/wishlist/",
+            "/compare/",
+        )
+    )
+
+
+def extract_store_categories(markup: str, page_url: str) -> list[str]:
+    parser = StorePageParser(page_url)
+    parser.feed(markup)
+    canonical = [
+        urlunparse(urlparse(url)._replace(path=urlparse(url).path.rstrip("/") or "/", query="", fragment=""))
+        for url in parser.categories
+    ]
+    return list(dict.fromkeys(canonical))
+
+
+def _relevant_store_categories(categories: list[str], products: list[Product]) -> list[str]:
+    product_types = {product.product_type.lower() for product in products}
+    broad_roots = {"/gaming", "/todas-as-categorias", "/dia-a-dia", "/audio"}
+    direct_sections = {
+        "mouse": {"mouse", "mouses"},
+        "keyboard": {"teclado", "teclados", "combo", "combos"},
+        "headphones": {"headset", "headsets", "astro"},
+    }
+    relevant: list[str] = []
+    for category in categories:
+        path = urlparse(category).path.lower().rstrip("/") or "/"
+        segments = set(path.strip("/").split("/"))
+        if (
+            path in broad_roots
+            or path.startswith("/lancamentos/")
+            or any(segments & direct_sections.get(product_type, set()) for product_type in product_types)
+        ):
+            relevant.append(category)
+
+    def category_rank(url: str) -> tuple[int, str]:
+        segments = set(urlparse(url).path.lower().strip("/").split("/"))
+        is_specific = any(segments & direct_sections.get(product_type, set()) for product_type in product_types)
+        return (0 if is_specific else 1, url)
+
+    return sorted(dict.fromkeys(relevant), key=category_rank)
+
+
+def extract_store_page_links(markup: str, page_url: str) -> list[str]:
+    parser = StorePageParser(page_url)
+    parser.feed(markup)
+    canonical: list[str] = []
+    for url in parser.page_links:
+        parsed = urlparse(url)
+        page_number = dict(parse_qsl(parsed.query)).get("p", "")
+        if page_number.isdigit() and int(page_number) > 1:
+            canonical.append(
+                urlunparse(parsed._replace(query=urlencode({"p": page_number}), fragment=""))
+            )
+    return list(dict.fromkeys(canonical))
+
+
+def parse_store_products(markup: str, page_url: str) -> list[StoreProduct]:
+    parser = StorePageParser(page_url)
+    parser.feed(markup)
+    return list(dict.fromkeys(parser.products))
+
+
+def find_store_product(products: list[StoreProduct], product: Product) -> StoreProduct | None:
+    matches = [
+        candidate
+        for candidate in products
+        if _has_product_identity(
+            product.name,
+            " ".join((candidate.name, urlparse(candidate.product_url).path, urlparse(candidate.image_url).path)),
+        )
+    ]
+    by_product_url: dict[str, list[StoreProduct]] = {}
+    for candidate in matches:
+        by_product_url.setdefault(candidate.product_url, []).append(candidate)
+    if len(by_product_url) != 1:
+        return None
+    same_product = next(iter(by_product_url.values()))
+    image_names = {
+        urlparse(candidate.image_url).path.rsplit("/", 1)[-1].lower()
+        for candidate in same_product
+    }
+    if len(image_names) != 1:
+        return None
+    return same_product[0]
+
+
 class SafeRedirectHandler(HTTPRedirectHandler):
     def redirect_request(self, request, response, code, message, headers, new_url):
         target = urljoin(request.full_url, new_url)
-        if not _allowed_url(target):
+        if not _allowed_store_url(target):
             raise URLError("Redirecionamento para domínio não autorizado.")
         return super().redirect_request(request, response, code, message, headers, target)
 
 
 def _fetch(url: str, max_bytes: int) -> tuple[bytes, str, str]:
-    if not _allowed_url(url):
-        raise ValueError("URL HTTPS fora dos domínios permitidos.")
+    if not _allowed_store_url(url):
+        raise ValueError("URL HTTPS fora do domínio público da Logitech Store.")
     request = Request(url, headers={"User-Agent": USER_AGENT, "Accept": "*/*"})
-    opener = build_opener(SafeRedirectHandler())
+    opener = build_opener(
+        SafeRedirectHandler(),
+        HTTPSHandler(context=ssl.create_default_context(cafile=certifi.where())),
+    )
     with opener.open(request, timeout=REQUEST_TIMEOUT) as response:
         data = response.read(max_bytes + 1)
         if len(data) > max_bytes:
@@ -262,26 +486,35 @@ def _fetch(url: str, max_bytes: int) -> tuple[bytes, str, str]:
 @lru_cache(maxsize=16)
 def _robots_policy(origin: str) -> RobotFileParser | None:
     robots_url = f"{origin}/robots.txt"
-    try:
-        content, content_type, final_url = _fetch(robots_url, MAX_PAGE_BYTES)
-        if "html" in content_type.lower() or not _allowed_url(final_url):
+    for attempt in range(2):
+        try:
+            content, content_type, final_url = _fetch(robots_url, MAX_PAGE_BYTES)
+            if "html" in content_type.lower() or not _allowed_store_url(final_url):
+                return None
+            parser = RobotFileParser()
+            parser.set_url(robots_url)
+            parser.parse(content.decode("utf-8", errors="replace").splitlines())
+            return parser
+        except HTTPError:
             return None
-        parser = RobotFileParser()
-        parser.set_url(robots_url)
-        parser.parse(content.decode("utf-8", errors="replace").splitlines())
-        return parser
-    except (HTTPError, URLError, TimeoutError, OSError, ValueError):
-        return None
+        except (URLError, TimeoutError, OSError, ValueError):
+            if attempt == 0:
+                time.sleep(REQUEST_DELAY)
+    return None
 
 
 def _check_robots(url: str) -> None:
+    if not _allowed_store_url(url):
+        raise ValueError("URL fora do domínio público da Logitech Store.")
+    if _is_disallowed_store_path(url):
+        raise ValueError("Caminho de busca ou área restrita não será acessado.")
     parsed = urlparse(url)
     origin = f"{parsed.scheme}://{parsed.netloc}"
     policy = _robots_policy(origin)
     if policy is None:
-        raise ValueError("robots.txt indisponível; anúncio pendente por segurança.")
+        raise ValueError("robots.txt da Logitech Store indisponível; produto pendente por segurança.")
     if not policy.can_fetch(USER_AGENT, url):
-        raise ValueError("robots.txt não permite acesso automatizado a este anúncio.")
+        raise ValueError("robots.txt da Logitech Store não permite acesso automatizado a esta página.")
 
 
 def _normalize(value: str) -> str:
@@ -313,9 +546,19 @@ def _has_product_identity(product_name: str, candidate_name: str) -> bool:
     if not tokens or not all(_normalize(token) in page_words for token in tokens):
         return False
     product_words = set(_normalize(product_name).split())
-    for variant, synonyms in COLOR_VARIANTS.items():
-        if variant in product_words and not (synonyms & page_words):
+    expected_variants = {
+        variant for variant in COLOR_VARIANTS if variant in product_words
+    }
+    found_variants = {
+        variant
+        for variant, synonyms in COLOR_VARIANTS.items()
+        if synonyms & page_words
+    }
+    for variant in expected_variants:
+        if not (COLOR_VARIANTS[variant] & page_words):
             return False
+    if found_variants - expected_variants:
+        return False
     return True
 
 
@@ -486,7 +729,56 @@ def _is_completed(item: dict[str, Any] | None) -> bool:
     )
 
 
-def _process_product(product: Product) -> dict[str, Any]:
+def _load_store_catalog(products: list[Product]) -> tuple[list[StoreProduct], list[str]]:
+    root_url = f"{LOGITECH_ORIGIN}/"
+    _check_robots(root_url)
+    homepage, content_type, _ = _fetch(root_url, MAX_PAGE_BYTES)
+    if "html" not in content_type.lower():
+        raise ValueError("A página inicial da Logitech Store não retornou HTML.")
+    homepage_text = homepage.decode("utf-8", errors="replace")
+    all_categories = extract_store_categories(homepage_text, root_url)
+    if not all_categories:
+        raise ValueError("Não foi possível identificar categorias públicas na navegação da Logitech Store.")
+    categories = _relevant_store_categories(all_categories, products)
+    if not categories:
+        raise ValueError("A navegação não possui categorias relacionadas aos tipos dos produtos.")
+    print(f"Categorias consultadas: {len(categories)} de {len(all_categories)} públicas.")
+
+    queue = list(categories)
+    visited: set[str] = {root_url}
+    catalog: list[StoreProduct] = []
+    errors: list[str] = []
+    requests_made = 1
+    while queue and requests_made < MAX_CATALOG_PAGES:
+        page_url = queue.pop(0)
+        if page_url in visited:
+            continue
+        visited.add(page_url)
+        try:
+            _check_robots(page_url)
+            if requests_made:
+                time.sleep(REQUEST_DELAY)
+            page, content_type, final_url = _fetch(page_url, MAX_PAGE_BYTES)
+            requests_made += 1
+            if "html" not in content_type.lower():
+                raise ValueError("A categoria não retornou HTML.")
+            markup = page.decode("utf-8", errors="replace")
+            catalog.extend(parse_store_products(markup, final_url))
+            queue.extend(extract_store_page_links(markup, final_url))
+        except (HTTPError, URLError, TimeoutError, OSError, ValueError) as error:
+            requests_made += 1
+            errors.append(f"{urlparse(page_url).path}: {str(error)[:120]}")
+
+    if queue:
+        errors.append(f"Limite de {MAX_CATALOG_PAGES} páginas atingido antes de concluir o catálogo.")
+    return list(dict.fromkeys(catalog)), errors
+
+
+def _process_product(
+    product: Product,
+    catalog: list[StoreProduct],
+    catalog_errors: list[str],
+) -> dict[str, Any]:
     base = {
         "produto": product.name,
         "anuncio_url": product.url,
@@ -496,42 +788,38 @@ def _process_product(product: Product) -> dict[str, Any]:
     if product.error or not product.listing_id:
         return {**base, "erro": product.error or "Código MLB inválido."}
     try:
-        _check_robots(product.url)
-        page, content_type, final_url = _fetch(product.url, MAX_PAGE_BYTES)
-        if "html" not in content_type.lower():
-            raise ValueError("O anúncio não retornou uma página HTML pública.")
-        block_error = _challenge_error(page)
-        if block_error:
-            return {**base, "erro": block_error}
-        candidates = _image_candidates(page, final_url, product.listing_id, product.name)
-        last_error = "Nenhuma imagem do anúncio pôde ser validada."
-        for candidate_url in candidates:
-            try:
-                data, content_type, _ = _fetch(candidate_url, MAX_IMAGE_BYTES)
-                extension = image_format(data, content_type)
-                converted, final_extension = _convert_if_available(data, extension)
-                filename = filename_for_product(product.name, product.listing_id, final_extension)
-                target = IMAGE_DIR / filename
-                if target.exists():
-                    if target.read_bytes() != converted:
-                        raise ValueError("Arquivo-alvo já existe com conteúdo diferente; não foi sobrescrito.")
-                else:
-                    _write_new(target, converted)
-                relative_path = target.relative_to(ROOT).as_posix()
-                return {
-                    "produto": product.name,
-                    "anuncio_url": product.url,
-                    "imagens": [relative_path],
-                    "status": "ok",
-                }
-            except (HTTPError, URLError, TimeoutError, OSError, ValueError, ImageValidationError) as error:
-                last_error = str(error)[:240]
-        return {**base, "erro": last_error}
+        match = find_store_product(catalog, product)
+        if match is None:
+            reason = "Nenhum produto com modelo e variante exatos foi confirmado no catálogo oficial."
+            if catalog_errors:
+                reason += " Catálogo incompleto: " + "; ".join(catalog_errors[:3])
+            return {**base, "erro": reason}
+        _check_robots(match.product_url)
+        _check_robots(match.image_url)
+        data, content_type, _ = _fetch(match.image_url, MAX_IMAGE_BYTES)
+        extension = image_format(data, content_type)
+        converted, final_extension = _convert_if_available(data, extension)
+        filename = filename_for_product(product.name, product.listing_id, final_extension)
+        target = IMAGE_DIR / filename
+        if target.exists():
+            if target.read_bytes() != converted:
+                raise ValueError("Arquivo-alvo já existe com conteúdo diferente; não foi sobrescrito.")
+        else:
+            _write_new(target, converted)
+        relative_path = target.relative_to(ROOT).as_posix()
+        return {
+            **base,
+            "imagens": [relative_path],
+            "status": "ok",
+            "produto_loja": match.name,
+            "produto_url": match.product_url,
+            "imagem_origem": match.image_url,
+        }
     except HTTPError as error:
         if error.code in (401, 403, 407, 429):
-            reason = f"O anúncio recusou acesso automatizado (HTTP {error.code}); sem tentativa de contornar."
+            reason = f"A Logitech Store recusou acesso automatizado (HTTP {error.code}); sem tentativa de contornar."
         else:
-            reason = f"Erro HTTP {error.code} ao acessar o anúncio."
+            reason = f"Erro HTTP {error.code} ao acessar produto/imagem da Logitech Store."
         return {**base, "erro": reason}
     except (URLError, TimeoutError, OSError, ValueError) as error:
         return {**base, "erro": str(error)[:240]}
@@ -578,6 +866,17 @@ def _validate(source: str, products: list[Product], manifest: list[dict[str, Any
             if not (ROOT / item.image).is_file():
                 errors.append(f"Imagem referenciada ausente: {item.image}")
     for record in manifest:
+        if record.get("status") == "ok":
+            for key in ("produto_url", "imagem_origem"):
+                value = record.get(key)
+                if not isinstance(value, str) or not _allowed_store_url(value):
+                    errors.append(f"Origem oficial inválida no manifesto: {key}.")
+            official_identity = " ".join(
+                str(record.get(key, ""))
+                for key in ("produto_loja", "produto_url", "imagem_origem")
+            )
+            if not _has_product_identity(str(record.get("produto", "")), official_identity):
+                errors.append(f"Produto oficial não corresponde ao anúncio: {record.get('produto', '')}")
         for relative in record.get("imagens", []):
             path = _manifest_image_path(relative) if isinstance(relative, str) else None
             if path is None:
@@ -650,17 +949,33 @@ def main() -> int:
 
     if args.dry_run:
         _dry_run(products, previous_manifest, args.force)
+        print("Fonte prevista: categorias públicas da Logitech Store; /catalogsearch/ não será acessado.")
         return 0
 
     old_urls = [product.url for product in products]
     records_by_url: dict[str, dict[str, Any]] = {}
     image_by_url: dict[str, str] = {}
+    candidates_to_process = [
+        product for product in products
+        if not (_is_completed(previous_manifest.get(product.url)) and not args.force)
+    ]
+    catalog: list[StoreProduct] = []
+    catalog_errors: list[str] = []
+    if candidates_to_process:
+        try:
+            catalog, catalog_errors = _load_store_catalog(products)
+            print(f"Catálogo público consultado: {len(catalog)} associações produto/imagem.")
+            for error in catalog_errors:
+                print(f"AVISO | catálogo parcial | {error}")
+        except (HTTPError, URLError, TimeoutError, OSError, ValueError) as error:
+            catalog_errors = [str(error)[:240]]
+            print(f"AVISO | catálogo indisponível | {catalog_errors[0]}")
     for product in products:
         previous = previous_manifest.get(product.url)
         if _is_completed(previous) and not args.force:
             record = previous
         else:
-            record = _process_product(product)
+            record = _process_product(product, catalog, catalog_errors)
             if record["status"] != "ok" and _is_completed(previous):
                 record = previous
                 print(f"AVISO | {product.name} | atualização falhou; imagem anteriormente validada foi mantida.")
@@ -668,7 +983,6 @@ def main() -> int:
                 print(f"ATUALIZADO | {product.name} | {', '.join(record['imagens'])}")
             else:
                 print(f"PENDENTE | {product.name} | {record.get('erro', 'falha sem detalhes')}")
-            time.sleep(1)
         records_by_url[product.url] = record
         images = record.get("imagens", [])
         if images:
